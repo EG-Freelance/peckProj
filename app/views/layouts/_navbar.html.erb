@@ -12,6 +12,7 @@
   				<% if current_user.admin? %>
   					<li><%= link_to "Admin Panel", "#" %></li>
   				<% end %>
+  				<li><%= link_to "Log Out", destroy_user_session_path, method: :delete %></li>
   			<% else %>
   				<%= simple_form_for(:user, :url => session_path(:user), class: 'navbar-form navbar-right loginBar') do |f| %>
 	  				<li>
