@@ -14,34 +14,109 @@
   				<% end %>
   				<li><%= link_to "Log Out", destroy_user_session_path, method: :delete %></li>
   			<% else %>
-  				<%= simple_form_for(:user, :url => session_path(:user), class: 'navbar-form navbar-right loginBar') do |f| %>
-	  				<li>
-	  					<div class="row">
-	  						<div class='col-md-6'><%= f.text_field :email, placeholder: 'Email address', class: 'textfield input' %></div>
-	  						<div class='col-md-6'><%= f.password_field :password, placeholder: 'Password', class: 'textfield input' %></div>
-	  					</div>
-	  				</li>
-	  				<li>
-  						<div class='row'>
-	  						<div class='col-md-6 col-xs-12'>
-	  							<%= link_to 'Forgot Password', new_password_path(:user), class: 'btn btn-link pull-left match-input' %>
-	  						</div>
-	  						<div class='col-md-6 col-xs-12'>
-	  							<%= f.submit 'Sign in', class: 'btn btn-link match-input' %>
-	  						</div>
-	  					</div>
-	  					<!--
-	  					<div class='row'>
-	  						<div class='col-md-6 col-xs-12'>
-	  							<%= f.check_box :remember_me, class: 'match-input' %>
-	  							<%= f.label :remember_me, style: 'font-weight:normal', class: 'match-input' %>
-	  						</div>
-	  					</div>
-	  				-->
-	  				</li>
-  				<% end %>
+          <button type="button" class="btn btn-lg btn-login" data-toggle="modal" data-target="#login">Log In</button>
+          <button type="button" class="btn btn-lg btn-signup" data-toggle="modal" data-target="#signup">Sign Up</button>
 				<% end %>
   		</ul>
   	</div>
   </div>
 </nav>
+
+<!-- Log In Modal -->
+<div id="login" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Sign In</h4>
+      </div>
+      <div class="modal-body">
+        <%= simple_form_for(:user, :url => session_path(:user), class: 'navbar-form navbar-right loginBar') do |f| %>
+          <table width='100%'>
+            <tr>
+              <td width=40%><%= f.text_field :email, placeholder: 'Email address', class: 'textfield input login' %></td>
+              <td width=10%></td>
+              <td width=40% style="padding-right:10px"><%= f.password_field :password, placeholder: 'Password', class: 'textfield input login' %></td>
+            </tr>
+            <tr>
+              <td style="padding-top:10px"></td>
+            </tr>
+            <tr>
+              <td><%= link_to 'Forgot Password', new_password_path(:user), class: 'btn btn-link match-input' %></td>
+              <td></td>
+              <td><%= f.submit 'Sign in', class: 'btn btn-login match-input' %></td>
+            </tr>
+          </table>
+          <!--<div>
+            <div class="row">
+              <div class='col-md-6'><%= f.text_field :email, placeholder: 'Email address', class: 'textfield input' %></div>
+              <div class='col-md-6'><%= f.password_field :password, placeholder: 'Password', class: 'textfield input' %></div>
+            </div>
+          </div>
+          <div>
+            <div class='row'>
+              <div class='col-md-6 col-xs-12'>
+                <%= link_to 'Forgot Password', new_password_path(:user), class: 'btn btn-link pull-left match-input' %>
+              </div>
+              <div class='col-md-6 col-xs-12'>
+                <%= f.submit 'Sign in', class: 'btn btn-link match-input' %>
+              </div>
+            </div>-->
+            <!--
+            <div class='row'>
+            <div class='col-md-6 col-xs-12'>
+            <%= f.check_box :remember_me, class: 'match-input' %>
+            <%= f.label :remember_me, style: 'font-weight:normal', class: 'match-input' %>
+            </div>
+            </div>
+          </div>-->
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Sign Up Modal -->
+<div id="signup" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Sign Up</h4>
+      </div>
+      <div class="modal-body">
+        <%= simple_form_for(:user, :url => registration_path(:user), class: 'navbar-form navbar-right loginBar') do |f| %>
+          <table width='100%'>
+            <tr>
+              <td style="padding-bottom:10px"><%= f.text_field :email, placeholder: 'Email address', class: 'textfield input login' %></td>
+            </tr>
+            <tr>
+              <td style="padding-bottom:10px"><%= f.password_field :password, placeholder: 'Password', class: 'textfield input login' %></td>
+            </tr>
+            <tr>
+              <td style="padding-bottom:10px"><%= f.password_field :password_confirmation, placeholder: 'Password confirmation', class: 'textfield input login' %></td>
+            </tr>
+            <tr>
+              <td style="padding-top:10px"></td>
+            </tr>
+            <tr>
+              <td><%= f.submit 'Sign up!', class: 'btn btn-login match-input' %></td>
+            </tr>
+          </table>
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>

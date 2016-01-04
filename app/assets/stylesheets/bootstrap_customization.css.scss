@@ -10,3 +10,41 @@
 .navbar-default{
 	height:71px !important;
 }
+
+.btn-login{
+  background: goldenrod;
+  border: #D4A017;
+  color: white;
+}
+.btn-login:hover, .btn-login:active, .btn-login:focus{
+  background: #C68E17;
+  border: #D4A017;
+  color: white;
+}
+
+.btn-signup{
+  background: silver;
+  border: #657383;
+  color: white;
+}
+.btn-signup:hover, .btn-signup:active, .btn-signup:focus{
+  background: darkgray;
+  border: #657383;
+  color: white;
+}
+
+.btn:focus,
+.btn:active:focus,
+.btn.active:focus,
+.btn.focus,
+.btn:active.focus,
+.btn.active.focus {
+  outline: thin dotted;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+  outline-color: gray;
+}
+
+.textfield.login.input{
+  width:100%;
+}
