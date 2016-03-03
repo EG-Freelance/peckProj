@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160104034257) do
+ActiveRecord::Schema.define(version: 20160303200819) do
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -27,6 +27,10 @@ ActiveRecord::Schema.define(version: 20160104034257) do
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.boolean  "admin"
+    t.integer  "owner_id"
+    t.string   "preferred_payment"
+    t.string   "paypal_acct"
+    t.string   "venmo_acct"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

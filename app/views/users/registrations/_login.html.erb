@@ -1,0 +1,40 @@
+<%= simple_form_for(:user, :url => session_path(:user), class: 'navbar-form navbar-right loginBar') do |f| %>
+  <table width='100%'>
+    <tr>
+      <td width=40%><%= f.text_field :email, placeholder: 'Email address', class: 'textfield input login' %></td>
+      <td width=10%></td>
+      <td width=40% style="padding-right:10px"><%= f.password_field :password, placeholder: 'Password', class: 'textfield input login' %></td>
+    </tr>
+    <tr>
+      <td style="padding-top:10px"></td>
+    </tr>
+    <tr>
+      <td><%= link_to 'Forgot Password', new_password_path(:user), class: 'btn btn-link match-input' %></td>
+      <td></td>
+      <td><%= f.submit 'Sign in', class: 'btn btn-login match-input' %></td>
+    </tr>
+  </table>
+  <!--<div>
+    <div class="row">
+      <div class='col-md-6'><%= f.text_field :email, placeholder: 'Email address', class: 'textfield input' %></div>
+      <div class='col-md-6'><%= f.password_field :password, placeholder: 'Password', class: 'textfield input' %></div>
+    </div>
+  </div>
+  <div>
+    <div class='row'>
+      <div class='col-md-6 col-xs-12'>
+        <%= link_to 'Forgot Password', new_password_path(:user), class: 'btn btn-link pull-left match-input' %>
+      </div>
+      <div class='col-md-6 col-xs-12'>
+        <%= f.submit 'Sign in', class: 'btn btn-link match-input' %>
+      </div>
+    </div>-->
+  <!--
+    <div class='row'>
+    <div class='col-md-6 col-xs-12'>
+      <%= f.check_box :remember_me, class: 'match-input' %>
+      <%= f.label :remember_me, style: 'font-weight:normal', class: 'match-input' %>
+    </div>
+  </div>
+</div>-->
+<% end %>

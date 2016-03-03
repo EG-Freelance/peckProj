@@ -1,0 +1,26 @@
+<%= simple_form_for(:user, :url => registration_path(:user), class: 'navbar-form navbar-right loginBar') do |f| %>
+  <table width='100%'>
+    <!-- Email address -->
+    <tr>
+      <td style="padding-bottom:10px"><%= f.text_field :email, placeholder: 'Email address', class: 'textfield input login' %></td>
+    </tr>
+    <!-- Password -->
+    <tr>
+      <td style="padding-bottom:10px"><%= f.password_field :password, placeholder: 'Password', class: 'textfield input login' %></td>
+    </tr>
+    <!-- Confirm password -->
+    <tr>
+      <td style="padding-bottom:10px"><%= f.password_field :password_confirmation, placeholder: 'Password confirmation', class: 'textfield input login' %></td>
+    </tr>
+    <!-- Registry owner's email -->
+    <tr>
+      <td style="padding-bottom:10px"><%= f.text_field :owner_id, placeholder: 'Registry Owner Email', class: 'textfield input login' %></td>
+    </tr>
+    <tr>
+      <td style="padding-top:10px"></td>
+    </tr>
+    <tr>
+      <td><%= f.submit 'Sign up!', class: 'btn btn-login match-input' %></td>
+    </tr>
+  </table>
+<% end %>
