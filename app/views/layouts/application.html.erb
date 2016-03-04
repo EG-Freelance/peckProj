@@ -6,8 +6,13 @@
   <%= render "layouts/navbar" %>
 
   <div style="padding-top:10px"></div>
-
-  <p class="alert"><%= alert %></p>
+  
+  <% unless flash[:error].nil? %>
+    <p id="error" style="padding-top:60px; padding-left:20px; color:darkred; background:red"><b><%= flash[:error] %></b</p>
+  <% end %>
+  <% unless alert.nil? %>
+    <p class="alert"><%= alert %></p>
+  <% end %>
 
   <!-- Google Fonts -->
   <link href='http://fonts.googleapis.com/css?family=Lora:400,700' rel='stylesheet' type='text/css'>

@@ -3,24 +3,30 @@ class Users::RegistrationsController < Devise::RegistrationsController
 # before_filter :configure_account_update_params, only: [:update]
   
   def create
-    puts "=============="
-    puts sign_up_params
     adjusted_sign_up_params = sign_up_params
     if adjusted_sign_up_params[:owner_id]
-      adjusted_sign_up_params[:owner_id] = User.find_by(email: adjusted_sign_up_params[:owner_id]).id
+      unless User.find_by(email: adjusted_sign_up_params[:owner_id]).nil?
+        adjusted_sign_up_params[:owner_id] = User.find_by(email: adjusted_sign_up_params[:owner_id]).id
+      else
+        adjusted_sign_up_params[:owner_id] = "Error"
+      end
     else
       adjusted_sign_up_params[:owner_id] = nil
     end
-    puts adjusted_sign_up_params
     
     @user = User.new(adjusted_sign_up_params)
+    
+    if @user.owner_id == "Error"
+      @user.errors.add(:owner_id, 'Registry Owner email is not valid -- please check the address and try again.')
+    end
+    
 
     respond_to do |format|
       if @user.save
         format.html { redirect_to root_url, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else
-        format.html { render :new }
+        format.html { redirect_to root_url, :flash => { :error => "Registry Owner email is not valid -- please check the address and try again."} }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end

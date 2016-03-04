@@ -1,35 +1,35 @@
 <%= simple_form_for(:user, :url => registration_path(:user), class: 'navbar-form navbar-right loginBar') do |f| %>
-  <table width='100%'>
+  <table width='100%', id='owner-reg-form'>
     <!-- Email address -->
     <tr>
-      <td colspan=2 style="padding-bottom:10px"><%= f.text_field :email, placeholder: 'Email address', class: 'textfield input login' %></td>
+      <td colspan=2 style="padding-bottom:10px"><%= f.text_field :email, placeholder: 'Email address', class: 'textfield input login', id: 'owner-email' %></td>
     </tr>
     <!-- Password -->
     <tr>
-      <td colspan=2 style="padding-bottom:10px"><%= f.password_field :password, placeholder: 'Password', class: 'textfield input login' %></td>
+      <td colspan=2 style="padding-bottom:10px"><%= f.password_field :password, placeholder: 'Password', class: 'textfield input login', id: 'owner-password' %></td>
     </tr>
     <!-- Confirm password -->
     <tr>
-      <td colspan=2 style="padding-bottom:10px"><%= f.password_field :password_confirmation, placeholder: 'Password confirmation', class: 'textfield input login' %></td>
+      <td colspan=2 style="padding-bottom:10px"><%= f.password_field :password_confirmation, placeholder: 'Password confirmation', class: 'textfield input login', id: 'owner-confirm-password' %></td>
     </tr>
     <!-- Preferred payment method -->
     <tr>
       <td width=200px>Preferred payment method</td>
-      <td style="padding-bottom:10px"><%= f.select :preferred_payment, options_for_select(["Paypal", "Venmo"]), class: 'textfield input login' %></td>
+      <td style="padding-bottom:10px"><%= f.select :preferred_payment, options_for_select(["Paypal", "Venmo"]), class: 'textfield input login', id: 'owner-preferred-payment' %></td>
     </tr>
     <!-- Paypal account -->
     <tr>
-      <td colspan=2 style="padding-bottom:10px"><%= f.text_field :paypal_acct, placeholder: 'Paypal account', class: 'textfield input login' %></td>
+      <td colspan=2 style="padding-bottom:10px"><%= f.text_field :paypal_acct, placeholder: 'Paypal account', class: 'textfield input login', id: 'owner-paypal-acct' %></td>
     </tr>
     <!-- Venmo account -->
     <tr>
-      <td colspan=2 style="padding-bottom:10px"><%= f.text_field :venmo_acct, placeholder: 'Venmo account', class: 'textfield input login' %></td>
+      <td colspan=2 style="padding-bottom:10px"><%= f.text_field :venmo_acct, placeholder: 'Venmo account', class: 'textfield input login', id: 'owner-venmo-acct' %></td>
     </tr>
     <tr>
       <td colspan=2 style="padding-top:10px"></td>
     </tr>
     <tr>
-      <td colspan=2><%= f.submit 'Sign up!', class: 'btn btn-login match-input' %></td>
+      <td colspan=2><%= f.submit 'Sign up!', { class: 'btn btn-login match-input', id: 'owner-signup' } %></td>
     </tr>
   </table>
 <% end %>
