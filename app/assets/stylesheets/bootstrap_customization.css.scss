@@ -54,5 +54,7 @@ body{
 }
 
 .textfield.login.input{
-  width:100%;
+  min-width: 100px;
+  max-width: 500px;
+  width: 100%;
 }

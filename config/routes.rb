@@ -3,6 +3,11 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { registrations: "users/registrations" }
   root 'pages#index'
   
+  authenticated :user do
+    root :to => 'pages#index', as: :authenticated_root
+    resources :users, only: [:update], :constraints => { :id => /[0-9]+/ }
+  end
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -2,19 +2,30 @@
   <table width='100%' id='guest-reg-form'>
     <!-- Email address -->
     <tr>
-      <td style="padding-bottom:10px"><%= f.text_field :email, placeholder: 'Email address', class: 'textfield input login', id: 'guest-email' %></td>
+      <td style="padding-bottom:10px"><%= f.text_field :email, placeholder: 'Email address', class: 'textfield input login', id: 'guest-email', value: (@user.email if user_signed_in? && current_user.guest?) %></td>
     </tr>
-    <!-- Password -->
-    <tr>
-      <td style="padding-bottom:10px"><%= f.password_field :password, placeholder: 'Password', class: 'textfield input login', id: 'guest-password' %></td>
-    </tr>
-    <!-- Confirm password -->
-    <tr>
-      <td style="padding-bottom:10px"><%= f.password_field :password_confirmation, placeholder: 'Password confirmation', class: 'textfield input login', id: 'guest-confirm-password' %></td>
-    </tr>
+    <!-- Password and password confirmation-->
+    <% if user_signed_in? %>
+      <tr>
+        <td style="padding-bottom:10px"><%= f.password_field :password, placeholder: 'Password (leave blank to not change)', class: 'textfield input login', id: 'guest-password' %></td>
+      </tr>
+      <tr>
+        <td style="padding-bottom:10px"><%= f.password_field :password_confirmation, placeholder: 'Password confirmation (leave blank to not change)', class: 'textfield input login', id: 'guest-confirm-password' %></td>
+      </tr>
+      <tr>
+        <td style="padding-bottom:10px"><%= f.password_field :current_password, placeholder: 'Current password (required to confirm changes)', class: 'textfield input login', id: 'guest-confirm-password' %></td>
+      </tr>
+    <% else %>
+      <tr>
+        <td style="padding-bottom:10px"><%= f.password_field :password, placeholder: 'Password', class: 'textfield input login', id: 'guest-password' %></td>
+      </tr>
+      <tr>
+        <td style="padding-bottom:10px"><%= f.password_field :password_confirmation, placeholder: 'Password confirmation', class: 'textfield input login', id: 'guest-confirm-password' %></td>
+      </tr>
+    <% end %>
     <!-- Registry owner's email -->
     <tr>
-      <td style="padding-bottom:10px"><%= f.text_field :owner_id, placeholder: 'Registry Owner Email', class: 'textfield input login', id: 'guest-owner-email' %></td>
+      <td style="padding-bottom:10px"><%= f.text_field :owner_id, placeholder: 'Registry Owner Email', class: 'textfield input login', id: 'guest-owner-email', value: (User.find(@user.owner_id).email if user_signed_in? && current_user.guest?) %></td>
     </tr>
     <tr>
       <td style="padding-top:10px"></td>

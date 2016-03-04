@@ -1,39 +1,74 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<div style="padding-top:60px; padding-left:25px; padding-right:25px">
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= devise_error_messages! %>
+  <h2>Edit <%= resource_name.to_s.humanize %></h2>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+    <%= devise_error_messages! %>
+  
+    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+      <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+    <% end %>
+  
+    <div id='owner-reg-form'>
+
+    <div class="field">
+      <%= f.label :email %><br />
+      <%= f.email_field :email, autofocus: true, class: 'textfield login input', id: current_user.owner? ? 'owner-email' : 'guest-email' %>
+    </div>
+
+    <div class="field">
+      <%= f.label :password %> <i>(leave blank to not change)</i><br />
+      <%= f.password_field :password, autocomplete: "off", class: 'textfield login input', id: current_user.owner? ? 'owner-new-password' : 'guest-new-password' %>
+    </div>
+
+    <div class="field">
+      <%= f.label :password_confirmation %><br />
+      <%= f.password_field :password_confirmation, autocomplete: "off", class: 'textfield login input', id: current_user.owner? ? 'owner-confirm-new-password' : 'guest-confirm-new-password' %>
+    </div>
+
+    <div class="field">
+      <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
+      <%= f.password_field :current_password, autocomplete: "off", class: 'textfield login input', id: current_user.owner? ? 'owner-password' : 'guest-password' %>
+    </div>
+  
+    <% if current_user.guest? %>
+
+      <div class="field">
+        <%= f.label :owner_id, "Registry Owner's Email" %><br />
+        <%= f.text_field :owner_id, autocomplete: "off", class: 'textfield login input', value: User.find(resource.owner_id).email, id: 'guest-owner-email' %>
+      </div>
+
+    <% else %>
+      
+      <div class="field">
+        <%= f.label :preferred_payment, "Preferred Payment Method" %><br />
+        <%= f.select :preferred_payment, options_for_select(["Paypal", "Venmo"], :selected => resource.preferred_payment), id: 'owner-preferred-payment' %>
+      </div>  
+      
+      <div class="field">
+        <%= f.label :paypal_acct, "Paypal Account" %><br />
+        <%= f.text_field :paypal_acct, autocomplete: "off", class: 'textfield login input', id: 'owner-paypal-acct' %>
+      </div>  
+      
+      <div class="field">
+        <%= f.label :venmo_acct, "Venmo Account" %><br />
+        <%= f.text_field :venmo_acct, autocomplete: "off", class: 'textfield login input', id: 'owner-venmo-acct' %>
+      </div>  
+  
+    <% end %>
+  
+    <br />
+
+    <div class="actions">
+      <%= f.submit "Update", :class => 'btn btn-login match-input', id: current_user.owner? ? 'owner-signup' : 'guest-signup' %>
+    </div>
   </div>
-
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
+  <h3>Cancel my account</h3>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
-  </div>
+  <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: 'btn' %>
 
-  <div class="field">
-    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-    <%= f.password_field :current_password, autocomplete: "off" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Update" %>
-  </div>
-<% end %>
-
-<h3>Cancel my account</h3>
-
-<p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
-
-<%= link_to "Back", :back %>
+  <%= link_to "Back", :back %>
+  
+</div>
