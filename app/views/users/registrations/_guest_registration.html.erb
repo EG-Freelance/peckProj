@@ -2,7 +2,7 @@
   <table width='100%' id='guest-reg-form'>
     <!-- Email address -->
     <tr>
-      <td style="padding-bottom:10px"><%= f.text_field :email, placeholder: 'Email address', class: 'textfield input login', id: 'guest-email', value: (@user.email if user_signed_in? && current_user.guest?) %></td>
+      <td style="padding-bottom:10px"><%= f.text_field :email, placeholder: 'Email address', class: 'textfield input login', id: 'guest-email', value: (current_user.email if user_signed_in? && current_user.guest?) %></td>
     </tr>
     <!-- Password and password confirmation-->
     <% if user_signed_in? %>
@@ -25,7 +25,7 @@
     <% end %>
     <!-- Registry owner's email -->
     <tr>
-      <td style="padding-bottom:10px"><%= f.text_field :owner_id, placeholder: 'Registry Owner Email', class: 'textfield input login', id: 'guest-owner-email', value: (User.find(@user.owner_id).email if user_signed_in? && current_user.guest?) %></td>
+      <td style="padding-bottom:10px"><%= f.text_field :owner_id, placeholder: 'Registry Owner Email', class: 'textfield input login', id: 'guest-owner-email', value: (User.find(current_user.owner_id).email if user_signed_in? && current_user.guest?) %></td>
     </tr>
     <tr>
       <td style="padding-top:10px"></td>

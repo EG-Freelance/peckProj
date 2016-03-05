@@ -15,7 +15,7 @@
     <!-- Preferred payment method -->
     <tr>
       <td width=200px>Preferred payment method</td>
-      <td style="padding-bottom:10px"><%= f.select :preferred_payment, options_for_select(["Paypal", "Venmo"], selected: (user_signed_in? && current_user.owner? ? current_user.preferred_payment : "Paypal")), class: 'textfield input login', id: 'owner-preferred-payment' %></td>
+      <td style="padding-bottom:10px"><%= f.select :preferred_payment, options_for_select(["Paypal", "Venmo"], selected: (user_signed_in? && current_user.owner? ? current_user.preferred_payment : "Paypal")), {}, id: 'owner-preferred-payment', class: 'textfield input login select' %></td>
     </tr>
     <!-- Paypal account -->
     <tr>
