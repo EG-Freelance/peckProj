@@ -1,0 +1,16 @@
+<table style="margin-left:25px">  
+  <% @owners.each do |o| %>
+    <tr>
+      <td><b><%= o.email %></b></td>
+    </tr>
+    <% unless o.guests.empty? %>
+      <% o.guests.each do |g| %>
+        <tr>
+          <td style="padding-left:10px"><%= g.email %></td>
+        </tr>
+      <% end %>
+    <% end %>  
+    <br>
+  <% end %>
+</table>
+    

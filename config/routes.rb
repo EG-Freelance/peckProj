@@ -1,7 +1,13 @@
 Rails.application.routes.draw do
   
+  devise_for :admins
   devise_for :users, controllers: { registrations: "users/registrations" }
   root 'pages#index'
+  
+  # Admin pages
+  authenticated :user, lambda { |u| u.admin? } do
+    get 'pages/all_users' => 'pages#all_users'
+  end
   
   authenticated :user do
     root :to => 'pages#index', as: :authenticated_root
