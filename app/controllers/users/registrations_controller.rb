@@ -2,6 +2,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
 # before_filter :configure_sign_up_params, only: [:create]
 # before_filter :configure_account_update_params, only: [:update]
   
+  def batch_invite
+    emails = params[:user][:email]
+    emails.each { |f| User.invite!(:email => f, :owner_id => current_user.id) }
+    redirect_to root_url, notice: "Invitations sent"
+  end
+  
   def create
     adjusted_sign_up_params = sign_up_params
     if adjusted_sign_up_params[:owner_id]

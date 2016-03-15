@@ -11,28 +11,30 @@
   
     <% if current_user.owner? %>
       <div id='owner-edit-form'>
-    <% else %>
+    <% elsif current_user.guest? %>
       <div id='guest-edit-form'>
+    <% else %>
+      <div id='user-edit-form'>
     <% end %>
 
       <div class="field">
         <%= f.label :email %><br />
-        <%= f.email_field :email, autofocus: true, class: 'textfield login input', id: current_user.owner? ? 'owner-edit-email' : 'guest-edit-email' %>
+        <%= f.email_field :email, autofocus: true, class: 'textfield login input', id: if current_user.owner? then 'owner-edit-email' elsif current_user.guest? then 'guest-edit-email' else 'user-edit-email' end %>
       </div>
 
       <div class="field">
         <%= f.label :password %> <i>(leave blank to not change)</i><br />
-        <%= f.password_field :password, autocomplete: "off", class: 'textfield login input', id: current_user.owner? ? 'owner-new-password' : 'guest-new-password' %>
+        <%= f.password_field :password, autocomplete: "off", class: 'textfield login input', id: if current_user.owner? then 'owner-new-password' elsif current_user.guest? then 'guest-new-password' else 'user-new-password' end %>
       </div>
 
       <div class="field">
         <%= f.label :password_confirmation %><br />
-        <%= f.password_field :password_confirmation, autocomplete: "off", class: 'textfield login input', id: current_user.owner? ? 'owner-confirm-new-password' : 'guest-confirm-new-password' %>
+        <%= f.password_field :password_confirmation, autocomplete: "off", class: 'textfield login input', id: if current_user.owner? then 'owner-confirm-new-password' elsif current_user.guest? then 'guest-confirm-new-password' else 'user-confirm-new-password' end %>
       </div>
 
       <div class="field">
         <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-        <%= f.password_field :current_password, autocomplete: "off", class: 'textfield login input', id: current_user.owner? ? 'owner-old-password' : 'guest-old-password' %>
+        <%= f.password_field :current_password, autocomplete: "off", class: 'textfield login input', id: if current_user.owner? then 'owner-old-password' elsif current_user.guest? then 'guest-old-password' else 'user-old-password' end %>
       </div>
 
       <% if current_user.guest? %>
@@ -42,7 +44,7 @@
           <%= f.text_field :owner_id, autocomplete: "off", class: 'textfield login input', value: User.find(current_user.owner_id).email, id: 'guest-edit-owner-email' %>
         </div>
 
-      <% else %>
+      <% elsif current_user.owner? %>
 
         <div class="field">
           <%= f.label :preferred_payment, "Preferred Payment Method" %><br />
@@ -64,7 +66,7 @@
       <br />
 
       <div class="actions">
-        <%= f.submit "Update", :class => 'btn btn-login match-input', id: current_user.owner? ? 'owner-update' : 'guest-update' %>
+        <%= f.submit "Update", :class => 'btn btn-login match-input disabled', id: if current_user.owner? then 'owner-update' elsif current_user.guest? then 'guest-update' else 'user-update' end %>
       </div>
     </div>
   <% end %>

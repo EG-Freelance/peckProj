@@ -1,36 +1,40 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>PeckProj</title>
+  <head>
+    <title>PeckProj</title>
 
-  <%= render "layouts/navbar" %>
+    <%= render "layouts/navbar" %>
 
-  <div style="padding-top:10px"></div>
+    <div style="padding-top:70px"></div>
+
+    <% unless flash[:error].nil? %>
+      <p id="error" style="padding-top:60px; padding-left:20px; margin-bottom:0px; color:darkred; background:red"><b><%= flash[:error] %></b></p>
+    <% end %>
+    <% unless alert.nil? %>
+      <p class="alert"><%= alert %></p>
+    <% end %>
+
+    <!-- Google Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700' rel='stylesheet' type='text/css'>
+    <link href='https://www.google.com/fonts#QuickUsePlace:quickUse/Family:Lobster+Two' rel='stylesheet' type='text/css'>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+
+    <%= yield %>
+
+  </body>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
   
-  <% unless flash[:error].nil? %>
-    <p id="error" style="padding-top:60px; padding-left:20px; margin-bottom:0px; color:darkred; background:red"><b><%= flash[:error] %></b></p>
-  <% end %>
-  <% unless alert.nil? %>
-    <p class="alert"><%= alert %></p>
-  <% end %>
-
-  <!-- Google Fonts -->
-  <link href='http://fonts.googleapis.com/css?family=Lora:400,700' rel='stylesheet' type='text/css'>
-  <link href='https://www.google.com/fonts#QuickUsePlace:quickUse/Family:Lobster+Two' rel='stylesheet' type='text/css'>
-
-  <!-- Latest compiled and minified CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-
-  <!-- Optional theme -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
-
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
-
-<%= yield %>
-
-</body>
 </html>

@@ -1,16 +1,20 @@
-<table style="margin-left:25px">  
-  <% @owners.each do |o| %>
-    <tr>
-      <td><b><%= o.email %></b></td>
-    </tr>
-    <% unless o.guests.empty? %>
-      <% o.guests.each do |g| %>
-        <tr>
-          <td style="padding-left:10px"><%= g.email %></td>
-        </tr>
-      <% end %>
-    <% end %>  
-    <br>
+<h2>Registry Connections</h2>
+
+<div id="accordion" class="panel-group">
+  <% @owners.each_with_index do |o,i| %>
+    <div class="panel panel-default">    
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href=<%= "#owner#{i+1}" %>><%= "#{i+1}. #{o.email}" %></a>
+            </h4>
+        </div>
+        <div id=<%= "owner#{i+1}" %> class="panel-collapse collapse">
+            <div class="panel-body">
+              <% o.guests.each do |g| %>
+                <%= g.email %>
+              <% end %>
+            </div>
+        </div>
+    </div>
   <% end %>
-</table>
-    
+</div>

@@ -1,3 +1,5 @@
+function create_new() { $('#createNewTextbox').append('<div><input class="string email optional" id="user_email" maxlength="255" name="user[email][]" size="255" type="email" value="" placeholder="Invitee Email"></div>'); }
+
 function signUpValidation(){
   // For owner
   $('#owner-reg-form').on('keypress', function(){
@@ -76,6 +78,25 @@ function editValidation(){
       });
     }    
   });
+  
+  // For other users
+  $('#user-edit-form').on('keypress', function(){
+    if($('#user-email').val() === "" || $('#user-old-password').val() === ""){
+      $('#user-update').addClass('disabled');
+      $('#user-edit-form').on("keypress", function (e) {
+        if (e.keyCode == 13) {
+          return false;
+        }
+      });
+    }else{
+      $('#user-update').removeClass('disabled');
+      $('#user-edit-form').on("keypress", function (e) {
+        if (e.keyCode == 13) {
+          $('#user-update').trigger('click');
+        }
+      });
+    }    
+  });
 }
 
 function allValidation(){
@@ -84,4 +105,4 @@ function allValidation(){
 }
 
 $(document).on('page:load', allValidation);
-$('document').ready(allValidation);
+$(document).ready(allValidation);

@@ -9,6 +9,10 @@ Rails.application.routes.draw do
     get 'pages/all_users' => 'pages#all_users'
   end
   
+  devise_scope :user do
+    post 'users/invitation/new' => 'users/registrations#batch_invite'
+  end
+  
   authenticated :user do
     root :to => 'pages#index', as: :authenticated_root
     resources :users, only: [:update], :constraints => { :id => /[0-9]+/ }

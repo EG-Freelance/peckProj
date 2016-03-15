@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
+  devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
   has_many :guests, :class_name => 'User', :foreign_key => :owner_id, dependent: :destroy
   belongs_to :owner, :class_name => 'User'
@@ -20,6 +20,14 @@ class User < ActiveRecord::Base
   end
   
   def admin?
-    !admin.nil?
+    self.admin == true
+  end
+  
+  def registry_admin?
+    self.owner? || !self.invited_by_id.nil? || self.admin == true
+  end
+  
+  def invitee?
+    !self.invited_by_id.nil?
   end
 end
