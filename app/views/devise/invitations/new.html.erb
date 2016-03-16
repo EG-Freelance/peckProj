@@ -1,31 +1,11 @@
-<!--<h2><%= t "devise.invitations.new.header" %></h2>
+<h2><%= t "devise.invitations.new.header" %></h2>
 
 <%= simple_form_for resource, as: resource_name, url: invitation_path(resource_name), html: { method: :post} do |f| %>
   <%= devise_error_messages! %>
 
-  <%= f.input :email %>
+<% resource.class.invite_key_fields.each do |field| -%>
+  <%= f.input field %>
+<% end -%>
 
-  <%= f.input :owner_id, input_html: {value: current_user.id, class: 'hidden'}, :label_html => {:class => 'hidden'} %>
-
-  <%= f.button :submit, t("devise.invitations.new.submit_button") %>
-<% end %> -->
-
-<h2>
-   <%= t "devise.invitations.new.header" %>
-</h2>
-
-<%= simple_form_for 'emails', :controller => 'registrations', :action => 'batch_invite', :html => {:method => :post} do |f| %>
-  <%= devise_error_messages! %>
-    <div>
-      
-      <div><input class="string email optional" id="user_email" maxlength="255" name="user[email][]" size="255" type="email" value="" placeholder="Invitee Email"></div>
-
-      <div id="createNewTextbox"></div>
-      <a id="btnLinkCreate" href="#" onClick="create_new();">
-        + INVITE MORE
-      </a>
-    </div>
-    <p>
-       <%= f.submit t("devise.invitations.new.submit_button") %>
-    </p>
+<%= f.button :submit, t("devise.invitations.new.submit_button") %>
 <% end %>
