@@ -21,5 +21,9 @@ module PeckProj
     # config.i18n.default_locale = :de
 
     config.assets.paths << "#{Rails.root}/app/assets/videos"
+    
+    # Use Postmark to handle email delivery
+    config.action_mailer.delivery_method = :postmark
+    config.action_mailer.postmark_settings = { :api_token => "d8d2828e-b03c-4a6f-a37e-040c33acbbb3" }
   end
 end
