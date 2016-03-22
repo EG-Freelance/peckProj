@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   validates :venmo_acct, presence: true, if: ->(user){user.preferred_payment == "Venmo"}
   
   def owner?
-    owner_id.nil? unless admin?
+    owner_id.nil? unless admin? || invitee?
   end
   
   def guest?
