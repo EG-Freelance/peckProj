@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
   
+  resources :products
+
+  resources :registries
+
   devise_for :admins
   devise_for :users, controllers: { registrations: "users/registrations" }
   root 'pages#index'
@@ -16,6 +20,7 @@ Rails.application.routes.draw do
   authenticated :user do
     root :to => 'pages#index', as: :authenticated_root
     resources :users, only: [:update], :constraints => { :id => /[0-9]+/ }
+    post 'add_product_to_registry' => 'registries#add_product_to_registry'
   end
   
   # The priority is based upon order of creation: first created -> highest priority.

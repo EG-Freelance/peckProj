@@ -1,0 +1,21 @@
+<p id="notice"><%= notice %></p>
+
+<% included = ProductRegistry.where(registry_id: @registry.id).map{ |r| r.product_id }.sort %>
+
+<table width="100%">
+  <tr>
+    <th>Product Name</th>
+    <th>Product Description</th>
+    <th>Add to Registry</th>
+  </tr>
+  <% Product.all.each do |p| %>
+    <tr>
+      <td><%= p.name %></td>
+      <td><%= p.description %></td>
+      <td><%= button_to "Add to Registry", add_product_to_registry_path(:params => {:registry => @registry.id, :product => p.id}), :remote => true, method: :post, :id => "add-remove-button-#{p.id}", :class => included.index(p.id).nil? ? "btn-add-product" : "btn-remove-product" %></td>
+    </tr>
+  <% end %>
+</table>
+
+<%= link_to 'Edit', edit_registry_path(@registry) %> |
+<%= link_to 'Back', registries_path %>

@@ -6,67 +6,35 @@
     <%= devise_error_messages! %>
   
     <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-      <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+      <div>Currently awaiting confirmation for: <%= resource.unconfirmed_email %></div>
     <% end %>
-  
-    <% if current_user.owner? %>
-      <div id='owner-edit-form'>
-    <% elsif current_user.guest? %>
-      <div id='guest-edit-form'>
-    <% else %>
-      <div id='user-edit-form'>
-    <% end %>
+    
+    <div id='user-edit-form'>
 
       <div class="field">
         <%= f.label :email %><br />
-        <%= f.email_field :email, autofocus: true, class: 'textfield login input', id: if current_user.owner? then 'owner-edit-email' elsif current_user.guest? then 'guest-edit-email' else 'user-edit-email' end %>
+        <%= f.email_field :email, autofocus: true, class: 'textfield login input', id: 'user-edit-email' %>
       </div>
 
       <div class="field">
         <%= f.label :password %> <i>(leave blank to not change)</i><br />
-        <%= f.password_field :password, autocomplete: "off", class: 'textfield login input', id: if current_user.owner? then 'owner-new-password' elsif current_user.guest? then 'guest-new-password' else 'user-new-password' end %>
+        <%= f.password_field :password, autocomplete: "off", class: 'textfield login input', id: 'user-new-password' %>
       </div>
 
       <div class="field">
         <%= f.label :password_confirmation %><br />
-        <%= f.password_field :password_confirmation, autocomplete: "off", class: 'textfield login input', id: if current_user.owner? then 'owner-confirm-new-password' elsif current_user.guest? then 'guest-confirm-new-password' else 'user-confirm-new-password' end %>
+        <%= f.password_field :password_confirmation, autocomplete: "off", class: 'textfield login input', id: 'user-confirm-new-password' %>
       </div>
 
       <div class="field">
         <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-        <%= f.password_field :current_password, autocomplete: "off", class: 'textfield login input', id: if current_user.owner? then 'owner-old-password' elsif current_user.guest? then 'guest-old-password' else 'user-old-password' end %>
+        <%= f.password_field :current_password, autocomplete: "off", class: 'textfield login input', id: 'user-old-password' %>
       </div>
-
-      <% if current_user.guest? %>
-
-        <div class="field">
-          <%= f.label :owner_id, "Registry Owner's Email" %><br />
-          <%= f.text_field :owner_id, autocomplete: "off", class: 'textfield login input', value: User.find(current_user.owner_id).email, id: 'guest-edit-owner-email' %>
-        </div>
-
-      <% elsif current_user.owner? %>
-
-        <div class="field">
-          <%= f.label :preferred_payment, "Preferred Payment Method" %><br />
-          <%= f.select :preferred_payment, options_for_select(["Paypal", "Venmo"], :selected => current_user.preferred_payment), {}, id: 'owner-edit-preferred-payment' %>
-        </div>  
-
-        <div class="field">
-          <%= f.label :paypal_acct, "Paypal Account" %><br />
-          <%= f.text_field :paypal_acct, autocomplete: "off", class: 'textfield login input', id: 'owner-edit-paypal-acct' %>
-        </div>  
-
-        <div class="field">
-          <%= f.label :venmo_acct, "Venmo Account" %><br />
-          <%= f.text_field :venmo_acct, autocomplete: "off", class: 'textfield login input', id: 'owner-edit-venmo-acct' %>
-        </div>  
-
-      <% end %>
 
       <br />
 
       <div class="actions">
-        <%= f.submit "Update", :class => 'btn btn-login match-input disabled', id: if current_user.owner? then 'owner-update' elsif current_user.guest? then 'guest-update' else 'user-update' end %>
+        <%= f.submit "Update", :class => 'btn btn-login match-input disabled', id: 'user-update' %>
       </div>
     </div>
   <% end %>

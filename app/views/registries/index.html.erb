@@ -1,0 +1,25 @@
+<h1>Listing registries</h1>
+
+<% reg_types = [['Owner', @owner],['Administrator', @administrator],['Guest', @guest]] %>
+
+<div id="accordion" class="panel-group">
+  <% reg_types.each do |r| %>
+    <div class="panel panel-default">    
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href=<%= "##{r[0]}" %>><%= "#{r[0]}" %></a>
+            </h4>
+        </div>
+        <div id=<%= "#{r[0]}" %> class="panel-collapse collapse">
+            <div class="panel-body" id=<%= "#{r[0]}-listing" %>>
+                <% r[1].each do |reg| %>
+                  <li><%= link_to reg.name, reg %></li>
+                <% end %>
+            </div>
+        </div>
+    </div>
+  <% end %>
+</div>
+<br>
+
+<%= render 'form' %>

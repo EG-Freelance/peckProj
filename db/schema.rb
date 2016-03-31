@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160311002742) do
+ActiveRecord::Schema.define(version: 20160330155704) do
 
   create_table "admins", force: true do |t|
     t.string   "email",              default: "", null: false
@@ -24,6 +24,31 @@ ActiveRecord::Schema.define(version: 20160311002742) do
     t.integer  "failed_attempts",    default: 0
     t.string   "unlock_token"
     t.datetime "locked_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "product_registries", force: true do |t|
+    t.integer "product_id"
+    t.integer "registry_id"
+  end
+
+  create_table "products", force: true do |t|
+    t.text "name"
+    t.text "description"
+  end
+
+  create_table "registries", force: true do |t|
+    t.boolean "active", default: true
+    t.text    "name"
+  end
+
+  create_table "user_registries", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "registry_id"
+    t.string   "association_type"
+    t.string   "preference"
+    t.text     "account"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

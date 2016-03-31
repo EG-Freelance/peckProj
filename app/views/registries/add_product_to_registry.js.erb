@@ -1,0 +1,9 @@
+var removeClass = $('#add-remove-button-<%= @product.id %>').attr('class');
+var addClass = ''
+if(removeClass === 'btn-add-product'){
+  addClass = 'btn-remove-product';  
+}else{
+  addClass = 'btn-add-product';
+}
+
+$('#add-remove-button-<%= @product.id %>').addClass(addClass).removeClass(removeClass);

@@ -3,31 +3,21 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
-  has_many :guests, :class_name => 'User', :foreign_key => :owner_id, dependent: :destroy
-  belongs_to :owner, :class_name => 'User'
+  has_many :user_registries
+  has_many :registries, :through => :user_registries
   
-  validates :owner_id, presence: true, if: :guest?, unless: :admin?
-  validates :preferred_payment, presence: true, if: :owner?
-  validates :paypal_acct, presence: true, if: ->(user){user.preferred_payment == "Paypal"}
-  validates :venmo_acct, presence: true, if: ->(user){user.preferred_payment == "Venmo"}
-  
-  def owner?
-    owner_id.nil? unless admin? || invitee?
+  def owned_registries
+    Registry.joins(:user_registries).where(:user_registries => { :user_id => self.id, :association_type => 'owner' })
   end
   
-  def guest?
-    !owner? unless admin?
+  def shared_registries
+    Registry.joins(:user_registries).where(:user_registries => { :user_id => self.id, :association_type => 'administrator' })
   end
   
-  def admin?
-    self.admin == true
+  def guest_registries
+    Registry.joins(:user_registries).where(:user_registries => { :user_id => self.id, :association_type => 'guest' })
   end
   
-  def registry_admin?
-    self.owner? || !self.invited_by_id.nil? || self.admin == true
-  end
   
-  def invitee?
-    !self.invited_by_id.nil?
-  end
+  
 end
