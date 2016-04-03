@@ -13,6 +13,7 @@ group :production do
   # Use postgresql as the database for Active Record
   gem 'pg'
   gem 'thin'
+  gem 'rails_12factor'
 end
 
 # Use simple form for extra form-handling
