@@ -2,7 +2,6 @@ class CreateProductsRegistriesAssociationTable < ActiveRecord::Migration
   def change
     drop_table :registries
     drop_table :products
-    drop_table :product_registries
     
     create_table :registries do |t|
       t.boolean :active, :default => true
