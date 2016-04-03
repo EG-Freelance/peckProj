@@ -21,6 +21,7 @@ Rails.application.routes.draw do
     root :to => 'pages#index', as: :authenticated_root
     resources :users, only: [:update], :constraints => { :id => /[0-9]+/ }
     post 'add_product_to_registry' => 'registries#add_product_to_registry'
+    post 'add_remove_product' => 'registries#add_remove_product'
   end
   
   # The priority is based upon order of creation: first created -> highest priority.

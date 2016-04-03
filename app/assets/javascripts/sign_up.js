@@ -1,3 +1,4 @@
+/*
 function create_new() { $('#createNewTextbox').append('<div><input class="string email optional" id="user_email" maxlength="255" name="user[email][]" size="255" type="email" value="" placeholder="Invitee Email"></div>'); }
 
 function signUpValidation(){
@@ -106,3 +107,4 @@ function allValidation(){
 
 $(document).on('page:load', allValidation);
 $(document).ready(allValidation);
+*/

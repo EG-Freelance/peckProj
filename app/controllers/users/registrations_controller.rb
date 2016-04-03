@@ -4,7 +4,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
   
   def batch_invite
     emails = params[:user][:email]
-    emails.each { |f| User.invite!(:email => f, :owner_id => current_user.id) }
+    @registry = params[:user][:registry]
+    emails.each do |f| 
+      u = User.invite!(:email => f)
+      puts '------------'
+      puts u
+      UserRegistry.create(user_id: u.id, registry_id: @registry, association_type: "administrator")
+    end
     redirect_to root_url, notice: "Invitations sent"
   end
   

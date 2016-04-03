@@ -2,12 +2,28 @@ body{
   background-color: #dddddd;
 }
 
+.js-notice{
+  width: 100%
+}
+
+.js-success{
+  background-color: lightgreen;
+  color: darkgreen;
+}
+
+.js-failure{
+  background-color: pink;
+  color: darkred;
+}
+
 .btn-add-product{
   background-color: lightgreen;
+  width: 200px;
 }
 
 .btn-remove-product{
   background-color: pink;
+  width: 200px;
 }
 
 .title{

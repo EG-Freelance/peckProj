@@ -16,17 +16,35 @@ class RegistriesController < ApplicationController
     respond_with(@registry)
   end
   
-  def add_product_to_registry
-    @product = Product.find(params[:product])
-    pr_params = {product_id: params[:product], registry_id: params[:registry]}
+  def add_remove_product
+    @registry = Registry.find(params[:product_registry][:registry_id])
+    @product = Product.find(params[:product_registry][:product_id])
+    pr_params = { product_id: params[:product_registry][:product_id], registry_id: params[:product_registry][:registry_id] }
+    puts '=============='
+    puts ProductRegistry.exists?(pr_params)
     if ProductRegistry.exists?(pr_params)
       ProductRegistry.find_by(pr_params).destroy
+      @status = "success"
+      respond_to do |format|
+        format.html { redirect_to :back, notice: "Product removed" }
+        format.js { }
+      end
     else
-      ProductRegistry.create(pr_params)
-    end
-    respond_to do |format|
-      format.html { redirect_to :back, notice: "Product added" }
-      format.js { }
+      pr_params[:quantity] = params[:product_registry][:quantity]
+      pr = ProductRegistry.new(pr_params)
+      if pr.save
+        @status = "success"
+        respond_to do |format|
+          format.html { redirect_to :back, notice: "Product added" }
+          format.js { }
+        end
+      else
+        @status = "failure"
+        respond_to do |format|
+          format.html { redirect_to :back, alert: "Please be sure to select a quantity" }
+          format.js { }
+        end
+      end
     end
   end
 
