@@ -3,7 +3,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 # before_filter :configure_account_update_params, only: [:update]
   
   def batch_invite
-    emails = params[:user][:email]
+    emails = [params[:user][:email]]
     @registry = params[:user][:registry]
     emails.each do |f| 
       u = User.invite!(:email => f)
