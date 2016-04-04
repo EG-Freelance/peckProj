@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
-  has_many :user_registries
+  has_many :user_registries, dependent: :destroy
   has_many :registries, :through => :user_registries
   
   def owned_registries
