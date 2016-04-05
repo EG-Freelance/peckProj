@@ -1,6 +1,6 @@
 <h2><%= t "devise.invitations.new.header" %></h2>
 
-<%= simple_form_for resource, as: resource_name, url: users_invitation_new_path(resource_name), html: { method: :post} do |f| %>
+<%= simple_form_for resource, as: resource_name, url: users_invitation_new_path(resource_name), html: { method: :post, :class => 'form-style-10'} do |f| %>
   <%= devise_error_messages! %>
 
   <% resource.class.invite_key_fields.each do |field| -%>

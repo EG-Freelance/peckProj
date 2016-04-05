@@ -84,6 +84,6 @@ class RegistriesController < ApplicationController
     end
 
     def registry_params
-      params.require(:registry).permit(:name, :active)
+      params.require(:registry).permit(:name, :active, user_registries_attributes: [:preference, :account, :user_id, :registry_id, :association_type])
     end
 end

@@ -6,10 +6,16 @@ class Users::RegistrationsController < Devise::RegistrationsController
     emails = [params[:user][:email]]
     @registry = params[:user][:registry]
     emails.each do |f| 
-      u = User.invite!(:email => f)
-      UserRegistry.create(user_id: u.id, registry_id: @registry, association_type: "administrator")
+      if User.exists?(email: f)
+        UserRegistry.find_or_create_by(user_id: User.find_by(email: f), registry_id: @registry, association_type: "administrator")
+      else
+        u = User.invite!(:email => f)
+        UserRegistry.create(user_id: u.id, registry_id: @registry, association_type: "administrator")
+      end
     end
-    redirect_to root_url, notice: "Invitations sent"
+    respond_to do |format|
+      format.html { redirect_to :back, notice: "Invitations sent" }
+    end
   end
   
   def create

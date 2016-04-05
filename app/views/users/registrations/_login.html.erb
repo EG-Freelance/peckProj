@@ -1,7 +1,7 @@
-<%= simple_form_for(:user, :url => session_path(:user), class: 'navbar-form navbar-right loginBar') do |f| %>
+<%= simple_form_for(:user, :url => session_path(:user), :html => { :class => 'form-style-10' }) do |f| %>
   <table width='100%'>
     <tr>
-      <td width=40%><%= f.text_field :email, placeholder: 'Email address', class: 'textfield input login' %></td>
+      <td width=40%><%= f.text_field :email, placeholder: 'Email address', class: 'textfield input login', autofocus: true %></td>
       <td width=10%></td>
       <td width=40% style="padding-right:10px"><%= f.password_field :password, placeholder: 'Password', class: 'textfield input login' %></td>
     </tr>

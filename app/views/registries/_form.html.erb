@@ -1,4 +1,4 @@
-<%= simple_form_for @registry, :remote => true do |f| %>
+<%= simple_form_for @registry, :html => { :class => "form-style-10" }, :remote => true do |f| %>
   <% if @registry.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@registry.errors.count, "error") %> prohibited this registry from being saved:</h2>
@@ -12,9 +12,14 @@
   <% end %>
 
   <div>
-    <%= f.text_field :name %>
-    <%= f.text_field :active %>
-  </div>
+    <%= f.text_field :name, placeholder: 'Registry Name' %>
+    <%= f.fields_for :product_registry do |ff| %>
+      <%= ff.select :preference, options_for_select([["Payment Preference",""],"Paypal","Venmo"]) %>
+      <%= ff.text_field :account, placeholder: "Payment Account Info" %>
+      <%= ff.hidden_field :active, :value => true %>
+    <% end %>
+  </div>  
+  <br>
   <div class="actions">
     <%= f.submit %>
   </div>
