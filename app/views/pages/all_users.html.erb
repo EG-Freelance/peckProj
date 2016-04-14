@@ -11,7 +11,7 @@
         <div id=<%= "owner#{i+1}" %> class="panel-collapse collapse">
             <div class="panel-body">
               <% o.registries.each do |r| %>
-                <%= r.name %> -- Payment Method: <%= r.payment_method.provider %>, Payment Username: <%= r.payment_method.username %>
+                <li><%= r.name %> -- <b>Payment Method:</b> <%= r.payment_method.provider %>; <b>Payment Username:</b> <%= r.payment_method.username %></li>
               <% end %>
             </div>
         </div>
