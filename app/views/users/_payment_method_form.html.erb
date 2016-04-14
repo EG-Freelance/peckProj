@@ -1,0 +1,12 @@
+<%= simple_form_for :payment_method, url: new_payment_method_path, :html => { :class => "form-style-10", :id => "payment-form" }, :remote => true do |f| %>
+
+  <div>
+    <%= f.text_field :custom_name, placeholder: "Payment Method Custom Name" %>
+    <%= f.select :provider, options_for_select(["Paypal", "Venmo"]) %>
+    <%= f.text_field :username, placeholder: "User Account" %>
+  </div>  
+  <br>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

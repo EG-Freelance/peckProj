@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160402025231) do
+ActiveRecord::Schema.define(version: 20160413190710) do
 
   create_table "admins", force: true do |t|
     t.string   "email",              default: "", null: false
@@ -28,6 +28,15 @@ ActiveRecord::Schema.define(version: 20160402025231) do
     t.datetime "updated_at"
   end
 
+  create_table "payment_methods", force: true do |t|
+    t.integer  "user_id"
+    t.string   "provider"
+    t.string   "username"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "custom_name"
+  end
+
   create_table "product_registries", force: true do |t|
     t.integer "product_id"
     t.integer "registry_id"
@@ -40,8 +49,9 @@ ActiveRecord::Schema.define(version: 20160402025231) do
   end
 
   create_table "registries", force: true do |t|
-    t.boolean "active", default: true
+    t.boolean "active",            default: true
     t.text    "name"
+    t.integer "payment_method_id"
   end
 
   create_table "user_registries", force: true do |t|

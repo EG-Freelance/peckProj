@@ -1,3 +1,7 @@
 var html = "<li><a href='/registries/<%= @registry.id %>'><%= j @registry.name %></a></li>";
 
 $('#Owner-listing').append(html);
+
+$('#js-notice').removeClass().addClass('js-success js-notice').text("Registry added successfully").stop().fadeTo(1,100).fadeTo(4000,0);
+$('#registry_user_registry_payment_method').val("");
+$('#registry_name').val("");

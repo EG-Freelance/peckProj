@@ -10,8 +10,8 @@
         </div>
         <div id=<%= "owner#{i+1}" %> class="panel-collapse collapse">
             <div class="panel-body">
-              <% o.guests.each do |g| %>
-                <%= g.email %>
+              <% o.registries.each do |r| %>
+                <%= r.name %> -- Payment Method: <%= r.payment_method.provider %>, Payment Username: <%= r.payment_method.username %>
               <% end %>
             </div>
         </div>

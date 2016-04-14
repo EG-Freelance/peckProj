@@ -22,6 +22,7 @@ Rails.application.routes.draw do
     resources :users, only: [:update], :constraints => { :id => /[0-9]+/ }
     post 'add_product_to_registry' => 'registries#add_product_to_registry'
     post 'add_remove_product' => 'registries#add_remove_product'
+    post 'new_payment_method' => 'payment_methods#save_payment_option'
   end
   
   # The priority is based upon order of creation: first created -> highest priority.

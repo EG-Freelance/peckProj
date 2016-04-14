@@ -9,6 +9,4 @@ if(removeClass === 'btn-add-product'){
   htmlText = 'Add to Registry';
 }
 
-console.log('<%= @registry.products.map{ |p| p.name } %>'.replace(/&quot;/g, '"'));
-
 $('#add-remove-button-<%= @product.id %>').addClass(addClass).removeClass(removeClass).val(htmlText);

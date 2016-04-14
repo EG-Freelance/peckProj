@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
   has_many :user_registries, dependent: :destroy
   has_many :registries, :through => :user_registries
+  has_many :payment_methods
   
   def owned_registries
     Registry.joins(:user_registries).where(:user_registries => { :user_id => self.id, :association_type => 'owner' })

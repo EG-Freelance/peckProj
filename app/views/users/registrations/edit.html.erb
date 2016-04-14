@@ -1,48 +1,42 @@
-<div style="padding-top:60px; padding-left:25px; padding-right:25px">
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, :class => 'form-style-10' }) do |f| %>
+  <%= devise_error_messages! %>
 
-  <h2>Edit <%= resource_name.to_s.humanize %></h2>
-
-  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-    <%= devise_error_messages! %>
-  
-    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-      <div>Currently awaiting confirmation for: <%= resource.unconfirmed_email %></div>
-    <% end %>
-    
-    <div id='user-edit-form'>
-
-      <div class="field">
-        <%= f.label :email %><br />
-        <%= f.email_field :email, autofocus: true, class: 'textfield login input', id: 'user-edit-email' %>
-      </div>
-
-      <div class="field">
-        <%= f.label :password %> <i>(leave blank to not change)</i><br />
-        <%= f.password_field :password, autocomplete: "off", class: 'textfield login input', id: 'user-new-password' %>
-      </div>
-
-      <div class="field">
-        <%= f.label :password_confirmation %><br />
-        <%= f.password_field :password_confirmation, autocomplete: "off", class: 'textfield login input', id: 'user-confirm-new-password' %>
-      </div>
-
-      <div class="field">
-        <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-        <%= f.password_field :current_password, autocomplete: "off", class: 'textfield login input', id: 'user-old-password' %>
-      </div>
-
-      <br />
-
-      <div class="actions">
-        <%= f.submit "Update", :class => 'btn btn-login match-input disabled', id: 'user-update' %>
-      </div>
-    </div>
+  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+    <div>Currently awaiting confirmation for: <%= resource.unconfirmed_email %></div>
   <% end %>
 
-  <h3>Cancel my account</h3>
+  <div id='user-edit-form'>
 
-  <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: 'btn' %>
+    <div class="field">
+      <%= f.label :email %><br />
+      <%= f.email_field :email, autofocus: true, class: 'textfield login input', id: 'user-edit-email' %>
+    </div>
 
-  <%= link_to "Back", :back %>
-  
+    <div class="field">
+      <%= f.label :password %> <i>(leave blank to not change)</i><br />
+      <%= f.password_field :password, autocomplete: "off", class: 'textfield login input', id: 'user-new-password' %>
+    </div>
+
+    <div class="field">
+      <%= f.label :password_confirmation %><br />
+      <%= f.password_field :password_confirmation, autocomplete: "off", class: 'textfield login input', id: 'user-confirm-new-password' %>
+    </div>
+
+    <div class="field">
+      <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
+      <%= f.password_field :current_password, autocomplete: "off", class: 'textfield login input', id: 'user-old-password' %>
+    </div>
+
+    <br />
+
+    <div class="actions">
+      <%= f.submit "Update", :class => 'btn btn-login match-input disabled', id: 'user-update' %>
+    </div>
+  </div>
+<% end %>
+
+<h3 style="text-align:center">Cancel my account</h3>
+
+<div style="text-align:center">
+  <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: 'btn', style: 'margin-bottom:50px' %>
 </div>

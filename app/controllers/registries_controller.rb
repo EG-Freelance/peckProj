@@ -20,8 +20,6 @@ class RegistriesController < ApplicationController
     @registry = Registry.find(params[:product_registry][:registry_id])
     @product = Product.find(params[:product_registry][:product_id])
     pr_params = { product_id: params[:product_registry][:product_id], registry_id: params[:product_registry][:registry_id] }
-    puts '=============='
-    puts ProductRegistry.exists?(pr_params)
     if ProductRegistry.exists?(pr_params)
       ProductRegistry.find_by(pr_params).destroy
       @status = "success"
@@ -58,6 +56,12 @@ class RegistriesController < ApplicationController
 
   def create
     @registry = Registry.new(registry_params)
+    payment_method = PaymentMethod.find_by(custom_name: params[:registry][:user_registry][:payment_method])
+    if payment_method.nil?
+      render :template => "registries/registry_create_error"
+      return false
+    end
+    @registry.payment_method_id = payment_method.id
     respond_to do |format|
       if @registry.save
         UserRegistry.create(registry_id: @registry.id, user_id: current_user.id, association_type: 'owner')
@@ -84,6 +88,6 @@ class RegistriesController < ApplicationController
     end
 
     def registry_params
-      params.require(:registry).permit(:name, :active, user_registries_attributes: [:preference, :account, :user_id, :registry_id, :association_type])
+      params.require(:registry).permit(:name, :active, :payment_method_id, user_registries_attributes: [:preference, :account, :user_id, :registry_id, :association_type])
     end
 end

@@ -1,4 +1,4 @@
- <button type="button" class="btn btn-lg" data-toggle="modal" data-target="#new-registry">Create New Registry</button>
+<button type="button" class="btn btn-lg" data-toggle="modal" data-target="#new-registry">Create New Registry</button>
 
 <h1>Listing registries</h1>
 
@@ -40,6 +40,7 @@
         <div role="tabpanel" class="tab-pane active" id="owner">
           <%= render 'form' %>
         </div>
+        <button type="button" class="btn btn-lg" data-toggle="modal" data-target="#new-payment">Create New Payment Method</button>
       </div>
 
       <div class="modal-footer">
@@ -47,5 +48,36 @@
       </div>
     </div>
   </div>
-
 </div>
+
+<!-- Payment Method Modal -->
+<div id="new-payment" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Create New Payment Method</h4>
+      </div>
+
+      <!-- Tab panes/Modal Body -->
+      <div class="modal-body">
+        <%= render 'users/payment_method_form' %>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('#registry-form').on('submit', function() {
+    $('#new-registry').modal('hide');
+  });
+  $('#payment-form').on('submit', function() {
+    $('#new-payment').modal('hide');
+  });
+</script>
