@@ -9,7 +9,5 @@ class CreatePaymentMethods < ActiveRecord::Migration
       t.timestamps
     end
     
-    remove_column :registries, :preference
-    remove_column :registries, :account
   end
 end
