@@ -13,6 +13,7 @@ class RegistriesController < ApplicationController
   end
 
   def show
+    @products = Product.all
     respond_with(@registry)
   end
   

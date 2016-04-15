@@ -1,5 +1,21 @@
 body{
-  background-color: #dddddd;
+  background-color: #EFF5FB !important;
+}
+
+.title{
+background: rgba(239,245,251,1);
+background: -moz-linear-gradient(top, rgba(239,245,251,1) 0%, rgba(136,208,242,0.68) 50%, rgba(239,245,251,0.36) 100%);
+background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(239,245,251,1)), color-stop(50%, rgba(136,208,242,0.68)), color-stop(100%, rgba(239,245,251,0.36)));
+background: -webkit-linear-gradient(top, rgba(239,245,251,1) 0%, rgba(136,208,242,0.68) 50%, rgba(239,245,251,0.36) 100%);
+background: -o-linear-gradient(top, rgba(239,245,251,1) 0%, rgba(136,208,242,0.68) 50%, rgba(239,245,251,0.36) 100%);
+background: -ms-linear-gradient(top, rgba(239,245,251,1) 0%, rgba(136,208,242,0.68) 50%, rgba(239,245,251,0.36) 100%);
+background: linear-gradient(to bottom, rgba(239,245,251,1) 0%, rgba(136,208,242,0.68) 50%, rgba(239,245,251,0.36) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eff5fb', endColorstr='#eff5fb', GradientType=0 );
+}
+
+// FONT //
+.regisli-font{
+  font-family:"Lobster Two", cursive;
 }
 
 .product-cards{
@@ -12,6 +28,12 @@ body{
   padding-left: 15px;
   padding-right: 15px;
   padding-bottom: 10px;
+}
+
+.card{
+  max-width: 350px;
+  min-width: 150px;
+  background-color: #ffffff;
 }
 
 input{
@@ -160,6 +182,8 @@ input{
 
 // END CUSTOM FORM STYLES //
 
+
+// JS NOTICES //
 .js-notice{
   width: 100%
 }
@@ -173,6 +197,8 @@ input{
   background-color: pink;
   color: darkred;
 }
+
+// END JS NOTICES //
 
 .btn-add-product{
   background-color: lightgreen;

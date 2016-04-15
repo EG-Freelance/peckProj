@@ -6,8 +6,6 @@
     <%= render "layouts/navbar" %>
 
     <div style="padding-top:70px"></div>
-    
-    <div id="js-notice" style="padding-left:100px; height:18px"></div>
 
     <% unless flash[:error].nil? %>
       <p id="error" style="padding-top:60px; padding-left:20px; margin-bottom:0px; color:darkred; background:red"><b><%= flash[:error] %></b></p>
@@ -15,6 +13,9 @@
     <% unless alert.nil? %>
       <p class="alert"><%= alert %></p>
     <% end %>
+    
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
 
     <!-- Google Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Lora:400,700' rel='stylesheet' type='text/css'>
@@ -25,12 +26,13 @@
 
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    
+     <!-- Masonry -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/3.3.2/masonry.pkgd.min.js"></script>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-    <%= csrf_meta_tags %>
   </head>
-  <body style="padding-left:20px" data-no-turbolink="true">
+  <body style="padding-left:20px; padding-right:20px" data-no-turbolink="true">
 
     <%= yield %>
 
