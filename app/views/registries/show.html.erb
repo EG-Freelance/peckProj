@@ -2,6 +2,9 @@
 
 <% included = ProductRegistry.where(registry_id: @registry.id).map{ |r| r.product_id }.sort %>
 
+<% progress_array = ProductRegistry.where(registry_id: @registry.id).map { |pr| [pr.product.fund.to_f, pr.purchased] } %>
+<% progress_array.empty? ? progress = 0 : progress = progress_array.map{ |p| p.inject(:*) }.inject(:+)/@registry.goal*100 %>
+
 <!-- Invite more users if the current user is the owner -->
 <% if user_signed_in? %>
   <% if current_user.owned_registries.map{ |r| r.id }.index(@registry.id) != nil %>
@@ -9,17 +12,25 @@
   <% end %>
 <% end %>
 
-<h1 class='regisli-font title' style='text-align:center'><%= @registry.name %></h1>
+<h1 class='regisli-font reg-title' style='text-align:center'><%= @registry.name %></h1>
+
+<p>Honeymoon Fund Progress</p>
+<div id="progressbar">
+  <div style="text-align:center"><%= progress.to_i %>%</div>
+</div>
+
 
 <!-- Product listings -->
 <div class="free-wall">
   <div class="card-deck">
-    <% Product.all.each do |p| %>
+    <% @products.each do |p| %>
       <div class="card product-cards box-shadow--4dp">
         <img class="card-img-top" src="http://www.wired.com/wp-content/uploads/2015/06/Oculus-Rift-2-1024x576.jpg" alt="Oculus Rift" style="width:100%">
         <div class="card-block card-text">
           <h3 class="card-title" style="text-align:center"><%= p.name %></h3>
           <p class="card-text"><%= p.description %></p>
+          <p style="color:green"><b><%= number_to_currency(p.price) %></b></p>
+          <p style="color:green"><i>Contribution to honeymoon fund: <b><%= number_to_currency(p.fund) %></b></i></p>
           <%= simple_form_for "product_registry", url: add_remove_product_path, html: { method: :post }, :remote => true do |f| %>
             <div class="col-md-1" style="width:25px; border-radius:10px"><%= f.input_field :quantity, :style => "width:25px", :value => ProductRegistry.exists?(product_id: p.id, registry_id: @registry.id) ? ProductRegistry.find_by(product_id: p.id, registry_id: @registry.id).quantity : "", :id => "quantity-#{p.id}" %></div>
             <%= f.hidden_field :product_id, :value => p.id %>
@@ -33,7 +44,6 @@
   </div>
 </div>
 
-<%= link_to 'Edit', edit_registry_path(@registry) %> |
 <%= link_to 'Back', registries_path %>
 
 <!-- Invite Users Modal -->
@@ -72,3 +82,7 @@
     percentPosition: true
   });
 </script>
+
+<script>
+  $('#progressbar div').css('width', <%= progress.to_s %>+'%');
+</script> 

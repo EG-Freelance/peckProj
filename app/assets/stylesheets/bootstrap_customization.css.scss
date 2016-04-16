@@ -2,15 +2,31 @@ body{
   background-color: #EFF5FB !important;
 }
 
-.title{
-background: rgba(239,245,251,1);
-background: -moz-linear-gradient(top, rgba(239,245,251,1) 0%, rgba(136,208,242,0.68) 50%, rgba(239,245,251,0.36) 100%);
-background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(239,245,251,1)), color-stop(50%, rgba(136,208,242,0.68)), color-stop(100%, rgba(239,245,251,0.36)));
-background: -webkit-linear-gradient(top, rgba(239,245,251,1) 0%, rgba(136,208,242,0.68) 50%, rgba(239,245,251,0.36) 100%);
-background: -o-linear-gradient(top, rgba(239,245,251,1) 0%, rgba(136,208,242,0.68) 50%, rgba(239,245,251,0.36) 100%);
-background: -ms-linear-gradient(top, rgba(239,245,251,1) 0%, rgba(136,208,242,0.68) 50%, rgba(239,245,251,0.36) 100%);
-background: linear-gradient(to bottom, rgba(239,245,251,1) 0%, rgba(136,208,242,0.68) 50%, rgba(239,245,251,0.36) 100%);
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eff5fb', endColorstr='#eff5fb', GradientType=0 );
+// Progress Bar //
+#progressbar {
+  background-color: black;
+  border-radius: 13px; /* (height of inner div) / 2 + padding */
+  padding: 3px;
+}
+
+#progressbar > div {
+   color: white;
+   background-color: green;
+   width: 40%; /* Adjust with JavaScript */
+   height: 20px;
+   border-radius: 10px;
+}
+// End Progress Bar //
+
+.reg-title{
+  background: rgba(239,245,251,1);
+  background: -moz-linear-gradient(top, rgba(239,245,251,1) 0%, rgba(136,208,242,0.68) 50%, rgba(239,245,251,0.36) 100%);
+  background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(239,245,251,1)), color-stop(50%, rgba(136,208,242,0.68)), color-stop(100%, rgba(239,245,251,0.36)));
+  background: -webkit-linear-gradient(top, rgba(239,245,251,1) 0%, rgba(136,208,242,0.68) 50%, rgba(239,245,251,0.36) 100%);
+  background: -o-linear-gradient(top, rgba(239,245,251,1) 0%, rgba(136,208,242,0.68) 50%, rgba(239,245,251,0.36) 100%);
+  background: -ms-linear-gradient(top, rgba(239,245,251,1) 0%, rgba(136,208,242,0.68) 50%, rgba(239,245,251,0.36) 100%);
+  background: linear-gradient(to bottom, rgba(239,245,251,1) 0%, rgba(136,208,242,0.68) 50%, rgba(239,245,251,0.36) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eff5fb', endColorstr='#eff5fb', GradientType=0 );
 }
 
 // FONT //

@@ -13,7 +13,16 @@ class RegistriesController < ApplicationController
   end
 
   def show
-    @products = Product.all
+    ur = UserRegistry.find_by(registry_id: @registry.id, user_id: current_user.id)
+    begin 
+      if (ur.association_type == "owner" || ur.association_type == "administrator")
+        @products = Product.all
+      else
+        @products = Product.includes(:product_registries).where(:product_registries => { registry_id: @registry.id })
+      end
+    rescue
+      @products = Product.includes(:product_registries).where(:product_registries => { registry_id: @registry.id })
+    end
     respond_with(@registry)
   end
   
@@ -89,6 +98,6 @@ class RegistriesController < ApplicationController
     end
 
     def registry_params
-      params.require(:registry).permit(:name, :active, :payment_method_id, user_registries_attributes: [:preference, :account, :user_id, :registry_id, :association_type])
+      params.require(:registry).permit(:name, :active, :payment_method_id, :goal, user_registries_attributes: [:preference, :account, :user_id, :registry_id, :association_type])
     end
 end

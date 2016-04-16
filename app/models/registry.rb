@@ -5,4 +5,7 @@ class Registry < ActiveRecord::Base
   has_many :product_registries
   has_many :products, :through => :product_registries
   belongs_to :payment_method
+  
+  validates_presence_of :goal
+  validates_presence_of :name
 end

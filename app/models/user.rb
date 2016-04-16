@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
   def guest_registries
     Registry.joins(:user_registries).where(:user_registries => { :user_id => self.id, :association_type => 'guest' })
   end
-  
-  
+    
+    
   
 end

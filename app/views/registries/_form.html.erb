@@ -13,6 +13,7 @@
 
   <div>
     <%= f.text_field :name, placeholder: 'Registry Name' %>
+    <%= f.text_field :goal, placeholder: 'Honeymoon Fund Goal' %>
     <%= f.fields_for :user_registry do |ff| %>
       <%= ff.select :payment_method, options_for_select(current_user.payment_methods.map{ |pm| pm.custom_name }.unshift(["Select a payment account", ""])) %>
       <%= ff.hidden_field :active, :value => true %>
