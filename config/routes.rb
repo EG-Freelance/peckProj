@@ -2,7 +2,11 @@ Rails.application.routes.draw do
   
   resources :products
 
-  resources :registries
+  resources :registries do
+    collection do
+      match 'search' => 'registries#search', via: [:get, :post], as: :search
+    end
+  end
 
   devise_for :admins
   devise_for :users, controllers: { registrations: "users/registrations" }

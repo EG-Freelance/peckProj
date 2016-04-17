@@ -13,17 +13,32 @@ class RegistriesController < ApplicationController
   end
 
   def show
+    if @registry
+      Rails.cache.write('registry_id', @registry.id)
+    else
+      @registry = Registry.find(Rails.cache.read('registry_id'))
+    end
     ur = UserRegistry.find_by(registry_id: @registry.id, user_id: current_user.id)
     begin 
       if (ur.association_type == "owner" || ur.association_type == "administrator")
-        @products = Product.all
+        products_pool = Product.all
       else
-        @products = Product.includes(:product_registries).where(:product_registries => { registry_id: @registry.id })
+        products_pool = Product.includes(:product_registries).where(:product_registries => { registry_id: @registry.id })
       end
     rescue
-      @products = Product.includes(:product_registries).where(:product_registries => { registry_id: @registry.id })
+      products_pool = Product.includes(:product_registries).where(:product_registries => { registry_id: @registry.id })
     end
-    respond_with(@registry)
+    
+    @q = products_pool.ransack(params[:q])
+    params[:id] = @registry.id
+    @products = @q.result
+    
+    # respond_with(@registry)
+  end
+  
+  def search  
+    show
+    render :show
   end
   
   def add_remove_product

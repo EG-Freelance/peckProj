@@ -19,6 +19,14 @@
   <div style="text-align:center"><%= progress.to_i %>%</div>
 </div>
 
+<!-- Search form for products -->
+<%= search_form_for @q, :url => { :action => 'search', :controller => 'registries' } do |f| %>
+  <%= f.text_field :name_cont, :placeholder => 'Product name' %>
+  <%= f.text_field :description_cont, :placeholder => 'Product description' %>
+  <%= f.text_field :price_gteq, :placeholder => 'Minimum price' %>
+  <%= f.text_field :price_lteq, :placeholder => 'Maximum price' %>
+  <%= f.submit %>
+<% end %>
 
 <!-- Product listings -->
 <div class="free-wall">

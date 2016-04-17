@@ -2,17 +2,6 @@
 <html>
   <head>
     <title>PeckProj</title>
-
-    <%= render "layouts/navbar" %>
-
-    <div style="padding-top:88px"></div>
-
-    <% unless flash[:error].nil? %>
-      <p id="error" style="padding-top:60px; padding-left:20px; margin-bottom:0px; color:darkred; background:red"><b><%= flash[:error] %></b></p>
-    <% end %>
-    <% unless alert.nil? %>
-      <p class="alert"><%= alert %></p>
-    <% end %>
     
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
@@ -31,6 +20,17 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/3.3.2/masonry.pkgd.min.js"></script>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+
+    <%= render "layouts/navbar" %>
+
+    <div style="padding-top:88px"></div>
+
+    <% unless flash[:error].nil? %>
+      <p id="error" style="padding-top:60px; padding-left:20px; margin-bottom:0px; color:darkred; background:red"><b><%= flash[:error] %></b></p>
+    <% end %>
+    <% unless alert.nil? %>
+      <p class="alert"><%= alert %></p>
+    <% end %>
   </head>
   <body style="padding-left:20px; padding-right:20px" data-no-turbolink="true">
 

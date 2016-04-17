@@ -4,8 +4,9 @@
   	<div id="navbar" class="collapse navbar-collapse">
 	  	<ul class="nav navbar-nav">
 	  		<li><%= link_to "About", "#" %></li>
-        
-        <li><%= link_to "My Registries", registries_path %></li>
+        <% if user_signed_in? %>
+          <li><%= link_to "My Registries", registries_path %></li>
+        <% end %>
 	  	</ul>
   		<ul class="nav navbar-nav navbar-right" style="padding-right:25px">
   			<% if user_signed_in? %>

@@ -46,6 +46,9 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 # Use Postmark to handle email delivery
 gem 'postmark-rails'
 
+# Use ransack to run queries
+gem 'ransack'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
