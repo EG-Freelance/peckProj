@@ -16,10 +16,11 @@ class RegistriesController < ApplicationController
     if @registry
       Rails.cache.write('registry_id', @registry.id)
     else
-      @registry = Registry.find(Rails.cache.read('registry_id'))
+      Rails.cache.read('registry_id')
     end
-    ur = UserRegistry.find_by(registry_id: @registry.id, user_id: current_user.id)
     begin 
+      @cart = Cart.first_or_create!(user_id: current_user.id, registry_id: @registry.id)
+      ur = UserRegistry.find_by(registry_id: @registry.id, user_id: current_user.id)
       if (ur.association_type == "owner" || ur.association_type == "administrator")
         products_pool = Product.all
       else

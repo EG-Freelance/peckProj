@@ -19,6 +19,9 @@ end
 # Use simple form for extra form-handling
 gem 'simple_form'
 
+# Use dig to handle nested hashes and arrays
+gem 'ruby_dig'
+
 # Use devise for user creation and organization
 # Use DeviseInvitable to allow users to invite other admins to their registries
 gem 'devise'

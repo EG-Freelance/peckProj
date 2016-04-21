@@ -1,0 +1,31 @@
+<% registries = current_user.cart.cart_products.map{ |cp| cp.registry_id }.uniq %>
+
+<%= simple_form_for :checkout, url: checkout_path, :html => { method: :post }, remote: true do |f| %>
+  <div id="accordion" class="panel-group">
+    <% registries.each do |r| %>
+      <% registry = Registry.find(r) %>
+      <div class="panel panel-default">    
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" href=<%= "##{r}" %>><%= registry.name %></a><div class="pull-right"><%= f.check_box "#{r}".to_sym, {}, 'true', 'false' %></div>
+          </h4>
+
+        </div>
+        <div id=<%= "#{r}" %> class="panel-collapse collapse">
+          <div class="panel-body" id=<%= "registry-#{r}-products" %>>
+            <% registry.cart_products.includes(:cart).where( :carts => { :user_id => current_user.id }).each do |cp| %>
+            <li><%= Product.find(cp.product_id).name %> -- <%= cp.quantity %></li>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <%= f.submit "Checkout", id: "checkout-submit" %>
+<% end %>
+
+<script>
+  $('#checkout-submit').click(function(){
+    var win = window.open('');
+  });
+</script>

@@ -1,4 +1,6 @@
-<p id="notice"><%= notice %></p>
+<div class="sticky">
+  <a href="#" class="pull-left"><img src="/assets/ShoppingCart.png", height="60"></a>
+</div>
 
 <% included = ProductRegistry.where(registry_id: @registry.id).map{ |r| r.product_id }.sort %>
 
@@ -18,6 +20,8 @@
 <div id="progressbar">
   <div style="text-align:center"><%= progress.to_i %>%</div>
 </div>
+
+<a href="http://shop.oculus.com" target="_blank" id="link">Link</a>
 
 <!-- Search form for products -->
 <%= search_form_for @q, :url => { :action => 'search', :controller => 'registries' } do |f| %>
@@ -39,11 +43,18 @@
           <p class="card-text"><%= p.description %></p>
           <p style="color:green"><b><%= number_to_currency(p.price) %></b></p>
           <p style="color:green"><i>Contribution to honeymoon fund: <b><%= number_to_currency(p.fund) %></b></i></p>
-          <%= simple_form_for "product_registry", url: add_remove_product_path, html: { method: :post }, :remote => true do |f| %>
-            <div class="col-md-1" style="width:25px; border-radius:10px"><%= f.input_field :quantity, :style => "width:25px", :value => ProductRegistry.exists?(product_id: p.id, registry_id: @registry.id) ? ProductRegistry.find_by(product_id: p.id, registry_id: @registry.id).quantity : "", :id => "quantity-#{p.id}" %></div>
-            <%= f.hidden_field :product_id, :value => p.id %>
-            <%= f.hidden_field :registry_id, :value => @registry.id %>
-          <div class="col-md-2"><%= f.submit included.index(p.id).nil? ? "Add to Registry" : "Remove from Registry", :style => "width:175px", :class => included.index(p.id).nil? ? "btn-add-product" : "btn-remove-product", id: "add-remove-button-#{p.id}" %></div>
+          <% if user_signed_in? && @registry.administrators.include?(current_user) %>
+            <%= simple_form_for "product_registry", url: add_remove_product_path, html: { method: :post }, :remote => true do |f| %>
+              <div class="col-md-1" style="width:25px; border-radius:10px"><%= f.input_field :quantity, :style => "width:25px", :value => ProductRegistry.exists?(product_id: p.id, registry_id: @registry.id) ? ProductRegistry.find_by(product_id: p.id, registry_id: @registry.id).quantity : "", :id => "quantity-#{p.id}" %></div>
+              <%= f.hidden_field :product_id, :value => p.id %>
+              <%= f.hidden_field :registry_id, :value => @registry.id %>
+           
+              <div class="col-md-2"><%= f.submit included.index(p.id).nil? ? "Add to Registry" : "Remove from Registry", :style => "width:175px", :class => included.index(p.id).nil? ? "btn-add-product" : "btn-remove-product", id: "add-remove-button-#{p.id}" %></div>
+          <br><br>
+            <% end %>
+          <% end %>
+          <% if user_signed_in? %>
+            <img type="button" class="btn btn-lg" data-toggle="modal" data-target=<%= "#add-to-cart-#{p.id}" %> src="/assets/ShoppingCartAdd.png", height="60", style="padding: 0px 0px 0px 0px;">
           <% end %>
           <br><br>
         </div>
@@ -74,6 +85,48 @@
 
   </div>
 </div>
+
+
+<!-- Add to Cart Modal -->
+<% @products.each do |p| %>
+  <div id=<%= "add-to-cart-#{p.id}" %> class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Add Product to Cart</h4>
+        </div>
+
+        <!-- Tab panes/Modal Body -->
+        <div class="modal-body">
+          <!-- Submission form for cart item -->
+          <% cart = Cart.find_by(user_id: current_user.id) %>
+          <%= simple_form_for :cart_product, url: add_to_cart_path, html: { method: :post }, :remote => true do |f| %>
+            <div class="col-md-1" style="width:25px; border-radius:10px"><%= f.input_field :quantity, :style => "width:25px", :value => CartProduct.exists?(product_id: p.id, cart_id: cart.id) ? CartProduct.find_by(product_id: p.id, cart_id: cart.id).quantity : "", :id => "cart-quantity-#{p.id}" %></div>
+            <%= f.hidden_field :product_id, :value => p.id %>
+            <%= f.hidden_field :registry_id, :value => @registry.id %>
+
+            <div class="col-md-2"><%= f.submit "Add to Cart" %></div>
+            <br><br>
+          <% end %>  
+          
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<script>
+  $('#product-form').on('submit', function() {
+    $('#add-to-cart').modal('hide');
+  });
+</script>
 
 <script>
   $('#invite-user').on('submit', function() {

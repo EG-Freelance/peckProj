@@ -6,6 +6,7 @@
 	  		<li><%= link_to "About", "#" %></li>
         <% if user_signed_in? %>
           <li><%= link_to "My Registries", registries_path %></li>
+          <li id="checkout-modal"><a data-toggle="modal" data-target="#checkout">Cart</a></li>
         <% end %>
 	  	</ul>
   		<ul class="nav navbar-nav navbar-right" style="padding-right:25px">
@@ -71,3 +72,32 @@
   </div>
 
 </div>
+
+<!-- Cart Modal -->
+<% if user_signed_in? %>
+  <div id="checkout" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Review Your Cart</h4>
+        </div>
+
+        <!-- Tab panes/Modal Body -->
+        <div class="modal-body">
+          <div role="tabpanel" class="tab-pane active" id="owner">
+            <%= render 'carts/checkout' %>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  
+<% end %>

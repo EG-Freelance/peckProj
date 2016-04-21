@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   
+  resources :carts
+
   resources :products
 
   resources :registries do
@@ -27,6 +29,8 @@ Rails.application.routes.draw do
     post 'add_product_to_registry' => 'registries#add_product_to_registry'
     post 'add_remove_product' => 'registries#add_remove_product'
     post 'new_payment_method' => 'payment_methods#save_payment_option'
+    post 'add_to_cart' => 'carts#add_to_cart'
+    post 'checkout' => 'carts#checkout'
   end
   
   # The priority is based upon order of creation: first created -> highest priority.
