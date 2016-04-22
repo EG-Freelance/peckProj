@@ -5,6 +5,7 @@ class CartsController < ApplicationController
   
   def add_to_cart
     CartProduct.where(cart_id: Cart.find_by(user_id: current_user.id).id, registry_id: params[:cart_product][:registry_id], product_id: params[:cart_product][:product_id], quantity: params[:cart_product][:quantity] ).first_or_create!
+    @r = current_user.cart.cart_products.map{ |cp| cp.registry_id }.uniq
     respond_to do |format|
       format.html { redirect_to :back }
       format.js { }
@@ -13,18 +14,22 @@ class CartsController < ApplicationController
 
   def checkout
     # Set registries being checked out
-    r = params['checkout'].map{ |k,v| k unless v == "false" }
+    @r = params['checkout'].map{ |k,v| k unless v == "false" }
     @cp_array = []
     
     # For each registry, send each CartProduct into an array for processing
-    r.each do |reg|
-      CartProduct.where(cart_id: Cart.find_by(user_id: current_user.id), registry_id: r).each do |p|
+    @r.each do |reg|
+      CartProduct.where(cart_id: Cart.find_by(user_id: current_user.id), registry_id: reg).each do |p|
         @cp_array << p.product
       end
     end
+    puts @cp_array.map{ |cp| cp.name }
     respond_to do |format|
       format.html { redirect_to :back }
-      format.js { }
+      format.js { 
+        render :template => 'carts/checkout' 
+        
+      }
     end
   end
   

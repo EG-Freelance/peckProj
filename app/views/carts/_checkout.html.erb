@@ -1,39 +1,30 @@
-<% registries = current_user.cart.cart_products.map{ |cp| cp.registry_id }.uniq %>
+<% @registries = current_user.cart.cart_products.map{ |cp| cp.registry_id }.uniq %>
 
-<%= simple_form_for :checkout, url: checkout_path, :html => { method: :post }, remote: true do |f| %>
-  <div id="accordion" class="panel-group">
-    <% registries.each do |r| %>
-      <% registry = Registry.find(r) %>
-      <div class="panel panel-default">    
-        <div class="panel-heading">
-          <h4 class="panel-title">
-            <a data-toggle="collapse" data-parent="#accordion" href=<%= "##{r}" %>><%= registry.name %></a><div class="pull-right"><%= f.check_box "#{r}".to_sym, {class: 'registry-checkbox'}, 'true', 'false' %></div>
-          </h4>
+<% if @registries.empty? %>
+  <h4>Your cart is empty</h4>
+<% else %>
 
-        </div>
-        <div id=<%= "#{r}" %> class="panel-collapse collapse">
-          <div class="panel-body" id=<%= "registry-#{r}-products" %>>
-            <% registry.cart_products.includes(:cart).where( :carts => { :user_id => current_user.id }).each do |cp| %>
-            <li><%= Product.find(cp.product_id).name %> -- <%= cp.quantity %></li>
-            <% end %>
+  <%= simple_form_for :checkout, url: checkout_path, :html => { method: :post }, remote: true do |f| %>
+    <div id="accordion" class="panel-group">
+      <% @registries.each do |r| %>
+        <% registry = Registry.find(r) %>
+        <div class="panel panel-default">    
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" data-parent="#accordion" href=<%= "##{r}" %>><%= registry.name %></a><div class="pull-right"><%= f.check_box "#{r}".to_sym, {class: 'registry-checkbox'}, 'true', 'false' %></div>
+            </h4>
+
+          </div>
+          <div id=<%= "#{r}" %> class="panel-collapse collapse">
+            <div class="panel-body" id=<%= "registry-#{r}-products" %>>
+              <% @products = registry.cart_products.includes(:cart).where( :carts => { :user_id => current_user.id }).each do |cp| %>
+              <li><%= Product.find(cp.product_id).name %> -- <%= cp.quantity %></li>
+              <% end %>
+            </div>
           </div>
         </div>
-      </div>
-    <% end %>
-  </div>
-  <%= f.submit "Checkout", id: "checkout-submit" %>
+      <% end %>
+    </div>
+    <%= f.submit "Checkout \n Selected Registries", id: "checkout-submit" %>
+  <% end %>
 <% end %>
-
-<script>
-  /*$('#checkout-submit').click(function(i){
-    var reg_array = [];
-    $('.registry-checkbox').each(function(){
-      if($(this).prop('checked') === true){
-        reg_array.push($(this).attr('id').substring(9,99));
-      }
-    });
-    console.log(reg_array);
-    for(i in reg_array){
-    }
-  });*/
-</script>

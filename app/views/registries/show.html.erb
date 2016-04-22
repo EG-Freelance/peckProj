@@ -21,8 +21,6 @@
   <div style="text-align:center"><%= progress.to_i %>%</div>
 </div>
 
-<a href="http://shop.oculus.com" target="_blank" id="link">Link</a>
-
 <!-- Search form for products -->
 <%= search_form_for @q, :url => { :action => 'search', :controller => 'registries' } do |f| %>
   <%= f.text_field :name_cont, :placeholder => 'Product name' %>
