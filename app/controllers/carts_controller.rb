@@ -13,9 +13,7 @@ class CartsController < ApplicationController
 
   def checkout
     # Set registries being checked out
-    puts "====="
     r = params['checkout'].map{ |k,v| k unless v == "false" }
-    puts r
     @cp_array = []
     
     # For each registry, send each CartProduct into an array for processing
@@ -24,7 +22,6 @@ class CartsController < ApplicationController
         @cp_array << p.product
       end
     end
-    puts @cp_array
     respond_to do |format|
       format.html { redirect_to :back }
       format.js { }

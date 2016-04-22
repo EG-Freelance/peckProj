@@ -7,7 +7,7 @@
       <div class="panel panel-default">    
         <div class="panel-heading">
           <h4 class="panel-title">
-            <a data-toggle="collapse" data-parent="#accordion" href=<%= "##{r}" %>><%= registry.name %></a><div class="pull-right"><%= f.check_box "#{r}".to_sym, {}, 'true', 'false' %></div>
+            <a data-toggle="collapse" data-parent="#accordion" href=<%= "##{r}" %>><%= registry.name %></a><div class="pull-right"><%= f.check_box "#{r}".to_sym, {class: 'registry-checkbox'}, 'true', 'false' %></div>
           </h4>
 
         </div>
@@ -25,7 +25,15 @@
 <% end %>
 
 <script>
-  $('#checkout-submit').click(function(){
-    var win = window.open('');
-  });
+  /*$('#checkout-submit').click(function(i){
+    var reg_array = [];
+    $('.registry-checkbox').each(function(){
+      if($(this).prop('checked') === true){
+        reg_array.push($(this).attr('id').substring(9,99));
+      }
+    });
+    console.log(reg_array);
+    for(i in reg_array){
+    }
+  });*/
 </script>
