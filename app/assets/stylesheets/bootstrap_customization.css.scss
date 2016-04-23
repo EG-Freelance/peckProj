@@ -2,6 +2,11 @@ body{
   background-color: #EFF5FB !important;
 }
 
+.modal-body {
+    max-height: calc(100vh - 210px);
+    overflow-y: auto;
+}
+
 #checkout-modal{
   cursor: pointer;
   cursor: hand;

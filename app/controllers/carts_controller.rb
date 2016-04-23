@@ -15,6 +15,7 @@ class CartsController < ApplicationController
   def checkout
     # Set registries being checked out
     @r = params['checkout'].map{ |k,v| k unless v == "false" }
+    @r.delete_if { |r| r.nil? }
     @cp_array = []
     
     # For each registry, send each CartProduct into an array for processing
@@ -23,14 +24,15 @@ class CartsController < ApplicationController
         @cp_array << p.product
       end
     end
-    puts @cp_array.map{ |cp| cp.name }
     respond_to do |format|
       format.html { redirect_to :back }
       format.js { 
-        render :template => 'carts/checkout' 
-        
+        render :template => 'carts/checkout'
       }
     end
+  end
+  
+  def checkout_confirmation
   end
   
   def index

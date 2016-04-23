@@ -1,3 +1,13 @@
+$('#checkout').modal('hide');
+
+console.log('<%= @r %>');
+
 <% @cp_array.each do |p| %>
   window.open('<%= p.affiliate_link %>');
 <% end %>
+
+$('#checkout-confirmation').html('<div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button><h4 class="modal-title">Confirm Your Purchase(s)</h4></div><div class="modal-body"><div role="tabpanel" class="tab-pane active" id="owner"><%= j (render 'carts/checkout_confirmation') %></div></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div>');
+
+console.log($('#checkout-confirmation'));
+
+$('#checkout-confirmation').modal("show");

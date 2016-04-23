@@ -1,0 +1,11 @@
+<%= simple_form_for :checkout_confirmation, url: checkout_confirmation_path, :html => { method: :post }, remote: true do |f| %>
+  <% @r.each do |r| %>
+    <% registry = Registry.find(r) %>
+    <%= registry.name %>
+    <% registry.cart_products.includes(:cart).where( :carts => { :user_id => current_user.id }).each do |cp| %>
+      <div><%= f.check_box "#{cp.id}".to_sym, {class: 'confirmation-checkbox'}, 'true', 'false' %>  <%= Product.find(cp.product_id).name %> -- <%= cp.quantity %></div>
+    <% end %>
+  <% end %>
+  <br />
+  <%= f.submit "Confirm" %>
+<% end %>
