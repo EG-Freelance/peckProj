@@ -33,6 +33,14 @@ class CartsController < ApplicationController
   end
   
   def checkout_confirmation
+    products = params['checkout_confirmation'].map{ |k,v| k unless v == "0" }
+    products.delete_if { |p| p.nil? }
+    pairs = products.each_slice(2).to_a
+    puts pairs[0]
+    respond_to do |format|
+      format.html { redirect_to :back }
+      format.js { }
+    end    
   end
   
   def index

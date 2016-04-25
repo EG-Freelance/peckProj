@@ -3,7 +3,7 @@
     <% registry = Registry.find(r) %>
     <%= registry.name %>
     <% registry.cart_products.includes(:cart).where( :carts => { :user_id => current_user.id }).each do |cp| %>
-      <div><%= f.check_box "#{cp.id}".to_sym, {class: 'confirmation-checkbox'}, 'true', 'false' %>  <%= Product.find(cp.product_id).name %> -- <%= f.input_field :quantity,  :value => cp.quantity, :style => "width:25px" %></div>
+      <div class="form-wrapper"><%= f.check_box "#{cp.id}".to_sym, {class: 'confirmation-checkbox'} %>  <%= Product.find(cp.product_id).name %> -- <%= f.input_field "#{cp.id}-quantity".to_sym,  :value => cp.quantity, :style => "width:25px" %></div>
     <% end %>
   <% end %>
   <br />

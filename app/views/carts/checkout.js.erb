@@ -11,3 +11,20 @@ $('#checkout-confirmation').html('<div class="modal-dialog"><div class="modal-co
 console.log($('#checkout-confirmation'));
 
 $('#checkout-confirmation').modal("show");
+
+$('.form-wrapper').each(function(){ 
+  $(this).children('.required').css("background-color","#DCDAD1").css("color","darkgray").prop('disabled', true);
+});
+
+function disableField(){
+  $('.confirmation-checkbox').click(function(){ 
+    if($(this).prop('checked') === false){
+      $(this).siblings('.required').css("background-color","#DCDAD1").css("color","darkgray").prop('disabled',true);
+    }else{
+      $(this).siblings('.required').css("background-color","white").css("color","black").prop('disabled',false);
+    }
+  });
+}
+
+$(document).on('page:load', disableField);
+$(document).ready(disableField);
