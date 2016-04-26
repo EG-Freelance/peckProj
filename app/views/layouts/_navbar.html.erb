@@ -87,7 +87,7 @@
 
         <!-- Tab panes/Modal Body -->
         <div class="modal-body">
-          <div role="tabpanel" class="tab-pane active" id="owner">
+          <div role="tabpanel" class="tab-pane active" id="cart-modal">
             <%= render 'carts/checkout' %>
           </div>
         </div>
@@ -101,4 +101,22 @@
   </div>
 <% end %>
 
-<div id="checkout-confirmation" class="modal fade" role="dialog"></div>
+<!-- Checkout confirmation modal -->
+<div id="checkout-confirmation" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Confirm Your Purchase(s)</h4>
+      </div>
+      <div class="modal-body">
+        <div role="tabpanel" class="tab-pane active" id="checkout-confirmation-modal">
+          <%= j (render 'carts/checkout_confirmation') %>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

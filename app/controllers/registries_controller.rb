@@ -47,7 +47,9 @@ class RegistriesController < ApplicationController
     @product = Product.find(params[:product_registry][:product_id])
     pr_params = { product_id: params[:product_registry][:product_id], registry_id: params[:product_registry][:registry_id] }
     if ProductRegistry.exists?(pr_params)
-      ProductRegistry.find_by(pr_params).destroy
+      pr = ProductRegistry.find_by(pr_params)
+      CartProduct.where(pr_params).destroy_all
+      pr.destroy
       @status = "success"
       respond_to do |format|
         format.html { redirect_to :back, notice: "Product removed" }

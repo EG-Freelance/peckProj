@@ -9,4 +9,8 @@ if(removeClass === 'btn-add-product'){
   htmlText = 'Add to Registry';
 }
 
+console.log('checkpoint');
 $('#add-remove-button-<%= @product.id %>').addClass(addClass).removeClass(removeClass).val(htmlText);
+
+console.log('<%= @product.id %>');
+$('#add-cart-<%= @product.id %>').css('opacity','100').removeAttr('disabled');

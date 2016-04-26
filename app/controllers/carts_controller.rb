@@ -4,7 +4,11 @@ class CartsController < ApplicationController
   respond_to :html
   
   def add_to_cart
-    CartProduct.where(cart_id: Cart.find_by(user_id: current_user.id).id, registry_id: params[:cart_product][:registry_id], product_id: params[:cart_product][:product_id], quantity: params[:cart_product][:quantity] ).first_or_create!
+    c = CartProduct.find_or_initialize_by(cart_id: Cart.find_by(user_id: current_user.id).id, registry_id: params[:cart_product][:registry_id], product_id: params[:cart_product][:product_id])
+    unless c.quantity == params[:cart_product][:quantity]
+      c.quantity = params[:cart_product][:quantity]
+      c.save
+    end
     @r = current_user.cart.cart_products.map{ |cp| cp.registry_id }.uniq
     respond_to do |format|
       format.html { redirect_to :back }
@@ -33,10 +37,18 @@ class CartsController < ApplicationController
   end
   
   def checkout_confirmation
-    products = params['checkout_confirmation'].map{ |k,v| k unless v == "0" }
+    products = params['checkout_confirmation'].map{ |k,v| [k,v] unless v == "0" }
     products.delete_if { |p| p.nil? }
     pairs = products.each_slice(2).to_a
-    puts pairs[0]
+    puts pairs.inspect
+    puts CartProduct.find(pairs[0][0][0])
+    pairs.each do |p|
+      cp = CartProduct.find(p[0][0])
+      cp_pr = cp.registry.product_registries.find_by(product_id: cp.product_id)
+      cp_quant = cp_pr.quantity
+      cp_pr.update(purchased: (p[1][1].to_i + cp_quant))
+      cp.destroy      
+    end
     respond_to do |format|
       format.html { redirect_to :back }
       format.js { }

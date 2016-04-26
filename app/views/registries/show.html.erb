@@ -52,7 +52,11 @@
             <% end %>
           <% end %>
           <% if user_signed_in? %>
-            <img type="button" class="btn btn-lg" data-toggle="modal" data-target=<%= "#add-to-cart-#{p.id}" %> src="/assets/ShoppingCartAdd.png", height="60", style="padding: 0px 0px 0px 0px;">
+            <% if ProductRegistry.exists?(product_id: p.id, registry_id: @registry.id) %>
+              <img type="button" class="btn btn-lg" data-toggle="modal" data-target=<%= "#add-to-cart-#{p.id}" %> src="/assets/ShoppingCartAdd.png" height="60" style="padding: 0px 0px 0px 0px;" id=<%= "add-cart-#{p.id}" %>>
+            <% else %>
+               <img type="button" class="btn btn-lg" disabled='disabled' data-toggle="modal" data-target=<%= "#add-to-cart-#{p.id}" %> src="/assets/ShoppingCartAdd.png" height="60" style="padding: 0px 0px 0px 0px;opacity:0" id=<%= "add-cart-#{p.id}" %>>
+            <% end %>
           <% end %>
           <br><br>
         </div>

@@ -5,18 +5,18 @@ if('<%= @status %>' === "success"){
   if(removeClass === 'btn-add-product'){
     addClass = 'btn-remove-product';
     htmlText = 'Remove from Registry';
-    $('#js-notice').removeClass().addClass('js-success js-notice').text("Product added").stop().fadeTo(1,100).fadeTo(4000,0);
+    $('#js-notice').removeClass().addClass('js-success js-notice').text("Product added").stop().fadeTo(1,1).fadeTo(4000,0);
+    $('#add-cart-<%= @product.id %>').removeAttr('disabled').fadeTo(500,1);
   }else{
     addClass = 'btn-add-product';
     htmlText = 'Add to Registry';
-    console.log("removing quantity");
     $('#quantity-<%= @product.id %>').val("");
-    $('#js-notice').removeClass().addClass('js-success js-notice').text("Product removed").stop().fadeTo(1,100).fadeTo(4000,0);
-  }
+    $('#js-notice').removeClass().addClass('js-success js-notice').text("Product removed").stop().fadeTo(1,1).fadeTo(4000,0);
 
-  console.log('<%= @registry.products.map{ |p| [p.name, p.product_registries.find_by(product_id: p.id, registry_id: @registry.id).quantity] } %>'.replace(/&quot;/g, '"'));
+    $('#add-cart-<%= @product.id %>').attr('disabled','disabled').fadeTo(500,0);
+  }
 
   $('#add-remove-button-<%= @product.id %>').addClass(addClass).removeClass(removeClass).val(htmlText);
 }else{
-  $('#js-notice').removeClass().addClass('js-failure js-notice').text("Please be sure to include a quantity in your submission").stop().fadeTo(1,100).fadeTo(4000,0);
+  $('#js-notice').removeClass().addClass('js-failure js-notice').text("Please be sure to include a quantity in your submission").stop().fadeTo(1,1).fadeTo(4000,0);
 }
