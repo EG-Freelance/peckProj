@@ -1,1 +1,5 @@
 $('#checkout-confirmation-modal').html("<%= j (render partial: 'carts/checkout_confirmation') %>");
+
+$('#cart-modal').html("<%= j (render partial: 'carts/checkout') %>");
+
+$('#checkout-confirmation').modal('hide');

@@ -1,4 +1,4 @@
-<%= simple_form_for :checkout_confirmation, url: checkout_confirmation_path, :html => { method: :post }, remote: true do |f| %>
+<%= simple_form_for :checkout_confirmation, url: checkout_confirmation_path, :html => { method: :post, id: 'checkout-confirmation-form' }, remote: true do |f| %>
   <% unless @r.nil? %>
     <% @r.each do |r| %>
       <% registry = Registry.find(r) %>

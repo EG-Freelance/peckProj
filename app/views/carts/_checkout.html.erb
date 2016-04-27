@@ -18,13 +18,14 @@
           <div id=<%= "#{r}" %> class="panel-collapse collapse">
             <div class="panel-body" id=<%= "registry-#{r}-products" %>>
               <% @products = registry.cart_products.includes(:cart).where( :carts => { :user_id => current_user.id }).each do |cp| %>
-              <li><%= Product.find(cp.product_id).name %> -- <%= cp.quantity %></li>
+              <li><%= Product.find(cp.product_id).name %> -- <%= cp.quantity %><%= link_to "X", destroy_cart_product_path(cp), method: :delete, remote: true %>
+</li>
               <% end %>
             </div>
           </div>
         </div>
       <% end %>
     </div>
-    <%= f.submit "Checkout \n Selected Registries", id: "checkout-submit" %>
+    <%= f.submit "Checkout Selected Registries", id: "checkout-submit" %>
   <% end %>
 <% end %>

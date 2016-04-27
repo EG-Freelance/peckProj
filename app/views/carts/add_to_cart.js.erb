@@ -1,6 +1,3 @@
 $('#js-notice').removeClass().addClass('js-success js-notice').text("Product added to cart").stop().fadeTo(1,100).fadeTo(4000,0);
 
-console.log('<%= @r %>');
-$('#accordion').html('<% @r.each do |r| %><div class="panel panel-default"><div class="panel-heading"><h4 class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href=<%= "##{r}" %>><%= Registry.find(r).name %></a><div class="pull-right"><input name="checkout[<%= r %>]" type="hidden" value="false" /><input class="registry-checkbox" id="checkout_<%= r %>" name="checkout[<%= r %>]" type="checkbox" value="true" /></div></h4></div><div id=<%= r %> class="panel-collapse collapse"><div class="panel-body" id="registry-<%= r %>-products"><% Registry.find(r).cart_products.includes(:cart).where( :carts => { :user_id => current_user.id }).each do |cp| %><li><%= Product.find(cp.product_id).name %> -- <%= cp.quantity %></li><% end %></div></div></div><% end %>');
-
 $('#cart-modal').html("<%= j (render partial: 'carts/checkout') %>");

@@ -55,6 +55,9 @@ class CartsController < ApplicationController
     end    
   end
   
+  def destroy_cart_product
+  end
+  
   def index
     @carts = Cart.all
     respond_with(@carts)

@@ -1,5 +1,5 @@
 class RegistriesController < ApplicationController
-  before_action :set_registry, only: [:show, :edit, :update, :destroy]
+  before_action :set_registry, only: [:show, :edit, :update, :destroy, :search]
 
   respond_to :html
 
@@ -13,20 +13,29 @@ class RegistriesController < ApplicationController
   end
 
   def show
-    if @registry
+    unless @registry.nil?
+      puts "check1a"
       Rails.cache.write('registry_id', @registry.id)
     else
+      puts "check1b"
       Rails.cache.read('registry_id')
     end
     begin 
+      puts "check2 #{@registry.inspect}"
       @cart = Cart.first_or_create!(user_id: current_user.id, registry_id: @registry.id)
+      puts "check3 #{@cart.inspect}"
       ur = UserRegistry.find_by(registry_id: @registry.id, user_id: current_user.id)
+      puts "check4 #{ur.inspect}"
       if (ur.association_type == "owner" || ur.association_type == "administrator")
+        puts "check 5a"
         products_pool = Product.all
       else
+        puts "check 5b"
         products_pool = Product.includes(:product_registries).where(:product_registries => { registry_id: @registry.id })
       end
+      puts "check 6"
     rescue
+      puts "check 7"
       products_pool = Product.includes(:product_registries).where(:product_registries => { registry_id: @registry.id })
     end
     
