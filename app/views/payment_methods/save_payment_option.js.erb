@@ -2,4 +2,6 @@ $('#js-notice').removeClass().addClass('js-success js-notice').text("Payment met
 
 $('#payment_method_username').val("");
 $('#payment_method_custom_name').val("");
-$('#registry_user_registry_payment_method').append("<option value='<%= @payment_method.custom_name %>'><%= @payment_method.custom_name %></option>")
+
+<% @registry = Registry.new %>
+$('#new-registry-modal').html("<%= j (render partial: 'registries/form') %>");

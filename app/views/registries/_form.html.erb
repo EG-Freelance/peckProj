@@ -1,16 +1,4 @@
 <%= simple_form_for @registry, :html => { :class => "form-style-10", :id => "registry-form" }, :remote => true do |f| %>
-  <% if @registry.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@registry.errors.count, "error") %> prohibited this registry from being saved:</h2>
-
-      <ul>
-      <% @registry.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
   <div>
     <%= f.text_field :name, placeholder: 'Registry Name' %>
     <%= f.text_field :goal, placeholder: 'Honeymoon Fund Goal' %>
