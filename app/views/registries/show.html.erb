@@ -20,6 +20,7 @@
 <div id="progressbar">
   <div style="text-align:center"><%= progress.to_i %>%</div>
 </div>
+<br>
 
 <!-- Search form for products -->
 <%= search_form_for @q, :url => { :action => 'search', :controller => 'registries' } do |f| %>
@@ -27,13 +28,18 @@
   <%= f.text_field :description_cont, :placeholder => 'Product description' %>
   <%= f.text_field :price_gteq, :placeholder => 'Minimum price' %>
   <%= f.text_field :price_lteq, :placeholder => 'Maximum price' %>
+  <%= f.text_field :merchant_cont, :placeholder => 'Product provider' %>
   <%= f.submit %>
 <% end %>
+
+<!-- Pagination -->
+<%= will_paginate @products %>
 
 <!-- Product listings -->
 <div class="free-wall">
   <div class="card-deck">
     <% @products.each do |p| %>
+      <% pr = ProductRegistry.find_by(registry_id: @registry.id, product_id: p.id) %>
       <div class="card product-cards box-shadow--4dp">
         <img class="card-img-top" src="http://www.wired.com/wp-content/uploads/2015/06/Oculus-Rift-2-1024x576.jpg" alt="Oculus Rift" style="width:100%">
         <div class="card-block card-text">
@@ -41,6 +47,7 @@
           <p class="card-text"><%= p.description %></p>
           <p style="color:green"><b><%= number_to_currency(p.price) %></b></p>
           <p style="color:green"><i>Contribution to honeymoon fund: <b><%= number_to_currency(p.fund) %></b></i></p>
+          <% unless pr.nil? %><p><i><%= [pr.quantity - pr.purchased, 0].max %> more needed out of <%= pr.quantity %></i></p><% end %>
           <% if user_signed_in? && @registry.administrators.include?(current_user) %>
             <%= simple_form_for "product_registry", url: add_remove_product_path, html: { method: :post }, :remote => true do |f| %>
               <div class="col-md-1" style="width:25px; border-radius:10px"><%= f.input_field :quantity, :style => "width:25px", :value => ProductRegistry.exists?(product_id: p.id, registry_id: @registry.id) ? ProductRegistry.find_by(product_id: p.id, registry_id: @registry.id).quantity : "", :id => "quantity-#{p.id}" %></div>
@@ -53,7 +60,7 @@
           <% end %>
           <% if user_signed_in? %>
             <% if ProductRegistry.exists?(product_id: p.id, registry_id: @registry.id) %>
-              <img type="button" class="btn btn-lg" data-toggle="modal" data-target=<%= "#add-to-cart-#{p.id}" %> src="/assets/ShoppingCartAdd.png" height="60" style="padding: 0px 0px 0px 0px;" id=<%= "add-cart-#{p.id}" %>>
+              <img type="button" class="btn btn-lg" data-toggle="modal" data-target=<%= "#add-to-cart-#{p.id}-modal" %> src="/assets/ShoppingCartAdd.png" height="60" style="padding: 0px 0px 0px 0px;" id=<%= "add-cart-#{p.id}" %>>
             <% else %>
                <img type="button" class="btn btn-lg" disabled='disabled' data-toggle="modal" data-target=<%= "#add-to-cart-#{p.id}" %> src="/assets/ShoppingCartAdd.png" height="60" style="padding: 0px 0px 0px 0px;opacity:0" id=<%= "add-cart-#{p.id}" %>>
             <% end %>
@@ -89,7 +96,7 @@
 
 <!-- Add to Cart Modal -->
 <% @products.each do |p| %>
-  <div id=<%= "add-to-cart-#{p.id}" %> class="modal fade" role="dialog">
+  <div id=<%= "add-to-cart-#{p.id}-modal" %> class="modal fade" role="dialog">
     <div class="modal-dialog">
 
       <!-- Modal content-->

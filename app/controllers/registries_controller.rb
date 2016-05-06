@@ -1,47 +1,37 @@
 class RegistriesController < ApplicationController
   before_action :set_registry, only: [:show, :edit, :update, :destroy, :search]
+  before_action :set_registries, only: [:index, :add_remove_as_guest, :search_reg]
 
   respond_to :html
 
   def index
-    @owner = current_user.owned_registries
-    @administrator = current_user.shared_registries
-    @guest = current_user.guest_registries
-    @registries = Registry.all
+    @q = Registry.all.ransack(params[:q])
+    @registries = @q.result.uniq.paginate(page: params[:page], per_page: 20)
     
     @registry = Registry.new
   end
 
   def show
     unless @registry.nil?
-      puts "check1a"
       Rails.cache.write('registry_id', @registry.id)
     else
-      puts "check1b"
       Rails.cache.read('registry_id')
     end
     begin 
-      puts "check2 #{@registry.inspect}"
       @cart = Cart.first_or_create!(user_id: current_user.id, registry_id: @registry.id)
-      puts "check3 #{@cart.inspect}"
       ur = UserRegistry.find_by(registry_id: @registry.id, user_id: current_user.id)
-      puts "check4 #{ur.inspect}"
       if (ur.association_type == "owner" || ur.association_type == "administrator")
-        puts "check 5a"
         products_pool = Product.all
       else
-        puts "check 5b"
         products_pool = Product.includes(:product_registries).where(:product_registries => { registry_id: @registry.id })
       end
-      puts "check 6"
     rescue
-      puts "check 7"
       products_pool = Product.includes(:product_registries).where(:product_registries => { registry_id: @registry.id })
     end
     
     @q = products_pool.ransack(params[:q])
     params[:id] = @registry.id
-    @products = @q.result
+    @products = @q.result.paginate(page: params[:page], per_page: 24)
     
     # respond_with(@registry)
   end
@@ -49,6 +39,24 @@ class RegistriesController < ApplicationController
   def search  
     show
     render :show
+  end
+  
+  def search_reg
+    index
+    render :index
+  end
+  
+  def add_remove_as_guest
+    ur_params = { :user_id => current_user.id, :registry_id => params[:id], :association_type => 'guest' }
+    @ur_r = params[:id]
+    if UserRegistry.exists?(ur_params)
+      UserRegistry.find_by(ur_params).destroy
+      @ur_status = "removed"
+    else
+      UserRegistry.create(ur_params)
+      @ur_status = "added"
+    end
+    render :template => 'registries/add_remove_as_guest'
   end
   
   def add_remove_product
@@ -120,6 +128,12 @@ class RegistriesController < ApplicationController
   end
 
   private
+    def set_registries
+      @owner = current_user.owned_registries
+      @administrator = current_user.shared_registries
+      @guest = current_user.guest_registries
+    end
+  
     def set_registry
       @registry = Registry.find(params[:id])
     end

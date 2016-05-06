@@ -8,18 +8,25 @@
     <div id="accordion" class="panel-group">
       <% @registries.each do |r| %>
         <% registry = Registry.find(r) %>
+        <% merchants = registry.products.map{ |p| p.merchant }.uniq %>
         <div class="panel panel-default">    
           <div class="panel-heading">
             <h4 class="panel-title">
-              <a data-toggle="collapse" data-parent="#accordion" href=<%= "##{r}" %>><%= registry.name %></a><div class="pull-right"><%= f.check_box "#{r}".to_sym, {class: 'registry-checkbox'}, 'true', 'false' %></div>
+              <a data-toggle="collapse" data-parent="#accordion" href=<%= "##{r}" %>><%= registry.name %></a>
             </h4>
 
           </div>
           <div id=<%= "#{r}" %> class="panel-collapse collapse">
             <div class="panel-body" id=<%= "registry-#{r}-products" %>>
-              <% @products = registry.cart_products.includes(:cart).where( :carts => { :user_id => current_user.id }).each do |cp| %>
-              <li><%= Product.find(cp.product_id).name %> -- <%= cp.quantity %><%= link_to "X", destroy_cart_product_path(cp), method: :delete, remote: true %>
-</li>
+              <% merchants.each do |m| %>
+                <div class="cart-merchant"><b><%= m %></b></div>
+                <% @products = registry.cart_products.includes(:cart, :product).where( :carts => { :user_id => current_user.id }, :products => { :merchant => m }).each do |cp| %>
+                  <div id=<%= "registry-item-#{cp.id}" %>>
+                    <%= f.check_box "#{cp.id}".to_sym, {class: 'registry-checkbox'}, 'true', 'false' %>
+                    <%= Product.find(cp.product_id).name %> -- <%= cp.quantity %>
+                    <div class="pull-right"><%= link_to "X", destroy_cart_product_path(cp), method: :post, remote: true %></div>
+                  </div>
+                <% end %>
               <% end %>
             </div>
           </div>

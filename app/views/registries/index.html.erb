@@ -2,27 +2,50 @@
 
 <h1>Listing registries</h1>
 
-<% reg_types = [['Owner', @owner],['Administrator', @administrator],['Guest', @guest]] %>
-
-<div id="accordion" class="panel-group">
-  <% reg_types.each do |r| %>
-    <div class="panel panel-default">    
-        <div class="panel-heading">
-            <h4 class="panel-title">
-                <a data-toggle="collapse" data-parent="#accordion" href=<%= "##{r[0]}" %>><%= "#{r[0]}" %></a>
-            </h4>
-        </div>
-        <div id=<%= "#{r[0]}" %> class="panel-collapse collapse">
-            <div class="panel-body" id=<%= "#{r[0]}-listing" %>>
-                <% r[1].each do |reg| %>
-                  <li><%= link_to reg.name, reg %></li>
-                <% end %>
-            </div>
-        </div>
-    </div>
-  <% end %>
+<div id="reg-accordion" class="panel-group">
+  <%= render 'registry_listings' %>
 </div>
 <br>
+
+<!-- Search form for registries -->
+<h2>Search for Registry</h2>
+<%= simple_form_for @q, :url => { :controller => 'registries', :action => 'search_reg' } do |f| %>
+  <%= f.text_field :name_cont, :placeholder => "Registry name" %>
+  <%= f.text_field :user_registries_user_email_cont, :placeholder => "Owner email" %>
+  <%= f.hidden_field :user_registries_eq, :value => 'owner' %>
+  <%= f.submit "Search" %>
+<% end %>
+<br>
+
+<!-- Pagination for registries -->
+<%= will_paginate @registries %>
+
+<!-- Registry search results -->
+<table class="table">
+  <tr>
+    <th>Add As Guest</th>
+    <th>Registry Name</th>
+    <th>Registry Creator Email</th>
+  </tr>
+  <% @registries.each do |r| %>
+    <tr>
+      <td>
+        <% if UserRegistry.exists?(registry_id: r.id, user_id: current_user.id, association_type: 'guest') %> 
+          <%= button_to add_remove_as_guest_path(:id => r.id), class: "btn", id: "add-remove-#{r.id}", method: :post, remote: true do %>
+            <span class="glyphicon glyphicon-minus"></span>
+          <% end %>
+        <% else %>
+          <%= button_to add_remove_as_guest_path(:id => r.id), class: "btn", id: "add-remove-#{r.id}", method: :post, remote: true do %>
+            <span class="glyphicon glyphicon-plus"></span>
+          <% end %>
+        <% end %>
+      </td>
+      <td><%= link_to r.name, r %></td>
+      <td><%= r.owners.map{ |o| o.email }.join(", ") %></td>
+    </tr>
+  <% end %>
+</table>
+  
 
 <!-- New Registry Modal -->
 <div id="new-registry" class="modal fade" role="dialog">

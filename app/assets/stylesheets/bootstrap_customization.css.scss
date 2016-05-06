@@ -2,6 +2,13 @@ body{
   background-color: #EFF5FB !important;
 }
 
+.cart-merchant{
+  background-color:lightgray; 
+  padding-left: 5px; 
+  border-radius: 3px;
+  width: 100%;
+}
+
 .modal-body {
     max-height: calc(100vh - 210px);
     overflow-y: auto;

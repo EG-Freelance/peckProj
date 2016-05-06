@@ -1,9 +1,8 @@
 <%= simple_form_for :checkout_confirmation, url: checkout_confirmation_path, :html => { method: :post, id: 'checkout-confirmation-form' }, remote: true do |f| %>
-  <% unless @r.nil? %>
-    <% @r.each do |r| %>
-      <% registry = Registry.find(r) %>
-      <%= registry.name %>
-      <% registry.cart_products.includes(:cart).where( :carts => { :user_id => current_user.id }).each do |cp| %>
+  <% unless @merchants.nil? %>
+    <% @merchants.each do |m| %>
+      <%= m %>
+      <% @registry.cart_products.includes(:cart, :product).where( :carts => { :user_id => current_user.id }, :products => { :merchant => m }).each do |cp| %>
         <div class="form-wrapper"><%= f.check_box "#{cp.id}".to_sym, {class: 'confirmation-checkbox'} %>  <%= Product.find(cp.product_id).name %> -- <%= f.input_field "#{cp.id}-quantity".to_sym,  :value => cp.quantity, :style => "width:25px" %></div>
       <% end %>
     <% end %>

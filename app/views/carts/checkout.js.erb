@@ -1,7 +1,5 @@
 $('#checkout').modal('hide');
 
-console.log('<%= @r %>');
-
 <% @cp_array.each do |p| %>
   window.open('<%= p.affiliate_link %>');
 <% end %>

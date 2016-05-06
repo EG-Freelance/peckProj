@@ -1,0 +1,9 @@
+<% if @ur_status == "added" %>
+  $('#js-notice').removeClass().addClass('js-success js-notice').text("Registry added under guest listings").stop().fadeTo(1,100).fadeTo(4000,0);
+  $("#add-remove-<%= @ur_r %>").html("<span class='glyphicon glyphicon-minus'></span>");
+<% else %>
+  $('#js-notice').removeClass().addClass('js-success js-notice').text("Registry removed from guest listings").stop().fadeTo(1,1).fadeTo(4000,0);
+  $("#add-remove-<%= @ur_r %>").html("<span class='glyphicon glyphicon-plus'></span>");
+<% end %>
+
+$('#reg-accordion').html("<%= j (render partial: 'registries/registry_listings') %>");

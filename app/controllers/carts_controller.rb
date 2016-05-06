@@ -4,6 +4,7 @@ class CartsController < ApplicationController
   respond_to :html
   
   def add_to_cart
+    @p_id = params[:cart_product][:product_id]
     c = CartProduct.find_or_initialize_by(cart_id: Cart.find_by(user_id: current_user.id).id, registry_id: params[:cart_product][:registry_id], product_id: params[:cart_product][:product_id])
     unless c.quantity == params[:cart_product][:quantity]
       c.quantity = params[:cart_product][:quantity]
@@ -17,17 +18,13 @@ class CartsController < ApplicationController
   end
 
   def checkout
-    # Set registries being checked out
-    @r = params['checkout'].map{ |k,v| k unless v == "false" }
-    @r.delete_if { |r| r.nil? }
-    @cp_array = []
+    # Set products being checked out
+    @cp = params['checkout'].map{ |k,v| k unless v == "false" }
+    @cp.delete_if { |r| r.nil? }
+    @cp_array = @cp.map { |cpid| CartProduct.find(cpid).product }
+    @merchants = @cp.map { |cpid| CartProduct.find(cpid).product.merchant }.uniq
+    @registry = Registry.find_by(id: CartProduct.find(@cp.first).registry_id)
     
-    # For each registry, send each CartProduct into an array for processing
-    @r.each do |reg|
-      CartProduct.where(cart_id: Cart.find_by(user_id: current_user.id), registry_id: reg).each do |p|
-        @cp_array << p.product
-      end
-    end
     respond_to do |format|
       format.html { redirect_to :back }
       format.js { 
@@ -56,6 +53,8 @@ class CartsController < ApplicationController
   end
   
   def destroy_cart_product
+    @cp_id = params[:format]
+    CartProduct.destroy(@cp_id)
   end
   
   def index

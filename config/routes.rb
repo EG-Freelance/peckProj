@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :registries do
     collection do
       match ':id/search' => 'registries#search', via: [:get, :post], as: :search
+      match 'search_reg' => 'registries#search_reg', via: [:get, :post], as: :search_reg
     end
   end
 
@@ -32,7 +33,8 @@ Rails.application.routes.draw do
     post 'add_to_cart' => 'carts#add_to_cart'
     post 'checkout' => 'carts#checkout'
     post 'checkout_confirmation' => 'carts#checkout_confirmation'
-    delete 'destroy_cart_product' => 'carts#destroy_cart_product'
+    post 'destroy_cart_product' => 'carts#destroy_cart_product'
+    post 'add_remove_as_guest' => 'registries#add_remove_as_guest'
   end
   
   # The priority is based upon order of creation: first created -> highest priority.
