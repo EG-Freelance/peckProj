@@ -2,6 +2,12 @@ body{
   background-color: #EFF5FB !important;
 }
 
+p.card-text{
+  height: 135px;
+  display: inline-block;
+  overflow: scroll;
+}
+
 .cart-merchant{
   background-color:lightgray; 
   padding-left: 5px; 

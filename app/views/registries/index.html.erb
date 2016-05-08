@@ -1,4 +1,6 @@
-<button type="button" class="btn btn-lg" data-toggle="modal" data-target="#new-registry">Create New Registry</button>
+<% if user_signed_in? %>
+  <button type="button" class="btn btn-lg" data-toggle="modal" data-target="#new-registry">Create New Registry</button>
+<% end %>
 
 <h1>Listing registries</h1>
 
@@ -23,23 +25,27 @@
 <!-- Registry search results -->
 <table class="table">
   <tr>
-    <th>Add As Guest</th>
-    <th>Registry Name</th>
-    <th>Registry Creator Email</th>
+    <% if user_signed_in? %>
+      <th>Add As Guest</th>
+      <th>Registry Name</th>
+      <th>Registry Creator Email</th>
+    <% end %>
   </tr>
   <% @registries.each do |r| %>
     <tr>
-      <td>
-        <% if UserRegistry.exists?(registry_id: r.id, user_id: current_user.id, association_type: 'guest') %> 
-          <%= button_to add_remove_as_guest_path(:id => r.id), class: "btn", id: "add-remove-#{r.id}", method: :post, remote: true do %>
-            <span class="glyphicon glyphicon-minus"></span>
+      <% if user_signed_in? %>
+        <td>
+          <% if UserRegistry.exists?(registry_id: r.id, user_id: current_user.id, association_type: 'guest') %> 
+            <%= button_to add_remove_as_guest_path(:id => r.id), class: "btn", id: "add-remove-#{r.id}", method: :post, remote: true do %>
+              <span class="glyphicon glyphicon-minus"></span>
+            <% end %>
+          <% else %>
+            <%= button_to add_remove_as_guest_path(:id => r.id), class: "btn", id: "add-remove-#{r.id}", method: :post, remote: true do %>
+              <span class="glyphicon glyphicon-plus"></span>
+            <% end %>
           <% end %>
-        <% else %>
-          <%= button_to add_remove_as_guest_path(:id => r.id), class: "btn", id: "add-remove-#{r.id}", method: :post, remote: true do %>
-            <span class="glyphicon glyphicon-plus"></span>
-          <% end %>
-        <% end %>
-      </td>
+        </td>
+      <% end %>
       <td><%= link_to r.name, r %></td>
       <td><%= r.owners.map{ |o| o.email }.join(", ") %></td>
     </tr>
@@ -47,31 +53,33 @@
 </table>
   
 
-<!-- New Registry Modal -->
-<div id="new-registry" class="modal fade" role="dialog">
-  <div class="modal-dialog">
+<% if user_signed_in? %>
+  <!-- New Registry Modal -->
+  <div id="new-registry" class="modal fade" role="dialog">
+    <div class="modal-dialog">
 
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Create New Registry</h4>
-      </div>
-
-      <!-- Tab panes/Modal Body -->
-      <div class="modal-body">
-        <div role="tabpanel" class="tab-pane active" id="new-registry-modal">
-          <%= render 'form' %>
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Create New Registry</h4>
         </div>
-        <button type="button" class="btn btn-lg" data-toggle="modal" data-target="#new-payment">Create New Payment Method</button>
-      </div>
 
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <!-- Tab panes/Modal Body -->
+        <div class="modal-body">
+          <div role="tabpanel" class="tab-pane active" id="new-registry-modal">
+            <%= render 'form' %>
+          </div>
+          <button type="button" class="btn btn-lg" data-toggle="modal" data-target="#new-payment">Create New Payment Method</button>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
+<% end %>
 
 <!-- Payment Method Modal -->
 <div id="new-payment" class="modal fade" role="dialog">

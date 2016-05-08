@@ -129,9 +129,15 @@ class RegistriesController < ApplicationController
 
   private
     def set_registries
-      @owner = current_user.owned_registries
-      @administrator = current_user.shared_registries
-      @guest = current_user.guest_registries
+      if user_signed_in?
+        @owner = current_user.owned_registries
+        @administrator = current_user.shared_registries
+        @guest = current_user.guest_registries
+      else
+        @owner = []
+        @administrator = []
+        @guest = []
+      end
     end
   
     def set_registry
