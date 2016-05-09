@@ -90,6 +90,19 @@ class RegistriesController < ApplicationController
       end
     end
   end
+  
+  def nonuser_checkout
+    @product = Product.find(params[:product_id])
+    respond_to do |format|
+      format.html { redirect_to :back }
+      format.js { }
+    end
+    #render :template => 'registries/nonuser_checkout'
+  end
+  
+  def nonuser_checkout_confirmation
+    
+  end
 
   def new
     @registry = Registry.new

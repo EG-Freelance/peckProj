@@ -61,10 +61,12 @@
           <% end %>
           <% if user_signed_in? %>
             <% if ProductRegistry.exists?(product_id: p.id, registry_id: @registry.id) %>
-              <img type="button" class="btn btn-lg" data-toggle="modal" data-target=<%= "#add-to-cart-#{p.id}-modal" %> src="/assets/ShoppingCartAdd.png" height="60" style="padding: 0px 0px 0px 0px;" id=<%= "add-cart-#{p.id}" %>>
+              <img type="button" class="btn btn-lg" data-toggle="modal" data-target=<%= "#add-to-cart-#{p.id}-modal" %> src="/assets/ShoppingCartAdd.png" height="60" style="padding: 0px 0px 0px 0px;" id=<%= "add-cart-#{p.id}" %>> or <i><%= link_to "Skip the cart", p.affiliate_link, :target => "_blank" %></i>
             <% else %>
                <img type="button" class="btn btn-lg" disabled='disabled' data-toggle="modal" data-target=<%= "#add-to-cart-#{p.id}" %> src="/assets/ShoppingCartAdd.png" height="60" style="padding: 0px 0px 0px 0px;opacity:0" id=<%= "add-cart-#{p.id}" %>>
             <% end %>
+          <% else %>
+            <i><%= link_to "Checkout without login", nonuser_checkout_path(:product_id => p.id), :target => "_blank", method: :post, remote: true %></i>
           <% end %>
           <br><br>
         </div>
@@ -145,6 +147,28 @@
     </div>
   <% end %>
 <% end %>
+
+<!-- Checkout confirmation modal (not logged in) -->
+<div id="nonuser-checkout-confirmation" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Confirm Your Purchase(s)</h4>
+      </div>
+      <div class="modal-body">
+        <div role="tabpanel" class="tab-pane active" id="checkout-confirmation-modal">
+          <% unless @product.nil? %>
+            <%= render 'registries/nonuser_checkout_confirmation' %>
+          <% end %>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
   $('#product-form').on('submit', function() {

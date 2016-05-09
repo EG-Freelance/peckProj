@@ -11,7 +11,7 @@
         <div id=<%= "owner#{i+1}" %> class="panel-collapse collapse">
             <div class="panel-body">
               <% o.registries.each do |r| %>
-                <li><%= r.name %> -- <b>Payment Method:</b> <%= r.payment_method.provider %>; <b>Payment Username:</b> <%= r.payment_method.username %></li>
+                <li><%= r.name %> -- <% if r.payment_method.nil? %> <i style="color:red">User needs to set up payment method</i> <% else %> <b>Payment Method:</b> <%= r.payment_method.provider %>; <b>Payment Username:</b> <%= r.payment_method.username %></li> <% end %>
               <% end %>
             </div>
         </div>

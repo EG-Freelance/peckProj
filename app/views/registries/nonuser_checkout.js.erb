@@ -1,0 +1,5 @@
+window.open('<%= @product.affiliate_link %>');
+
+$('#nonuser-checkout-confirmation').html('<%= j (render partial: 'registries/nonuser_checkout_confirmation') %>');
+
+$('#nonuser-checkout-confirmation').modal("show");

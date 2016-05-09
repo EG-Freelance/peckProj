@@ -14,6 +14,9 @@ Rails.application.routes.draw do
   devise_for :admins
   devise_for :users, controllers: { registrations: "users/registrations" }
   root 'pages#index'
+  get 'pages/about' => 'pages#about', as: :about
+  post 'nonuser_checkout' => 'registries#nonuser_checkout', as: :nonuser_checkout
+  post 'nonuser_checkout_confirmation' => 'registries#nonuser_checkout_confirmation', as: :nonuser_checkout_confirmation
   
   # Admin pages
   authenticated :user, lambda { |u| u.admin? } do

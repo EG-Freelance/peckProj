@@ -32,10 +32,19 @@
       <p class="alert"><%= alert %></p>
     <% end %>
   </head>
-  <body style="padding-left:20px; padding-right:20px; padding-bottom:20px" data-no-turbolink="true">
+  <body>
+    <!-- Wrap all page content here -->
+    <div id="wrap" style="padding-left:20px; padding-right:20px; padding-bottom:80px" data-no-turbolink="true">
 
-    <%= yield %>
+      <!-- Begin page content -->
+        <%= yield %>
+    </div>
 
+    <div id="footer">
+      <div class="container">
+        <%= render 'layouts/footer' %>
+      </div>
+    </div>
   </body>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
