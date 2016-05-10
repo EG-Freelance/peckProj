@@ -1,1 +1,6 @@
-$('#nonuser-checkout-confirmation').modal('hide');
+if('<%= @status %>' === "success"){
+  $('#nonuser-checkout-confirmation').modal('hide');
+  $('#js-notice').removeClass().addClass('js-success js-notice').text("Checkout confirmed").stop().fadeTo(1,100).fadeTo(4000,0);
+}else{
+  $('#js-notice').removeClass().addClass('js-failure js-notice').text("Please be sure that you've listed a valid number").stop().fadeTo(1,100).fadeTo(4000,0);
+}
