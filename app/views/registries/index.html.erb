@@ -1,13 +1,14 @@
 <% if user_signed_in? %>
   <button type="button" class="btn btn-lg" data-toggle="modal" data-target="#new-registry">Create New Registry</button>
+
+  <h1>Listing registries</h1>
+
+  <div id="reg-accordion" class="panel-group">
+    <%= render 'registry_listings' %>
+  </div>
+  <br>
+
 <% end %>
-
-<h1>Listing registries</h1>
-
-<div id="reg-accordion" class="panel-group">
-  <%= render 'registry_listings' %>
-</div>
-<br>
 
 <!-- Search form for registries -->
 <h2>Search for Registry</h2>

@@ -66,7 +66,12 @@
                <img type="button" class="btn btn-lg" disabled='disabled' data-toggle="modal" data-target=<%= "#add-to-cart-#{p.id}" %> src="/assets/ShoppingCartAdd.png" height="60" style="padding: 0px 0px 0px 0px;opacity:0" id=<%= "add-cart-#{p.id}" %>>
             <% end %>
           <% else %>
-            <i><%= link_to "Checkout without login", nonuser_checkout_path(:product_id => p.id), :target => "_blank", method: :post, remote: true %></i>
+            <i><%= link_to "Checkout without login", nonuser_checkout_path(:product_id => p.id, :registry_id => @registry.id), :id => "checkout-#{p.id}", method: :post, remote: true %></i>
+            <script>
+              $('<%= "#checkout-#{p.id}" %>').click(function(){
+                window.open('<%= p.affiliate_link %>');
+              });
+            </script>
           <% end %>
           <br><br>
         </div>
@@ -154,10 +159,10 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Confirm Your Purchase(s)</h4>
+        <h4 class="modal-title">Confirm Your Purchase</h4>
       </div>
       <div class="modal-body">
-        <div role="tabpanel" class="tab-pane active" id="checkout-confirmation-modal">
+        <div role="tabpanel" class="tab-pane active" id="nonuser-checkout-confirmation-modal">
           <% unless @product.nil? %>
             <%= render 'registries/nonuser_checkout_confirmation' %>
           <% end %>

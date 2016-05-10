@@ -93,6 +93,7 @@ class RegistriesController < ApplicationController
   
   def nonuser_checkout
     @product = Product.find(params[:product_id])
+    @registry_id = params[:registry_id]
     respond_to do |format|
       format.html { redirect_to :back }
       format.js { }
@@ -101,7 +102,13 @@ class RegistriesController < ApplicationController
   end
   
   def nonuser_checkout_confirmation
-    
+    pr = ProductRegistry.find_by(registry_id: params[:nonuser_checkout_confirmation][:registry_id], product_id: params[:nonuser_checkout_confirmation][:product_id])
+    pr_purch = pr.purchased
+    pr.update(purchased: pr_purch + params[:nonuser_checkout_confirmation][:quantity].to_i)
+    respond_to do |format|
+      format.html { redirect_to :back }
+      format.js { }
+    end
   end
 
   def new
