@@ -37,13 +37,20 @@ class CartsController < ApplicationController
     products = params['checkout_confirmation'].map{ |k,v| [k,v] unless v == "0" }
     products.delete_if { |p| p.nil? }
     pairs = products.each_slice(2).to_a
-    puts pairs.inspect
-    puts CartProduct.find(pairs[0][0][0])
+    # pairs array format:
+    # [[ <CartProduct.id>, <checked, t/f>],[ <CartProduct.id-quantity>, <CartProduct.quantity confirmed>]]
+    product_array = pairs.map{ |p| p[0][0] }
+    #set @registry for js rendering
+    @registry = CartProduct.find(pairs[0][0][0]).registry
+    cps = CartProduct.where(id: product_array)
+    product_ids = cps.map{ |cp| cp.product_id }
+    #set @prs for js rendering
+    @prs = ProductRegistry.where(product_id: product_ids, registry_id: @registry.id)
     pairs.each do |p|
       cp = CartProduct.find(p[0][0])
       cp_pr = cp.registry.product_registries.find_by(product_id: cp.product_id)
-      cp_quant = cp_pr.quantity
-      cp_pr.update(purchased: (p[1][1].to_i + cp_quant))
+      cp_purch = cp_pr.purchased
+      cp_pr.update(purchased: (p[1][1].to_i + cp_purch))
       cp.destroy      
     end
     respond_to do |format|

@@ -6,8 +6,6 @@ $('#checkout').modal('hide');
 
 $('#checkout-confirmation-modal').html("<%= j (render partial: 'carts/checkout_confirmation') %>");
 
-console.log($('#checkout-confirmation'));
-
 $('#checkout-confirmation').modal("show");
 
 $('.form-wrapper').each(function(){ 

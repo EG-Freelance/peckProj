@@ -1,6 +1,7 @@
-if('<%= @status %>' === "success"){
-  $('#nonuser-checkout-confirmation').modal('hide');
-  $('#js-notice').removeClass().addClass('js-success js-notice').text("Checkout confirmed").stop().fadeTo(1,100).fadeTo(4000,0);
-}else{
-  $('#js-notice').removeClass().addClass('js-failure js-notice').text("Please be sure that you've listed a valid number").stop().fadeTo(1,100).fadeTo(4000,0);
-}
+$('#nonuser-checkout-confirmation').modal('hide');
+
+<% pr = ProductRegistry.find_by(registry_id: @registry.id, product_id: @product.id) %>
+<% pr_quant = pr.quantity %>
+<% pr_purch = pr.purchased %>
+
+$('<%= "#remaining-#{@product.id}" %>').html('<p style="height:18px"><i><%= [pr_quant - pr_purch, 0].max %> more needed out of <%= pr_quant %></i></p>')

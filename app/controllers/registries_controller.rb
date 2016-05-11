@@ -12,13 +12,7 @@ class RegistriesController < ApplicationController
   end
 
   def show
-    unless @registry.nil?
-      Rails.cache.write('registry_id', @registry.id)
-    else
-      Rails.cache.read('registry_id')
-    end
     begin 
-      @cart = Cart.first_or_create!(user_id: current_user.id, registry_id: @registry.id)
       ur = UserRegistry.find_by(registry_id: @registry.id, user_id: current_user.id)
       if (ur.association_type == "owner" || ur.association_type == "administrator")
         products_pool = Product.all
@@ -102,20 +96,15 @@ class RegistriesController < ApplicationController
   end
   
   def nonuser_checkout_confirmation
+    @product = Product.find(params[:nonuser_checkout_confirmation][:product_id])
+    @registry = Registry.find(params[:nonuser_checkout_confirmation][:registry_id])
     pr = ProductRegistry.find_by(registry_id: params[:nonuser_checkout_confirmation][:registry_id], product_id: params[:nonuser_checkout_confirmation][:product_id])
     pr_purch = pr.purchased
-    ck_q= params[:nonuser_checkout_confirmation][:quantity].to_i
-    if ck_q > 0
-      pr.purchased = pr_purch + ck_q
-      pr.save
-      @status = "success"
-    else
-      @status = "failure"
-    end
+    pr.update(purchased: pr_purch + params[:nonuser_checkout_confirmation][:quantity].to_i)
     respond_to do |format|
       format.html { redirect_to :back }
       format.js { }
-    end  
+    end
   end
 
   def new

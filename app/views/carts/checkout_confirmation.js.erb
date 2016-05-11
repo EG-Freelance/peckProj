@@ -2,4 +2,11 @@ $('#checkout-confirmation-modal').html("<%= j (render partial: 'carts/checkout_c
 
 $('#cart-modal').html("<%= j (render partial: 'carts/checkout') %>");
 
+<% @prs.each do |pr| %>
+  <% pr_quant = pr.quantity %>
+  <% pr_purch = pr.purchased %>
+
+  $('<%= "#remaining-#{pr.product_id}" %>').html('<p style="height:18px"><i><%= [pr_quant - pr_purch, 0].max %> more needed out of <%= pr_quant %></i></p>')
+<% end %>
+
 $('#checkout-confirmation').modal('hide');
