@@ -10,7 +10,7 @@
 <!-- Invite more users if the current user is the owner -->
 <% if user_signed_in? %>
   <% if current_user.owned_registries.map{ |r| r.id }.index(@registry.id) != nil %>
-    <button type="button" class="btn btn-lg btn-signup" data-toggle="modal" data-target="#invite">Invite more administrators</button>
+    <button type="button" class="btn btn-default btn-lg" data-toggle="modal" data-target="#invite">Invite more administrators</button>
   <% end %>
 <% end %>
 
@@ -30,14 +30,13 @@
   <%= f.text_field :price_gteq, :placeholder => 'Minimum price' %>
   <%= f.text_field :price_lteq, :placeholder => 'Maximum price' %>
   <%= f.text_field :merchant_cont, :placeholder => 'Product provider' %>
-  <%= f.submit %>
+  <%= f.submit :class => "btn btn-default btn-sm" %>
 <% end %>
 
 <!-- Pagination -->
 <%= will_paginate @products %>
 
 <!-- Product listings -->
-<div id="search-results-wrapper">
   <div class="free-wall">
     <div class="card-deck">
       <% @products.each do |p| %>
@@ -92,7 +91,6 @@
       <% end %>
     </div>
   </div>
-</div>
 
 <!-- Invite Users Modal -->
 <div id="invite" class="modal fade" role="dialog">

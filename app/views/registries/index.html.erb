@@ -1,5 +1,5 @@
 <% if user_signed_in? %>
-  <button type="button" class="btn btn-lg" data-toggle="modal" data-target="#new-registry">Create New Registry</button>
+  <button type="button" class="btn btn-lg btn-default" data-toggle="modal" data-target="#new-registry">Create New Registry</button>
 
   <h1>Listing registries</h1>
 
@@ -12,11 +12,11 @@
 
 <!-- Search form for registries -->
 <h2>Search for Registry</h2>
-<%= simple_form_for @q, :url => { :controller => 'registries', :action => 'search_reg' } do |f| %>
+<%= simple_form_for @q, :url => { :controller => 'registries', :action => 'search_reg' }, :html => { :class => "" } do |f| %>
   <%= f.text_field :name_cont, :placeholder => "Registry name" %>
   <%= f.text_field :user_registries_user_email_cont, :placeholder => "Owner email" %>
   <%= f.hidden_field :user_registries_eq, :value => 'owner' %>
-  <%= f.submit "Search" %>
+  <%= f.submit "Search", :class => "btn btn-default btn-sm" %>
 <% end %>
 <br>
 
@@ -71,7 +71,6 @@
           <div role="tabpanel" class="tab-pane active" id="new-registry-modal">
             <%= render 'form' %>
           </div>
-          <button type="button" class="btn btn-lg" data-toggle="modal" data-target="#new-payment">Create New Payment Method</button>
         </div>
 
         <div class="modal-footer">
