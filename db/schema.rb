@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160427234525) do
+ActiveRecord::Schema.define(version: 20160513143424) do
 
   create_table "admins", force: true do |t|
     t.string   "email",              default: "", null: false
@@ -66,6 +66,7 @@ ActiveRecord::Schema.define(version: 20160427234525) do
     t.decimal "fund"
     t.text    "affiliate_link"
     t.string  "merchant"
+    t.text    "image_link"
   end
 
   create_table "registries", force: true do |t|
