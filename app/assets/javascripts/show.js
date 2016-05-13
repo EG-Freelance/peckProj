@@ -1,4 +1,4 @@
-$(document).ready(function(){
+/*$(document).ready(function(){
   function resetCards(){
     var array = []
     $('.product-cards').each(function(i){ array[i] = $(this).css('top'); });
@@ -15,4 +15,4 @@ $(document).ready(function(){
   }
 
   $(document).ready(resetCards());
-});
+});*/
