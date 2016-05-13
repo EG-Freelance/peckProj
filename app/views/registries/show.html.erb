@@ -33,6 +33,10 @@
   <%= f.submit :class => "btn btn-default btn-sm" %>
 <% end %>
 
+<!-- Sort links -->
+<i><b>Sort products by:</b></i>
+<%= sort_link(@q, :name, 'Name', default_order: :asc) %> | <%= sort_link(@q, :price, 'Price', default_order: :asc) %> | <%= sort_link(@q, :merchant, 'Provider', default_order: :asc) %>
+
 <!-- Pagination -->
 <%= will_paginate @products %>
 

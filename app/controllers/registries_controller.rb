@@ -25,9 +25,8 @@ class RegistriesController < ApplicationController
     
     @q = products_pool.ransack(params[:q])
     params[:id] = @registry.id
+    @q.sorts = 'name asc' if @q.sorts.empty?
     @products = @q.result.paginate(page: params[:page], per_page: 24)
-    
-    # respond_with(@registry)
   end
   
   def search  
