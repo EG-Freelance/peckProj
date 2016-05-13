@@ -45,7 +45,7 @@
         <% pr.nil? ? pr_purch = 0 : pr_purch = pr.purchased %>
         <div class="card product-cards box-shadow--4dp">
           <!-- WHEN PRODUCT INFORMATION IS PULLED IN, IMAGE SOURCE SHOULD BE TIED TO PRODUCT -->
-          <img class="card-img-top" src="http://www.wired.com/wp-content/uploads/2015/06/Oculus-Rift-2-1024x576.jpg" alt="Oculus Rift" style="width:100%">
+          <img class="card-img-top" src=<%= "#{p.image_link}" %> alt="Oculus Rift" style="width:100%">
           <div class="card-block card-text">
             <h3 class="card-title" style="text-align:center"><%= p.name %></h3>
             <p class="card-text"><%= p.description %></p>
@@ -214,27 +214,18 @@
 </script>
 
 <script>
-  function resetCards(){
+  $(document).ready(function(){
     var array = []
     $('.product-cards').each(function(i){ array[i] = $(this).css('top'); });
-    console.log($('.product-cards'));
-    console.log(array);
     var u_array = $.unique(array);
-    console.log(u_array);
     var pos1 = parseInt(u_array[0]);
-    console.log(pos1);
     var pos2 = parseInt(u_array[1]);
-    console.log(pos2);
     var cardHeight = parseInt($('.product-cards').first().css('height'));
-    console.log(cardHeight);
     var gutter = 30;
     if(pos2 - pos1 < cardHeight){
       for(i in u_array){ 
         $('.product-cards[style*="top: '+u_array[i]+'"]').css('top', i*(cardHeight+gutter)); 
       }
     }
-    $('#wrap').css({'min-height' : '100%','height' : 'auto','margin' : '0 auto -60px','padding' : '0px 20px 60px 20px'});
-  }
-  
-  setTimeout(resetCards, 50);
+  });
 </script>
