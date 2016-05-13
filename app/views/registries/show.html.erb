@@ -214,7 +214,7 @@
 </script>
 
 <script>
-  $(document).ready(function(){
+  function resetCards(){
     var array = []
     $('.product-cards').each(function(i){ array[i] = $(this).css('top'); });
     console.log($('.product-cards'));
@@ -233,5 +233,7 @@
         $('.product-cards[style*="top: '+u_array[i]+'"]').css('top', i*(cardHeight+gutter)); 
       }
     }
-  });
+  }
+  
+  setTimeout(resetCards, 1000);
 </script>
