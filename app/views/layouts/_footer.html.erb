@@ -1,6 +1,8 @@
 <div style="text-align:center">
   <div class="row">
-    <span class="glyphicon glyphicon-envelope" style="font-size:30px; margin-top: 5px"></span><br>
-    Contact
+    <%= mail_to "admin@regisli.com" do %>
+        <span class="glyphicon glyphicon-envelope" style="font-size:30px; margin-top: 5px"></span><br>
+      Contact
+    <% end %>
   </div>
 </div>
