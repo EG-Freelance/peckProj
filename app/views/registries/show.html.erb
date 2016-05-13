@@ -44,7 +44,6 @@
         <% pr.nil? ? pr_quant = 0 : pr_quant = pr.quantity %>
         <% pr.nil? ? pr_purch = 0 : pr_purch = pr.purchased %>
         <div class="card product-cards box-shadow--4dp">
-          <!-- WHEN PRODUCT INFORMATION IS PULLED IN, IMAGE SOURCE SHOULD BE TIED TO PRODUCT -->
           <img class="card-img-top" src=<%= "#{p.image_link}" %> alt="Oculus Rift" style="width:100%">
           <div class="card-block card-text">
             <h3 class="card-title" style="text-align:center"><%= p.name %></h3>
@@ -131,10 +130,9 @@
           <!-- Tab panes/Modal Body -->
           <div class="modal-body">
 
-            <!-- WHEN PRODUCT INFORMATION IS PULLED IN, IMAGE SOURCE SHOULD BE TIED TO PRODUCT -->
             <div class="row">
               <div class="col-md-4">
-                <img src="http://www.wired.com/wp-content/uploads/2015/06/Oculus-Rift-2-1024x576.jpg" alt="Oculus Rift" style='max-height:100px;'>
+                <img src=<%= "#{p.image_link}" %> alt="Oculus Rift" style='max-height:100px;'>
               </div>
               <div class="col-md-8">
                 <h3><u><i><%= p.merchant %></i></u></h3>
@@ -214,7 +212,7 @@
 </script>
 
 <script>
-  $(document).ready(function(){
+  function resetCards(){
     var array = []
     $('.product-cards').each(function(i){ array[i] = $(this).css('top'); });
     var u_array = $.unique(array);
@@ -227,5 +225,8 @@
         $('.product-cards[style*="top: '+u_array[i]+'"]').css('top', i*(cardHeight+gutter)); 
       }
     }
-  });
+    $('#wrap').css({'min-height' : '100%','height' : 'auto','margin' : '0 auto -60px','padding' : '0px 20px 60px 20px'});
+  }
+  
+  setTimeout(resetCards, 50);  
 </script>
