@@ -1,12 +1,17 @@
-$('#checkout-confirmation-modal').html("<%= j (render partial: 'carts/checkout_confirmation') %>");
+<% if @status == "success" %>
+  $('#checkout-confirmation-modal').html("<%= j (render partial: 'carts/checkout_confirmation') %>");
 
-$('#cart-modal').html("<%= j (render partial: 'carts/checkout') %>");
+  $('#cart-modal').html("<%= j (render partial: 'carts/checkout') %>");
 
-<% @prs.each do |pr| %>
-  <% pr_quant = pr.quantity %>
-  <% pr_purch = pr.purchased %>
+  <% @prs.each do |pr| %>
+    <% pr_quant = pr.quantity %>
+    <% pr_purch = pr.purchased %>
 
-  $('<%= "#remaining-#{pr.product_id}" %>').html('<p style="height:18px"><i><%= [pr_quant - pr_purch, 0].max %> more needed out of <%= pr_quant %></i></p>')
+    $('<%= "#remaining-#{pr.product_id}" %>').html('<p style="height:18px"><i><%= [pr_quant - pr_purch, 0].max %> more needed out of <%= pr_quant %></i></p>')
+  <% end %>
+
+  $('#checkout-confirmation').modal('hide');
+  $('#js-notice').removeClass().addClass('js-success js-notice').text("Purchase confirmed!").stop().fadeTo(1,1).fadeTo(4000,0);
+<% else %>
+  $('#js-notice-cc').removeClass().addClass('js-failure js-notice').text("Please be sure to include a valid quantity in your submission").stop().fadeTo(1,1).fadeTo(4000,0); 
 <% end %>
-
-$('#checkout-confirmation').modal('hide');

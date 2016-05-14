@@ -95,11 +95,16 @@ class RegistriesController < ApplicationController
   end
   
   def nonuser_checkout_confirmation
-    @product = Product.find(params[:nonuser_checkout_confirmation][:product_id])
-    @registry = Registry.find(params[:nonuser_checkout_confirmation][:registry_id])
-    pr = ProductRegistry.find_by(registry_id: params[:nonuser_checkout_confirmation][:registry_id], product_id: params[:nonuser_checkout_confirmation][:product_id])
-    pr_purch = pr.purchased
-    pr.update(purchased: pr_purch + params[:nonuser_checkout_confirmation][:quantity].to_i)
+    if params[:nonuser_checkout_confirmation][:quantity].to_i > 0
+      @status = "success"
+      @product = Product.find(params[:nonuser_checkout_confirmation][:product_id])
+      @registry = Registry.find(params[:nonuser_checkout_confirmation][:registry_id])
+      pr = ProductRegistry.find_by(registry_id: params[:nonuser_checkout_confirmation][:registry_id], product_id: params[:nonuser_checkout_confirmation][:product_id])
+      pr_purch = pr.purchased
+      pr.update(purchased: pr_purch + params[:nonuser_checkout_confirmation][:quantity].to_i)
+    else
+      @status = "failure"
+    end
     respond_to do |format|
       format.html { redirect_to :back }
       format.js { }

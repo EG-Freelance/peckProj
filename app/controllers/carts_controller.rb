@@ -38,21 +38,32 @@ class CartsController < ApplicationController
     products.delete_if { |p| p.nil? }
     pairs = products.each_slice(2).to_a
     # pairs array format:
-    # [[ <CartProduct.id>, <checked, t/f>],[ <CartProduct.id-quantity>, <CartProduct.quantity confirmed>]]
+    # [[ <CartProduct.id>, <checked t/f>],[ <CartProduct.id-quantity>, <CartProduct.quantity confirmed>]]
     product_array = pairs.map{ |p| p[0][0] }
-    #set @registry for js rendering
-    @registry = CartProduct.find(pairs[0][0][0]).registry
-    cps = CartProduct.where(id: product_array)
-    product_ids = cps.map{ |cp| cp.product_id }
-    #set @prs for js rendering
-    @prs = ProductRegistry.where(product_id: product_ids, registry_id: @registry.id)
-    pairs.each do |p|
-      cp = CartProduct.find(p[0][0])
-      cp_pr = cp.registry.product_registries.find_by(product_id: cp.product_id)
-      cp_purch = cp_pr.purchased
-      cp_pr.update(purchased: (p[1][1].to_i + cp_purch))
-      cp.destroy      
-    end
+    
+    # set total confirmed purchases to make sure the form isn't empty
+    sum_array = pairs.map{ |p| p[1][1].to_i }
+    sum_confirmed = sum_array.sum
+    
+    if sum_confirmed > 0
+      @status = "success"
+      #set @registry for js rendering
+      @registry = CartProduct.find(pairs[0][0][0]).registry
+      cps = CartProduct.where(id: product_array)
+      product_ids = cps.map{ |cp| cp.product_id }
+
+      #set @prs for js rendering
+      @prs = ProductRegistry.where(product_id: product_ids, registry_id: @registry.id)
+      pairs.each do |p|
+        cp = CartProduct.find(p[0][0])
+        cp_pr = cp.registry.product_registries.find_by(product_id: cp.product_id)
+        cp_purch = cp_pr.purchased
+        cp_pr.update(purchased: (p[1][1].to_i + cp_purch))
+        cp.destroy      
+      end
+    else
+      @status = "failure"
+    end      
     respond_to do |format|
       format.html { redirect_to :back }
       format.js { }

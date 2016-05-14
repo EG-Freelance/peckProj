@@ -1,7 +1,13 @@
-$('#nonuser-checkout-confirmation').modal('hide');
+<% if @status == "success" %>
+  $('#nonuser-checkout-confirmation').modal('hide');
 
-<% pr = ProductRegistry.find_by(registry_id: @registry.id, product_id: @product.id) %>
-<% pr_quant = pr.quantity %>
-<% pr_purch = pr.purchased %>
+  <% pr = ProductRegistry.find_by(registry_id: @registry.id, product_id: @product.id) %>
+  <% pr_quant = pr.quantity %>
+  <% pr_purch = pr.purchased %>
 
-$('<%= "#remaining-#{@product.id}" %>').html('<p style="height:18px"><i><%= [pr_quant - pr_purch, 0].max %> more needed out of <%= pr_quant %></i></p>')
+  $('<%= "#remaining-#{@product.id}" %>').html('<p style="height:18px"><i><%= [pr_quant - pr_purch, 0].max %> more needed out of <%= pr_quant %></i></p>')
+
+  $('#js-notice').removeClass().addClass('js-success js-notice').text("Purchase confirmed!").stop().fadeTo(1,1).fadeTo(4000,0);
+<% else %>
+  $('#js-notice-ncc').removeClass().addClass('js-failure js-notice').text("Please be sure to include a valid quantity in your submission").stop().fadeTo(1,1).fadeTo(4000,0);
+<% end %>
