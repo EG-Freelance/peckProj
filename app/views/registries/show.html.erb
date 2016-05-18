@@ -1,7 +1,3 @@
-<div class="sticky">
-  <a href="#" class="pull-left"><img src="/assets/ShoppingCart.png", height="60"></a>
-</div>
-
 <% included = ProductRegistry.where(registry_id: @registry.id).map{ |r| r.product_id }.sort %>
 
 <% progress_array = ProductRegistry.where(registry_id: @registry.id).map { |pr| [pr.product.fund.to_f, pr.purchased] } %>
@@ -217,16 +213,10 @@
   function resetCards(){
     var array = []
     $('.product-cards').each(function(i){ array[i] = $(this).css('top'); });
-    console.log($('.product-cards'));
-    console.log(array);
     var u_array = $.unique(array);
-    console.log(u_array);
     var pos1 = parseInt(u_array[0]);
-    console.log(pos1);
     var pos2 = parseInt(u_array[1]);
-    console.log(pos2);
     var cardHeight = parseInt($('.product-cards').first().css('height'));
-    console.log(cardHeight);
     var gutter = 30;
     if(pos2 - pos1 < cardHeight){
       for(i in u_array){ 
@@ -236,5 +226,5 @@
     $('#wrap').css({'min-height' : '100%','height' : 'auto','margin' : '0 auto -60px','padding' : '0px 20px 60px 20px'});
   }
   
-  setTimeout(resetCards, 50);
+  setTimeout(resetCards, 100);
 </script>
