@@ -23,9 +23,34 @@ body {
 
 /* Set the fixed height of the footer here */
 #footer {
-  height: 60px;
-  background-color: #c5c5c5;
-  width: 100%;
+  position:fixed;
+  bottom: 0px;
+  height:12px;
+  width: 100%;       
+  left: 0px;       
+  right: 0px;
+  border:1px solid black;
+  display: inline-block;       
+  cursor:pointer;
+  background: skyblue;     
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  transition: all 0.5s ease 0.2s;
+}
+
+#footer:hover{
+  height:80px;
+}
+
+.slide{
+  border:1px solid black;
+  height:60px;    
+  left: 0px;
+  right:0px;
+  bottom: 11px;
+  display: none;    
+  position: absolute;
+  background-color: steelblue;
 }
 
 p.card-text{

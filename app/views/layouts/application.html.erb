@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>PeckProj</title>
+    <title>Regisli</title>
     
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
@@ -38,16 +38,14 @@
   </head>
   <body>
     <!-- Wrap all page content here -->
-    <div id="wrap" style="padding-left:20px; padding-right:20px; padding-bottom:80px" data-no-turbolink="true">
+    <div id="wrap" style="padding-left:20px; padding-right:20px; padding-bottom:12px" data-no-turbolink="true">
 
       <!-- Begin page content -->
         <%= yield %>
     </div>
 
     <div id="footer">
-      <div class="container">
-        <%= render 'layouts/footer' %>
-      </div>
+      <%= render 'layouts/footer' %>
     </div>
   </body>
   
