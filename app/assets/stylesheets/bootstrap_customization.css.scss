@@ -145,8 +145,9 @@ form.form-search:before {
   display:block;
 }
 
-.dropdown-menu{
-  margin-top:-15px;
+.nav-menu:hover{
+  background:#eeeeee;
+  border-radius:10px;  
 }
 /*------End Navbar Dropdown on Hover----------*/
 
@@ -429,8 +430,8 @@ input{
 }
 
 .navbar-secondary{
-  height:35px !important;
-  min-height:35px !important; 
+  height:50px !important;
+  min-height:50px !important; 
 }
 
 .navbar .navbar-center{

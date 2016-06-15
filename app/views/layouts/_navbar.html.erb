@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default" style="margin-bottom:0px !important">
+<nav class="navbar navbar-default" style="margin-bottom:0px !important; padding-top:10px">
   <div class="container-fluid">
     <a href="/" class="pull-left"><img src="/assets/regisli_logo_transparent.png", height="60"></a>
   	<div id="navbar" class="collapse navbar-collapse">
@@ -16,7 +16,7 @@
           </form>
         </div>
       </ul>
-  		<ul class="nav navbar-nav navbar-right" style="padding-right:25px">
+  		<ul class="nav navbar-nav navbar-right" style="padding-right:25px;">
   			<% if user_signed_in? %>
   				<% if current_user.admin? %>
   					<li><%= link_to "Admin Panel", pages_all_users_path %></li>
@@ -37,8 +37,8 @@
     <div class="container-fluid">
       <div id="navbar" class="collapse navbar-collapse">
         <ul class="nav navbar-nav navbar-center">
-          <li><%= link_to "REGISTRIES", "#" %></li>     
-          <ul class="dropdown nav navbar-nav">
+          <li class="nav-menu"><%= link_to "REGISTRIES", registries_path %></li>     
+          <ul class="nav-menu dropdown nav navbar-nav">
             <li><a>STARTER GUIDES</a></li>
             <ul class="dropdown-menu nav navbar-nav">
               <div class="row two-col">
@@ -59,7 +59,7 @@
               </div>
             </ul>
           </ul>
-          <ul class="dropdown nav navbar-nav">
+          <ul class="nav-menu dropdown nav navbar-nav">
             <li><a>BRANDS</a></li>
             <ul class="dropdown-menu nav navbar-nav">
               <div class="row three-col">
@@ -101,14 +101,14 @@
               </div>
             </ul>
           </ul>
-          <ul class="dropdown nav navbar-nav">
+          <ul class="nav-menu dropdown nav navbar-nav">
             <li><a>GIFTS</a></li>
             <ul class="dropdown-menu nav navbar-nav">
               <li>First thing</li>
               <li>Second thing</li>
             </ul>
           </ul>
-          <li><%= link_to "TRAVEL", "#" %></li>
+          <li class="nav-menu"><%= link_to "TRAVEL", "#" %></li>
         </ul>
       </div>
     </div>
