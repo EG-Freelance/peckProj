@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-fixed-top">
+<nav class="navbar navbar-default" style="margin-bottom:0px !important">
   <div class="container-fluid">
     <a href="/" class="pull-left"><img src="/assets/regisli_logo_transparent.png", height="60"></a>
   	<div id="navbar" class="collapse navbar-collapse">
@@ -9,6 +9,13 @@
           <li id="checkout-modal"><a data-toggle="modal" data-target="#checkout">Cart</a></li>
         <% end %>
 	  	</ul>
+      <ul class="nav navbar-nav navbar-center">
+        <div style="padding:20px;">
+          <form class="form-search form-inline">
+            <input type="text" class="search-query" placeholder="Search Products" />
+          </form>
+        </div>
+      </ul>
   		<ul class="nav navbar-nav navbar-right" style="padding-right:25px">
   			<% if user_signed_in? %>
   				<% if current_user.admin? %>
@@ -23,8 +30,91 @@
   		</ul>
   	</div>
   </div>
-  <div id="js-notice" style="padding-left:100px; height:18px"></div>
 </nav>
+
+<div class="sticky-menu sticky-nav-temp">
+  <nav class="navbar navbar-default navbar-secondary">
+    <div class="container-fluid">
+      <div id="navbar" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav navbar-center">
+          <li><%= link_to "REGISTRIES", "#" %></li>     
+          <ul class="dropdown nav navbar-nav">
+            <li><a>STARTER GUIDES</a></li>
+            <ul class="dropdown-menu nav navbar-nav">
+              <div class="row two-col">
+                <div class="col-sm-6">
+                  <li>First thing</li>
+                  <li class="divider"></li>
+                  <li>Second thing</li>
+                  <li>Third thing</li>
+                  <li>Fourth thing</li>
+                </div>
+                <div class="col-sm-6">
+                  <li>Fifth thing</li>
+                  <li>Sixth thing</li>
+                  <li>Seventh thing</li>
+                  <li>Eighth thing</li>
+                  <li>Ninth thing</li>
+                </div>
+              </div>
+            </ul>
+          </ul>
+          <ul class="dropdown nav navbar-nav">
+            <li><a>BRANDS</a></li>
+            <ul class="dropdown-menu nav navbar-nav">
+              <div class="row three-col">
+                <div class="col-sm-4">
+                  <li><b><u>Technology</u></b></li>
+                  <li>Oculus</li>
+                  <li>Radeon</li>
+                  <li>AMD</li>
+                  <li>nVidia</li>
+                  <li>Sony</li>
+                  <li class="divider"></li>
+                  <li><b><u>Sports</u></b></li>
+                  <li>Bauer</li>
+                  <li>Mission</li>
+                  <li>CCM</li>
+                </div>
+                <div class="col-sm-4">
+                  <li><b><u>Astronomy</u></b></li>
+                  <li>Atlas</li>
+                  <li>Skywatcher</li>
+                  <li>Orion</li>
+                  <li>Hubble</li>
+                  <li>NASA</li>
+                  <li class="divider"></li>
+                  <li><b><u>Games</u></b></li>
+                  <li>Nintendo</li>
+                  <li>Sony</li>
+                  <li>Microsoft</li>
+                  <li>Steam</li>
+                </div>
+                <div class="col-sm-4">
+                  <li><b><u>Phones</u></b></li>
+                  <li>Apple</li>
+                  <li>HTC</li>
+                  <li>Samsung</li>
+                  <li>Nokia</li>
+                  <li>Sony</li>
+                </div>
+              </div>
+            </ul>
+          </ul>
+          <ul class="dropdown nav navbar-nav">
+            <li><a>GIFTS</a></li>
+            <ul class="dropdown-menu nav navbar-nav">
+              <li>First thing</li>
+              <li>Second thing</li>
+            </ul>
+          </ul>
+          <li><%= link_to "TRAVEL", "#" %></li>
+        </ul>
+      </div>
+    </div>
+    <div id="js-notice" style="padding-left:100px; height:18px; position:absolute"></div>
+  </nav>
+</div>
 
 <!-- Log In Modal -->
 <div id="login" class="modal fade" role="dialog">
@@ -120,3 +210,26 @@
     </div>
   </div>
 </div>
+
+<script>
+  var menu = document.querySelector('.sticky-menu');
+  var menuPosition = menu.getBoundingClientRect();
+  var placeholder = document.createElement('div');
+  placeholder.style.width = menuPosition.width + 'px';
+  placeholder.style.height = menuPosition.height + 'px';
+  var isAdded = false;
+
+  window.addEventListener('scroll', function() {
+    if (window.pageYOffset >= menuPosition.top && !isAdded) {
+      menu.classList.add('sticky-nav');
+      menu.classList.remove('sticky-nav-temp');
+      menu.parentNode.insertBefore(placeholder, menu);
+      isAdded = true;
+    } else if (window.pageYOffset < menuPosition.top && isAdded) {
+      menu.classList.remove('sticky-nav');
+      menu.classList.add('sticky-nav-temp');
+      menu.parentNode.removeChild(placeholder);
+      isAdded = false;
+    }
+  });
+</script>

@@ -2,8 +2,21 @@ body{
   background-color: #EFF5FB !important;
 }
 
-/* Sticky footer styles
+/* Sticky styles
 -------------------------------------------------- */
+
+.sticky-nav{
+  top: 0;
+  position: fixed;
+  width: 100%;
+  z-index: 999 !important;
+}
+
+.sticky-nav-temp {
+  width: 100%;
+  z-index: 999 !important;
+  position: relative !important;
+}
 
 html,
 body {
@@ -32,7 +45,7 @@ body {
   border:1px solid black;
   display: inline-block;       
   cursor:pointer;
-  background: skyblue;     
+  background: #60b6d5;     
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   transition: all 0.5s ease 0.2s;
@@ -42,16 +55,110 @@ body {
   height:80px;
 }
 
-.slide{
-  border:1px solid black;
-  height:60px;    
-  left: 0px;
-  right:0px;
-  bottom: 11px;
-  display: none;    
-  position: absolute;
-  background-color: steelblue;
+/*--------Bootstrap scroll-page sections----------*/
+
+.intro-section {
+  height: 100%;
+  min-height: 650px;
+  padding-top: 20px;
+  margin-left: -20px;
+  margin-right: -20px;
+  text-align: center;
+  background: #eee;
 }
+
+.first-section {
+  height: 100%;
+  min-height: 650px;
+  padding-top: 40px;
+  margin-left: -20px;
+  margin-right: -20px;
+  text-align: center;
+  background: #fff;
+}
+
+.second-section {
+  height: 100%;
+  min-height: 650px;
+  padding-top: 40px;
+  margin-left: -20px;
+  margin-right: -20px;
+  text-align: center;
+  background: #eee;
+}
+
+.third-section {
+  height: 100%;
+  min-height: 650px;
+  padding-top: 40px;
+  margin-left: -20px;
+  margin-right: -20px;
+  text-align: center;
+  background: #fff;
+}
+
+.fourth-section {
+  height: 100%;
+  min-height: 650px;
+  padding-top: 40px;
+  margin-left: -20px;
+  margin-right: -20px;
+  text-align: center;
+  background: #eee;
+}
+
+/*--------End Bootstrap scroll-page sections----------*/
+
+/*--------Custom Search Field---------*/
+input.search-query {
+  padding-left:26px;
+  border-radius:10px;
+  outline:none;
+  width:450px;
+}
+
+input.search-query:focus { 
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(0, 135, 255, 0.6);
+}
+
+form.form-search {
+  position: relative;
+}
+
+form.form-search:before {
+  content:'';
+  display: block;
+  width: 14px;
+  height: 14px;
+  background-image: url(http://getbootstrap.com/2.3.2/assets/img/glyphicons-halflings.png);
+  background-position: -48px 0;
+  position: absolute;
+  top:6px;
+  left:8px;
+  opacity: .5;
+  z-index: 1000;
+}
+/*-------End Custom Search Field--------*/
+
+/*-------Navbar Dropdown on Hover---------*/
+.dropdown:hover .dropdown-menu{
+  display:block;
+}
+
+.dropdown-menu{
+  margin-top:-15px;
+}
+/*------End Navbar Dropdown on Hover----------*/
+
+/*------Multi-column Dropdowns---------*/
+.two-col{
+  min-width:400px;
+}
+
+.three-col{
+  min-width:600px;
+}
+/*------End Mulit-column Dropdowns-------*/
 
 p.card-text{
   height: 100px;
@@ -315,6 +422,25 @@ input{
 
 .navbar-default{
 	height:71px !important;
+  opacity: 0.9;
+  border: 0px;
+  background: white !important;
+  border-radius: 0px !important;
+}
+
+.navbar-secondary{
+  height:35px !important;
+  min-height:35px !important; 
+}
+
+.navbar .navbar-center{
+  display: inline-block;
+  float: none;
+  vertical-align: top;
+}
+
+.navbar .navbar-collapse{
+  text-align: center;
 }
 
 .btn-login{
