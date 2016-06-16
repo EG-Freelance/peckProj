@@ -26,9 +26,9 @@
       </div>
       <div class="col-md-5 col-sm-6">
         <ul class="nav navbar-nav navbar-right" style="padding-right:0px;">
-          <li><%= link_to "Blog", "#" %></li>
-          <li><%= link_to "Help", "#" %></li>
           <li><%= link_to "Contact Us", "#" %></li>
+          <li><%= link_to "Help", "#" %></li>
+          <li><%= link_to "Blog", "#" %></li>
           <% if user_signed_in? %>
             <% if current_user.admin? %>
               <li><%= link_to "Admin Panel", pages_all_users_path %></li>
