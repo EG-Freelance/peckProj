@@ -1,41 +1,78 @@
-<nav class="navbar navbar-default" style="margin-bottom:0px !important; padding-top:10px">
+<nav class="navbar navbar-default navbar-static-top" style="margin-bottom:0px !important; padding-top:10px; z-index: 1000;">
   <div class="container-fluid">
-    <a href="/" class="pull-left"><img src="/assets/regisli_logo_transparent.png", height="60"></a>
-  	<div id="navbar" class="collapse navbar-collapse">
-	  	<ul class="nav navbar-nav">
-	  		<li><%= link_to "About", about_path %></li>
-        <li><%= link_to "Registries", registries_path %></li>
-        <% if user_signed_in? %>
-          <li id="checkout-modal"><a data-toggle="modal" data-target="#checkout">Cart</a></li>
-        <% end %>
-	  	</ul>
-      <ul class="nav navbar-nav navbar-center">
-        <div style="padding:20px;">
-          <form class="form-search form-inline">
-            <input type="text" class="search-query" placeholder="Search Products" />
-          </form>
-        </div>
-      </ul>
-  		<ul class="nav navbar-nav navbar-right" style="padding-right:25px;">
-  			<% if user_signed_in? %>
-  				<% if current_user.admin? %>
-  					<li><%= link_to "Admin Panel", pages_all_users_path %></li>
-  				<% end %>
-          <li><%= link_to "Edit Account", edit_user_registration_path %>
-  				<li><%= link_to "Log Out", destroy_user_session_path, method: :delete %></li>
-  			<% else %>
-          <button type="button" class="btn btn-lg btn-login" data-toggle="modal" data-target="#login">Log In</button>
-          <button type="button" class="btn btn-lg btn-signup" data-toggle="modal" data-target="#signup">Sign Up</button>
-				<% end %>
-  		</ul>
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar"> <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+
+      </button>
+      <div class="navbar-brand navbar-brand-left" style="padding:0">
+        <a href="/">
+          <img src="/assets/regisli_logo_transparent.png" height="60">
+        </a>
+      </div>
+    </div>
+  	<div id="navbar" class="collapse navbar-collapse row">
+      <div class="col-md-1 col-sm-0"></div>
+      <div class="col-md-5 col-sm-4">
+        <ul class="nav navbar-nav" style="width:100%">
+          <div style="padding:15px;" id="search-div">
+            <form class="form-search form-inline">
+              <input type="text" class="search-query" placeholder="Search Products" />
+            </form>
+          </div>
+        </ul>
+      </div>
+      <div class="col-md-5 col-sm-6">
+        <ul class="nav navbar-nav navbar-right" style="padding-right:0px;">
+          <li><%= link_to "Blog", "#" %></li>
+          <li><%= link_to "Help", "#" %></li>
+          <li><%= link_to "Contact Us", "#" %></li>
+          <% if user_signed_in? %>
+            <% if current_user.admin? %>
+              <li><%= link_to "Admin Panel", pages_all_users_path %></li>
+            <% end %>               
+            <ul class="nav-menu dropdown nav navbar-nav">
+              <li class="dropdown" id="dropdown-parent"><a><img style="margin-top:-5px" src="/assets/UserIcon.png" height="30"></a></li>
+              <ul class="dropdown-menu nav navbar-nav" id="user-dropdown">
+                <!-- Fill dropdown based on window size and change dropdown style (hover vs. click) -->
+                <script>
+                  function fillDropdown(){
+                    if($(window).width() > 767){
+                      $('#user-dropdown').html('<li><a href="/users/edit">Edit Account</a></li><li><a data-method="delete" href="/users/sign_out" rel="nofollow">Log Out</a></li>');
+                      $('#dropdown-parent').removeAttr('data-toggle');
+                    }else{
+                      $('#user-dropdown').html('<li class="divider"></li><li style="text-align:center"><a href="/users/edit">Edit Account</a></li><li style="text-align:center"><a data-method="delete" href="/users/sign_out" rel="nofollow">Log Out</a></li><li class="divider"></li>');
+                      $('#dropdown-parent').attr('data-toggle','dropdown');
+                    }
+                  };
+                  $(window).resize(fillDropdown);
+                  $(document).ready(fillDropdown);
+                </script>
+              </ul>
+            </ul>
+            <li id="checkout-modal"><a data-toggle="modal" data-target="#checkout"><img style="margin-top:-5px" src="/assets/CartIcon.png" height="30"></a></li>
+          <% else %>
+            <li><a class="user-link" data-toggle="modal" data-target="#signup">Sign Up</a></li>
+            <li><a class="user-link" data-toggle="modal" data-target="#login">Log In</a></li>
+          <% end %>
+        </ul>
+      </div>
   	</div>
   </div>
 </nav>
 
 <div class="sticky-menu sticky-nav-temp">
   <nav class="navbar navbar-default navbar-secondary">
-    <div class="container-fluid">
-      <div id="navbar" class="collapse navbar-collapse">
+    <div class="container-fluid" style="padding:0">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#secondary-navbar"> 
+        <span class="sr-only"> Toggle navigation </span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div id="secondary-navbar" class="collapse navbar-collapse">
         <ul class="nav navbar-nav navbar-center">
           <li class="nav-menu"><%= link_to "REGISTRIES", registries_path %></li>     
           <ul class="nav-menu dropdown nav navbar-nav">

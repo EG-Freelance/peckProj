@@ -9,12 +9,12 @@ body{
   top: 0;
   position: fixed;
   width: 100%;
-  z-index: 999 !important;
+  z-index: 500 !important;
 }
 
 .sticky-nav-temp {
   width: 100%;
-  z-index: 999 !important;
+  z-index: 500 !important;
   position: relative !important;
 }
 
@@ -110,11 +110,14 @@ body {
 /*--------End Bootstrap scroll-page sections----------*/
 
 /*--------Custom Search Field---------*/
+#search-div{
+  width:inherit;
+}
 input.search-query {
   padding-left:26px;
   border-radius:10px;
   outline:none;
-  width:450px;
+  width:100%;
 }
 
 input.search-query:focus { 
@@ -141,13 +144,21 @@ form.form-search:before {
 /*-------End Custom Search Field--------*/
 
 /*-------Navbar Dropdown on Hover---------*/
-.dropdown:hover .dropdown-menu{
-  display:block;
-}
+@media only screen and (min-width: 768px) {
+  .dropdown:hover .dropdown-menu{
+    display:block;
+    padding-left:5px;
+    // left:-50px; // Use if dropdown needs to be offset
+  }
 
-.nav-menu:hover{
-  background:#eeeeee;
-  border-radius:10px;  
+  .dropdown-menu{ 
+    z-index: 1000;
+  }
+
+  .nav-menu:hover{
+    background:#eeeeee;
+    border-radius:10px;
+  }
 }
 /*------End Navbar Dropdown on Hover----------*/
 
@@ -159,7 +170,15 @@ form.form-search:before {
 .three-col{
   min-width:600px;
 }
-/*------End Mulit-column Dropdowns-------*/
+/*------End Multi-column Dropdowns-------*/
+
+.user-link:hover{
+  cursor:pointer;
+}
+
+#checkout-modal:hover{
+  cursor:pointer;
+}
 
 p.card-text{
   height: 100px;
@@ -412,17 +431,13 @@ input{
   font-family: 'Lobster Two', cursive;
 }
 
-.navbar-fixed-top{
-	padding-top:10px;
-}
-
 .carousel-img{
 	width:100% !important;
 	max-height:400px !important;
 }
 
 .navbar-default{
-	height:71px !important;
+	min-height:71px !important;
   opacity: 0.9;
   border: 0px;
   background: white !important;
@@ -430,7 +445,6 @@ input{
 }
 
 .navbar-secondary{
-  height:50px !important;
   min-height:50px !important; 
 }
 
@@ -438,6 +452,7 @@ input{
   display: inline-block;
   float: none;
   vertical-align: top;
+  text-align: middle;
 }
 
 .navbar .navbar-collapse{
