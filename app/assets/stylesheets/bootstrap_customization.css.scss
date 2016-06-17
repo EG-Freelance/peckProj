@@ -231,9 +231,28 @@ p.card-text{
 }
 
 // FONT //
-.regisli-font{
-  font-family:"Lobster Two", cursive;
+@font-face {
+  font-family: 'Lilly';
+  src:font-url('Lilly.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
 }
+
+.regisli-header-font{
+  font-family:"Lilly";
+}
+
+@font-face {
+  font-family: 'JosefinSans-Regular';
+  src:font-url('JosefinSans-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.regisli-normal-font{
+  font-family:"JosefinSans-Regular";
+}
+// END FONT //
 
 .product-cards{
   padding-right: 0px;

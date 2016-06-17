@@ -22,6 +22,9 @@ module PeckProj
 
     config.assets.paths << "#{Rails.root}/app/assets/videos"
     
+    # Use custom fonts
+    config.assets.precompile << /\.(?:svg|eot|woff|ttf)\z/
+    
     # Use Postmark to handle email delivery
     config.action_mailer.delivery_method = :postmark
     config.action_mailer.postmark_settings = { :api_token => "d8d2828e-b03c-4a6f-a37e-040c33acbbb3" }
