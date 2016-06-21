@@ -2,8 +2,7 @@ body{
   background-color: #EFF5FB !important;
 }
 
-/* Sticky styles
--------------------------------------------------- */
+/* Sticky styles */
 
 .sticky-nav{
   top: 0;
@@ -109,6 +108,11 @@ body {
 
 /*--------End Bootstrap scroll-page sections----------*/
 
+/*-------- Video hover ----------*/
+#regisli-video:hover{
+  cursor:pointer;
+}
+
 /*--------Custom Search Field---------*/
 #search-div{
   width:inherit;
@@ -157,7 +161,7 @@ form.form-search:before {
 
   .nav-menu:hover{
     background:#eeeeee;
-    border-radius:10px;
+    //border-radius:10px;
   }
 }
 /*------End Navbar Dropdown on Hover----------*/
