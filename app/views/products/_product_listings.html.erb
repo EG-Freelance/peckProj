@@ -40,7 +40,7 @@
           <% if current_controller == 'registries' %>
             <% if pr.nil? %><p style="height:18px;"></p><% else %><div id=<%= "remaining-#{p.id}" %>><p style="height:18px"><i><%= [pr_quant - pr_purch, 0].max %> more needed out of <%= pr_quant %></i></p></div><% end %>
           <% end %>
-          <% if user_signed_in? && @registry.administrators.include?(current_user) %>
+          <% if user_signed_in? && current_controller == 'registries' && @registry.administrators.include?(current_user) %>
             <%= simple_form_for "product_registry", url: add_remove_product_path, html: { method: :post }, :remote => true do |f| %>
               <div class="col-md-1" style="width:25px; border-radius:10px"><%= f.input_field :quantity, :style => "width:25px", :value => ProductRegistry.exists?(product_id: p.id, registry_id: @registry.id) ? ProductRegistry.find_by(product_id: p.id, registry_id: @registry.id).quantity : "", :id => "quantity-#{p.id}" %></div>
               <%= f.hidden_field :product_id, :value => p.id %>
@@ -50,7 +50,7 @@
               <br><br>
             <% end %>
           <% end %>
-          <% if user_signed_in? %>
+          <% if user_signed_in?  && current_controller == 'registries' %>
             <% if pr_quant - pr_purch > 0 %>
               <img type="button" class="btn btn-lg" data-toggle="modal" data-target=<%= "#add-to-cart-#{p.id}-modal" %> src="/assets/ShoppingCartAdd.png" height="60" style="padding: 0px 0px 0px 0px;" id=<%= "add-cart-#{p.id}" %>> or <i><%= link_to "Skip the cart", nonuser_checkout_path(:product_id => p.id, :registry_id => @registry.id), :id => "checkout-#{p.id}", method: :post, remote: true %></i>
               <script>
