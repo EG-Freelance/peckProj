@@ -1,4 +1,5 @@
 class RegistriesController < ApplicationController
+  require 'open-uri'
   before_action :set_registry, only: [:show, :edit, :update, :destroy, :search]
   before_action :set_registries, only: [:index, :add_remove_as_guest, :search_reg]
 
@@ -9,8 +10,8 @@ class RegistriesController < ApplicationController
     @registries = @q.result.uniq.paginate(page: params[:page], per_page: 20)
     
     @registry = Registry.new
-  end
-
+  end  
+  
   def show
     begin 
       ur = UserRegistry.find_by(registry_id: @registry.id, user_id: current_user.id)
@@ -22,6 +23,13 @@ class RegistriesController < ApplicationController
     rescue
       products_pool = Product.includes(:product_registries).where(:product_registries => { registry_id: @registry.id })
     end
+
+    ###### SET TINY-URL FOR REGISTRY ######    
+    # This will change for live site!!
+    base = "http://regisli-staging.herokuapp.com"
+    path = request.env['PATH_INFO']
+    @tiny_url = open('http://tinyurl.com/api-create.php?url=' + base + path, "UserAgent" => "Ruby Script").read
+    ########################################
     
     @q = products_pool.ransack(params[:q])
     params[:id] = @registry.id

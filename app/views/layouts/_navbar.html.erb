@@ -18,13 +18,25 @@
       <div class="col-md-5 col-sm-4">
         <ul class="nav navbar-nav" style="width:100%">
           <div style="padding:15px;" id="search-div">
-            <form class="form-search form-inline">
-              <input type="text" class="search-query" placeholder="Search Products" />
+            <form accept-charset="UTF-8" action="/products/search" class="form-search form-inline" id="product_search" method="get">
+              <input id="q_name_cont" name="q[name_cont]" placeholder="Search Products" type="text" class="search-query" />
             </form>
           </div>
         </ul>
       </div>
-      <div class="col-md-5 col-sm-6" style="position:absolute; right:0; min-width:420px">
+      <div id="top-navbar-container" class="col-md-5 col-sm-6" style="position:absolute; right:0; min-width:420px">
+        <!-- Set CSS based on window size (do not force position on mobile size) -->
+        <script>
+          function cssReset(){
+            if($(window).width() > 767){
+              $('#top-navbar-container').css({ "position":"absolute", "right":"0", "min-width":"420px" });
+            }else{
+              $('#top-navbar-container').css({ "position":"relative", "right":"inherit", "min-width":"inherit" });
+            }
+          };
+          $(window).resize(cssReset);
+          $(document).ready(cssReset);
+        </script>
         <ul class="nav navbar-nav navbar-right" style="padding-right:0px;">
           <li><%= link_to "Contact Us", "#" %></li>
           <li><%= link_to "Help", "#" %></li>

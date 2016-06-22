@@ -2,7 +2,11 @@ Rails.application.routes.draw do
   
   resources :carts
 
-  resources :products
+  resources :products do
+    collection do
+      match 'search' => 'products#search', via: [:get, :post], as: :search
+    end
+  end
 
   resources :registries do
     collection do

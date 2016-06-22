@@ -7,12 +7,20 @@ class ProductsController < ApplicationController
   end
 
   def index
-    @products = Product.all
-    respond_with(@products)
+    products_pool = Product.all
+    
+    @q = products_pool.ransack(params[:q])
+    @q.sorts = 'name asc' if @q.sorts.empty?
+    @products = @q.result.paginate(page: params[:page], per_page: 24)
   end
 
   def show
     respond_with(@product)
+  end
+  
+  def search  
+    index
+    render :index
   end
 
   def new
