@@ -74,7 +74,6 @@
                 </script>
               <% else %>
                 <i><%= link_to_if (pr_quant - pr_purch > 0), "" %></i>
-                <!--<a href="#" disabled='true' style="opacity:0", id=<%= "checkout-#{p.id}" %>><%= nonuser_checkout_path(:product_id => p.id, :registry_id => @registry.id) %></a>-->
               <% end %>
             <% end %>
           <% end %>
