@@ -1,5 +1,7 @@
 <% current_controller = Rails.application.routes.recognize_path(request.env['PATH_INFO'])[:controller] %>
 
+<% included = ProductRegistry.where(registry_id: @registry.id).map{ |r| r.product_id }.sort if current_controller == 'registries' %>
+
 <!-- Search form for products -->
 <% if current_controller == "registries" %>
   <h3>Search registries</h3>
@@ -71,7 +73,8 @@
                     });
                 </script>
               <% else %>
-                <a href="#" disabled='disabled' style="opacity:0", id=<%= "checkout-#{p.id}" %>><%= nonuser_checkout_path(:product_id => p.id, :registry_id => @registry.id) %></a>
+                <i><%= link_to_if (pr_quant - pr_purch > 0), "" %></i>
+                <!--<a href="#" disabled='true' style="opacity:0", id=<%= "checkout-#{p.id}" %>><%= nonuser_checkout_path(:product_id => p.id, :registry_id => @registry.id) %></a>-->
               <% end %>
             <% end %>
           <% end %>

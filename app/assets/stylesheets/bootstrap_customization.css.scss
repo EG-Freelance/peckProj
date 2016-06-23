@@ -176,6 +176,15 @@ form.form-search:before {
 }
 /*------End Multi-column Dropdowns-------*/
 
+.navbar-right{
+  >li{
+    >a{
+      padding-right:10px;
+      padding-left:10px;
+    }
+  }
+}
+
 .user-link:hover{
   cursor:pointer;
 }
@@ -197,7 +206,7 @@ span.card-text{
   width: 100%;
 }
 
-.modal-body {
+.modal-body{
     max-height: calc(100vh - 210px);
     overflow-y: auto;
 }

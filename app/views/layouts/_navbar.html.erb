@@ -41,10 +41,7 @@
           <li><%= link_to "Contact Us", "#" %></li>
           <li><%= link_to "Help", "#" %></li>
           <li><%= link_to "Blog", "#" %></li>
-          <% if user_signed_in? %>
-            <% if current_user.admin? %>
-              <li><%= link_to "Admin Panel", pages_all_users_path %></li>
-            <% end %>               
+          <% if user_signed_in? %>         
             <ul class="nav-menu dropdown nav navbar-nav">
               <li class="dropdown" id="dropdown-parent"><a><img style="margin-top:-5px" src="/assets/UserIcon.png" height="30"></a></li>
               <ul class="dropdown-menu nav navbar-nav" id="user-dropdown">
@@ -52,10 +49,10 @@
                 <script>
                   function fillDropdown(){
                     if($(window).width() > 767){
-                      $('#user-dropdown').html('<li><a href="/users/edit">Edit Account</a></li><li><a data-method="delete" href="/users/sign_out" rel="nofollow">Log Out</a></li>');
+                      $('#user-dropdown').html('<% if current_user.admin? %><li style="width:100%"><a href="/pages/all_users">Admin Panel</a></li><% end %><li style="width:100%"><a href="/users/edit">Edit Account</a></li><li style="width:100%"><a data-method="delete" href="/users/sign_out" rel="nofollow">Log Out</a></li>');
                       $('#dropdown-parent').removeAttr('data-toggle');
                     }else{
-                      $('#user-dropdown').html('<li class="divider"></li><li style="text-align:center"><a href="/users/edit">Edit Account</a></li><li style="text-align:center"><a data-method="delete" href="/users/sign_out" rel="nofollow">Log Out</a></li><li class="divider"></li>');
+                      $('#user-dropdown').html('<li class="divider"><% if current_user.admin? %><li style="text-align:center"><a href="/pages/all_users">Admin Panel</a></li><% end %></li><li style="text-align:center"><a href="/users/edit">Edit Account</a></li><li style="text-align:center"><a data-method="delete" href="/users/sign_out" rel="nofollow">Log Out</a></li><li class="divider"></li>');
                       $('#dropdown-parent').attr('data-toggle','dropdown');
                     }
                   };
@@ -150,13 +147,7 @@
               </div>
             </ul>
           </ul>
-          <ul class="nav-menu dropdown nav navbar-nav">
-            <li><a>GIFTS</a></li>
-            <ul class="dropdown-menu nav navbar-nav">
-              <li>First thing</li><br>
-              <li>Second thing</li>
-            </ul>
-          </ul>
+          <li class="nav-menu"><%= link_to "GIFTS", products_path %></li>
           <li class="nav-menu"><%= link_to "TRAVEL", "#" %></li>
         </ul>
       </div>
