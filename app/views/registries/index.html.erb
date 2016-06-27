@@ -35,20 +35,26 @@
   <% @registries.each do |r| %>
     <tr>
       <% if user_signed_in? %>
-        <td>
-          <% if UserRegistry.exists?(registry_id: r.id, user_id: current_user.id, association_type: 'guest') %> 
-            <%= button_to add_remove_as_guest_path(:id => r.id), class: "btn", id: "add-remove-#{r.id}", method: :post, remote: true do %>
-              <span class="glyphicon glyphicon-minus"></span>
+        <% if current_user.owned_registries.map{ |reg| reg.id }.exclude?(r.id) && current_user.shared_registries.map{ |reg| reg.id }.exclude?(r.id) %>
+          <td>
+            <% if UserRegistry.exists?(registry_id: r.id, user_id: current_user.id, association_type: 'guest') %> 
+              <%= button_to add_remove_as_guest_path(:id => r.id), class: "btn ", id: "add-remove-#{r.id}", method: :post, remote: true do %>
+                <span class="glyphicon glyphicon-minus"></span>
+              <% end %>
+            <% else %>
+              <%= button_to add_remove_as_guest_path(:id => r.id), class: "btn", id: "add-remove-#{r.id}", method: :post, remote: true do %>
+                <span class="glyphicon glyphicon-plus"></span>
+              <% end %>
             <% end %>
-          <% else %>
-            <%= button_to add_remove_as_guest_path(:id => r.id), class: "btn", id: "add-remove-#{r.id}", method: :post, remote: true do %>
-              <span class="glyphicon glyphicon-plus"></span>
-            <% end %>
-          <% end %>
-        </td>
+          </td>
+        <% else %>
+          <td>
+              <span class="glyphicon glyphicon-plus" data-toggle="tooltip" data-placement="top" title="You already manage this registry"></span>
+          </td>
+        <% end %>
       <% end %>
-      <td><%= link_to r.name, r %></td>
-      <td><%= r.owners.map{ |o| o.email }.join(", ") %></td>
+      <td><%= link_to r.name, r, class: "link" %></td>
+      <td><%= raw(r.owners.map{ |o| link_to o.email, registries_path(:q => { :user_registries_user_email_cont => o.email }), class: "link" }.join(", ")) %></td>
     </tr>
   <% end %>
 </table>
@@ -110,5 +116,11 @@
   });
   $('#payment-form').on('submit', function() {
     $('#new-payment').modal('hide');
+  });
+</script>
+
+<script>
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
   });
 </script>

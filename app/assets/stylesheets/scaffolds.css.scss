@@ -2,15 +2,23 @@ body {
   background-color: #fff;
   color: #333;
   font-family: "JosefinSans-Regular";
-  font-size: 18px;
-  line-height: 22px;
+  font-size: 16px;
+  line-height: 20px;
 }
 
-p, ol, ul, td {
+ol, ul, td {
   font-family: "JosefinSans-Regular";
-  font-size: 18px;
-  line-height: 22px;
+  font-size: 16px;
+  line-height: 20px;
 }
+
+p {
+  font-family: "arial";
+  font-size: 16px;
+  line-height: 20px;
+}
+
+
 
 pre {
   background-color: #eee;

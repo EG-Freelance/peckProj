@@ -2,7 +2,17 @@ body{
   background-color: #EFF5FB !important;
 }
 
+.link{
+  text-decoration: underline;
+}
+
 /* Sticky styles */
+
+.navbar-collapse.in {
+    overflow: hidden;
+    max-height: none !important;
+    height: auto !important;
+} //makes sure responsive navbar area doesn't have scrollbar
 
 .sticky-nav{
   top: 0;

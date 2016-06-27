@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160513143424) do
+ActiveRecord::Schema.define(version: 20160627160118) do
 
   create_table "admins", force: true do |t|
     t.string   "email",              default: "", null: false
@@ -74,6 +74,7 @@ ActiveRecord::Schema.define(version: 20160513143424) do
     t.text    "name"
     t.integer "payment_method_id"
     t.decimal "goal"
+    t.boolean "private"
   end
 
   create_table "user_registries", force: true do |t|

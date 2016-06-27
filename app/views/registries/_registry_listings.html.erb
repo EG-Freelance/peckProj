@@ -1,4 +1,4 @@
-<% reg_types = [['Owner', @owner],['Administrator', @administrator],['Guest', @guest]] %>
+<% reg_types = [['Owner', @owner],['Manager', @administrator],['Guest', @guest]] %>
 
 <% reg_types.each do |r| %>
   <div class="panel panel-default">    
@@ -10,7 +10,7 @@
     <div id=<%= "#{r[0]}" %> class="panel-collapse collapse">
       <div class="panel-body" id=<%= "#{r[0]}-listing" %>>
         <% r[1].each do |reg| %>
-          <li><%= link_to reg.name, reg %></li>
+          <li class="link"><%= link_to reg.name, reg %></li>
         <% end %>
       </div>
     </div>

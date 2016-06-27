@@ -6,7 +6,12 @@ class RegistriesController < ApplicationController
   respond_to :html
 
   def index
-    @q = Registry.all.ransack(params[:q])
+    if params[:q]
+      unless params[:q][:user_registries_user_email_cont].blank?
+        params[:q][:user_registries_association_type_eq] = "owner"
+      end
+    end
+    @q = Registry.where(private: false).ransack(params[:q])
     @registries = @q.result.uniq.paginate(page: params[:page], per_page: 20)
     
     @registry = Registry.new
@@ -57,7 +62,11 @@ class RegistriesController < ApplicationController
       UserRegistry.create(ur_params)
       @ur_status = "added"
     end
-    render :template => 'registries/add_remove_as_guest'
+    if params[:origin_path] == "show_registry"
+      render :template => 'registries/add_remove_as_guest_show'
+    else
+      render :template => 'registries/add_remove_as_guest'
+    end
   end
   
   def add_remove_product
@@ -173,6 +182,6 @@ class RegistriesController < ApplicationController
     end
 
     def registry_params
-      params.require(:registry).permit(:name, :active, :payment_method_id, :goal, user_registries_attributes: [:preference, :account, :user_id, :registry_id, :association_type])
+      params.require(:registry).permit(:private, :name, :active, :payment_method_id, :goal, user_registries_attributes: [:preference, :account, :user_id, :registry_id, :association_type])
     end
 end

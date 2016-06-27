@@ -6,6 +6,7 @@
       <%= ff.select :payment_method, options_for_select(current_user.payment_methods.map{ |pm| pm.custom_name }.unshift(["Select a payment account", ""])) %>
       <%= ff.hidden_field :active, :value => true %>
     <% end %>
+    <div class="row"><div class="col-md-1 col-sm-1"><%= f.check_box :private %></div><div class="col-md-11 col-sm-ll"><%= f.label "Set as Private (Your registry will not be findable in a search; guests will have to be directly linked)" %></div></div>
   </div>  
   <br>
   <div class="actions">
