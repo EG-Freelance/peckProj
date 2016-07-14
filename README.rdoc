@@ -1,13 +1,49 @@
 TODO:
-*Searchbar to products in middle of navbar
-  *Full products page without creating registry
-*Subgroup headings
-*Bunch of sectioned scroll-areas
-*Top-right navbar links
 *Blog page...?
-*Change base font
 
+Popshops:
+UN: regisli.members@gmail.com
+PW:  Regisli2016!
 
+base = http://api.popshops.com/v3/
+All merchants catalog:  db46yl7pq0tgy9iumgj88bfj7
+Regisli catalog: cxp18qi882gbqwhz4i4yc2skp
+Account key:  bmx5dx3qgect9tbrw0zsmvsnx
+
+################# PULL IN OFFERS? (using Reg catalog) #################
+
+i = 1
+loop do
+  popshops = Curl.get("http://api.popshops.com/v3/products.json?account=bmx5dx3qgect9tbrw0zsmvsnx&catalog=cxp18qi882gbqwhz4i4yc2skp&results_per_page=100&page=#{i}")
+  results = JSON.parse(popshops.body)
+  products = results['results']['products']['product']
+  ids = products.map { |r| r['id'] }
+
+  product_offers = Curl.get("http://api.popshops.com/v3/products.json?account=bmx5dx3qgect9tbrw0zsmvsnx&catalog=cxp18qi882gbqwhz4i4yc2skp&results_per_page=100&product=#{ids.join(',')}")
+  products_with_offers = JSON.parse(product_offers.body)['results']['products']['product']
+  break if (results['results']['products']['count']/100.0).ceil == i
+  i += 1
+end
+
+#######################################################################
+
+##### calls for different resources #####
+
+# merchants
+merchants = Curl.get("http://api.popshops.com/v3/merchants.json?account=bmx5dx3qgect9tbrw0zsmvsnx&catalog=cxp18qi882gbqwhz4i4yc2skp")
+merchants = JSON.parse(merchants.body)
+merchants_hash = merchants['results']['merchants']['merchant']
+
+# merchant_types
+merchant_types = Curl.get("http://api.popshops.com/v3/merchant_types.json?account=bmx5dx3qgect9tbrw0zsmvsnx")
+merchant_types = JSON.parse(merchant_types.body)
+merchant_types_hash = merchant_types['results']['merchant_types']['merchant_type']
+
+# brands
+(piggy-backs off of products call)
+brands_hash = results['resources']['brands']['brand']
+
+######################################################################
 
 == README
 

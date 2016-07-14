@@ -10,7 +10,7 @@
   <% end %>
 <% end %>
 
-<% if current_user.shared_registries.map{ |r| r.id }.exclude?(@registry.id) && current_user.owned_registries.map{ |r| r.id }.exclude?(@registry.id) %>
+<% if current_user && current_user.shared_registries.map{ |r| r.id }.exclude?(@registry.id) && current_user.owned_registries.map{ |r| r.id }.exclude?(@registry.id) %>
   <div>
     <%= button_to add_remove_as_guest_path(:id => @registry.id, :origin_path => "show_registry"), class: "btn btn-default btn-lg", id: "add-remove-#{@registry.id}", method: :post, remote: true do %>
       <% if current_user.guest_registries.map{ |r| r.id }.exclude?(@registry.id) %>

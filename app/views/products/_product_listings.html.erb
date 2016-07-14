@@ -11,9 +11,9 @@
 <%= search_form_for @q, :url => { :action => 'search', :controller => current_controller } do |f| %>
   <%= f.text_field :name_cont, :placeholder => 'Product name' %>
   <%= f.text_field :description_cont, :placeholder => 'Product description' %>
-  <%= f.text_field :price_gteq, :placeholder => 'Minimum price' %>
-  <%= f.text_field :price_lteq, :placeholder => 'Maximum price' %>
-  <%= f.text_field :merchant_cont, :placeholder => 'Product provider' %>
+  <%= f.text_field :price_min_gteq, :placeholder => 'Minimum price' %>
+  <%= f.text_field :price_max_lteq, :placeholder => 'Maximum price' %>
+  <%= f.text_field :merchants_name_cont, :placeholder => 'Product provider' %>
   <%= f.submit :class => "btn btn-default btn-sm" %>
 <% end %>
 
@@ -30,15 +30,15 @@
         <% pr.nil? ? pr_purch = 0 : pr_purch = pr.purchased %>
       <% end %>
       <div class="card product-cards box-shadow--4dp">
-        <!-- WHEN PRODUCT INFORMATION IS PULLED IN, IMAGE SOURCE SHOULD BE TIED TO PRODUCT -->
-        <img class="card-img-top" src=<%= p.image_link %> alt="Oculus Rift" style="width:100%">
+        <img class="card-img-top center" src=<%= p.offers.first.image_url_large %> alt=<%= p.name %> style="height: 203px">
         <div class="card-block card-text">
           <span class="card-text">
             <h3 style="text-align:center"><b><u><%= p.name %></u></b></h3>
+            <p><u>Brand</u>: <%=p.brand.name %></p>
             <p><%= p.description %></p>
           </span>
-          <p style="color:green"><b><%= number_to_currency(p.price) %></b></p>
-          <p style="color:green"><i>Contribution to honeymoon fund: <b><%= number_to_currency(p.fund) %></b></i></p>
+          <p style="color:green"><b><%= number_to_currency(p.price_min) %></b></p>
+          <p style="color:green"><i>Contribution to honeymoon fund: <b><%= number_to_currency(p.price_min * 0.1) %></b></i></p>
           <% if current_controller == 'registries' %>
             <% if pr.nil? %><p style="height:18px;"></p><% else %><div id=<%= "remaining-#{p.id}" %>><p style="height:18px"><i><%= [pr_quant - pr_purch, 0].max %> more needed out of <%= pr_quant %></i></p></div><% end %>
           <% end %>
@@ -83,3 +83,7 @@
     <% end %>
   </div>
 </div>
+
+
+<!-- Pagination -->
+<%= will_paginate @products %>

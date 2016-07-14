@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160627160118) do
+ActiveRecord::Schema.define(version: 20160714151114) do
 
   create_table "admins", force: true do |t|
     t.string   "email",              default: "", null: false
@@ -28,6 +28,14 @@ ActiveRecord::Schema.define(version: 20160627160118) do
     t.datetime "updated_at"
   end
 
+  create_table "brands", force: true do |t|
+    t.string   "popshops_index"
+    t.string   "name"
+    t.integer  "count"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "cart_products", force: true do |t|
     t.integer  "cart_id"
     t.integer  "product_id"
@@ -39,6 +47,57 @@ ActiveRecord::Schema.define(version: 20160627160118) do
 
   create_table "carts", force: true do |t|
     t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "merchant_products", force: true do |t|
+    t.integer  "product_id"
+    t.integer  "merchant_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "merchant_types", force: true do |t|
+    t.string   "popshops_index"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "merchants", force: true do |t|
+    t.integer  "merchant_type_id"
+    t.string   "popshops_index"
+    t.string   "name"
+    t.string   "network"
+    t.integer  "product_count"
+    t.integer  "deal_count"
+    t.string   "network_merchant_id"
+    t.string   "country"
+    t.string   "category"
+    t.string   "popshops_merchant_type"
+    t.text     "logo_url"
+    t.text     "url"
+    t.text     "site_url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "offers", force: true do |t|
+    t.integer  "merchant_id"
+    t.integer  "product_id"
+    t.string   "popshops_index"
+    t.string   "sku"
+    t.string   "popshops_merchant"
+    t.string   "name"
+    t.text     "description"
+    t.text     "url"
+    t.text     "image_url_large"
+    t.string   "currency_iso"
+    t.decimal  "price_merchant"
+    t.decimal  "price_retail"
+    t.decimal  "estimated_price_total"
+    t.string   "condition"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -60,13 +119,19 @@ ActiveRecord::Schema.define(version: 20160627160118) do
   end
 
   create_table "products", force: true do |t|
-    t.text    "name"
-    t.text    "description"
-    t.decimal "price"
-    t.decimal "fund"
-    t.text    "affiliate_link"
-    t.string  "merchant"
-    t.text    "image_link"
+    t.integer  "brand_id"
+    t.integer  "merchant_id"
+    t.string   "popshops_index"
+    t.string   "category"
+    t.string   "name"
+    t.text     "description"
+    t.string   "popshops_brand"
+    t.decimal  "price_min"
+    t.decimal  "price_max"
+    t.integer  "offer_count"
+    t.text     "image_url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "registries", force: true do |t|

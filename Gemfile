@@ -55,6 +55,11 @@ gem 'ransack'
 # Pagination for Rails Rails 3+, Sinatra, and Merb
 gem 'will_paginate', '~> 3.1.0'
 
+# Use Curl (curb) and Nokogiri for API calls
+gem 'curb'
+gem 'nokogiri'
+gem 'popshops-api'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
