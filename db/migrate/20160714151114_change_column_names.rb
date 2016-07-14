@@ -1,8 +1,4 @@
 class ChangeColumnNames < ActiveRecord::Migration
-  drop_table :products
-  drop_table :offers
-  drop_table :merchants
-  
   create_table :offers do |t|
     t.belongs_to :merchant
     t.belongs_to :product
