@@ -22,6 +22,8 @@ module PeckProj
 
     config.assets.paths << "#{Rails.root}/app/assets/videos"
     
+    config.assets.paths << Rails.root.join('vendor', 'assets', 'components')
+    
     # Use custom fonts
     config.assets.precompile << /\.(?:svg|eot|woff|ttf)\z/
     

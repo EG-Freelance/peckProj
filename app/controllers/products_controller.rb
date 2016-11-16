@@ -1,4 +1,6 @@
 class ProductsController < ApplicationController
+  include GetProducts
+  
   before_action :set_product, only: [:show, :edit, :update, :destroy]
 
   respond_to :html
@@ -7,11 +9,11 @@ class ProductsController < ApplicationController
   end
 
   def index
-    products_pool = Product.all
+    @products = GetProducts.get_products(params[:keywords], params[:page])
     
-    @q = products_pool.ransack(params[:q])
-    @q.sorts = 'name asc' if @q.sorts.empty?
-    @products = @q.result.paginate(page: params[:page], per_page: 24)
+#    @q = products_pool.ransack(params[:q])
+#    @q.sorts = 'name asc' if @q.sorts.empty?
+#    @products = @q.result.paginate(page: params[:page], per_page: 100)
   end
 
   def show

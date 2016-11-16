@@ -1,4 +1,5 @@
 class ChangeColumnNames < ActiveRecord::Migration
+  drop_table :offers
   create_table :offers do |t|
     t.belongs_to :merchant
     t.belongs_to :product
@@ -19,6 +20,7 @@ class ChangeColumnNames < ActiveRecord::Migration
   end
   
   def change
+    drop_table :products
     create_table :products do |t|
       t.belongs_to :brand
       t.belongs_to :merchant

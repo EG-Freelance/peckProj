@@ -163,7 +163,7 @@ form.form-search:before {
 }
 /*-------End Custom Search Field--------*/
 
-/*-------Navbar Dropdown on Hover---------*/
+/*-------Navbar Dropdown on Hover---------
 @media only screen and (min-width: 768px) {
   .dropdown:hover .dropdown-menu{
     display:block;
@@ -180,15 +180,22 @@ form.form-search:before {
     //border-radius:10px;
   }
 }
+*/
+
+.nav > li.dropdown.open { position: static; }
+.nav > li.dropdown.open .dropdown-menu {display:table; width: 100%; text-align: center; left:0; right:0; }
+.dropdown-menu>li { display: table-cell; }
 /*------End Navbar Dropdown on Hover----------*/
 
 /*------Multi-column Dropdowns---------*/
 .two-col{
-  min-width:400px;
+  width:400px;
+  max-width:100vw;
 }
 
 .three-col{
-  min-width:600px;
+  width:600px;
+  max-width:100vw;
 }
 /*------End Multi-column Dropdowns-------*/
 
@@ -490,7 +497,7 @@ input{
 
 .navbar-default{
 	min-height:71px !important;
-  opacity: 0.9;
+  opacity: 0.95;
   border: 0px;
   background: white !important;
   border-radius: 0px !important;

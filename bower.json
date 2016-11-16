@@ -1,0 +1,22 @@
+{
+  "name": "regisli",
+  "homepage": "https://github.com/EG-freelance/peckProj",
+  "authors": [
+    "Erik <flyers_rock_87@hotmail.com>"
+  ],
+  "description": "registry",
+  "main": "",
+  "license": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "vendor/assets/components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "Yamm3": "yamm3#^1.1.0"
+  }
+}

@@ -1,3 +1,4 @@
+<!-- Top navbar -->
 <nav class="navbar navbar-default navbar-static-top" style="margin-bottom:0px !important; padding-top:10px; z-index: 1000;">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -70,8 +71,9 @@
   </div>
 </nav>
 
+<!-- Sticky navbar -->
 <div class="sticky-menu sticky-nav-temp">
-  <nav class="navbar navbar-default navbar-secondary">
+  <nav class="navbar navbar-default navbar-secondary yamm">
     <div class="container-fluid" style="padding:0">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#secondary-navbar"> 
         <span class="sr-only"> Toggle navigation </span>
@@ -81,72 +83,50 @@
       </button>
       <div id="secondary-navbar" class="collapse navbar-collapse">
         <ul class="nav navbar-nav navbar-center">
-          <li class="nav-menu"><%= link_to "REGISTRIES", registries_path %></li>     
-          <ul class="nav-menu dropdown nav navbar-nav">
-            <li><a>STARTER GUIDES</a></li>
-            <ul class="dropdown-menu nav navbar-nav">
-              <div class="row two-col">
-                <div class="col-sm-6">
-                  <li>First thing</li>
-                  <li class="divider"></li>
-                  <li>Second thing</li>
-                  <li>Third thing</li>
-                  <li>Fourth thing</li>
-                </div>
-                <div class="col-sm-6">
-                  <li>Fifth thing</li>
-                  <li>Sixth thing</li>
-                  <li>Seventh thing</li>
-                  <li>Eighth thing</li>
-                  <li>Ninth thing</li>
-                </div>
-              </div>
+          <li class="nav-menu"><%= link_to "REGISTRIES", registries_path %></li>   
+          <li class="nav-menu"><%= link_to "STARTER GUIDES", "#" %></li>   
+          <li class="dropdown yamm-fw">
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-expanded="true">KITCHEN</a>
+            <ul class="dropdown-menu">
+              <%= render 'layouts/kitchen' %>
             </ul>
-          </ul>
-          <ul class="nav-menu dropdown nav navbar-nav">
-            <li><a>BRANDS</a></li>
-            <ul class="dropdown-menu nav navbar-nav">
-              <div class="row three-col">
-                <div class="col-sm-4">
-                  <li><b><u>Technology</u></b></li>
-                  <li>Oculus</li>
-                  <li>Radeon</li>
-                  <li>AMD</li>
-                  <li>nVidia</li>
-                  <li>Sony</li>
-                  <li class="divider"></li>
-                  <li><b><u>Sports</u></b></li>
-                  <li>Bauer</li>
-                  <li>Mission</li>
-                  <li>CCM</li>
-                </div>
-                <div class="col-sm-4">
-                  <li><b><u>Astronomy</u></b></li>
-                  <li>Atlas</li>
-                  <li>Skywatcher</li>
-                  <li>Orion</li>
-                  <li>Hubble</li>
-                  <li>NASA</li>
-                  <li class="divider"></li>
-                  <li><b><u>Games</u></b></li>
-                  <li>Nintendo</li>
-                  <li>Sony</li>
-                  <li>Microsoft</li>
-                  <li>Steam</li>
-                </div>
-                <div class="col-sm-4">
-                  <li><b><u>Phones</u></b></li>
-                  <li>Apple</li>
-                  <li>HTC</li>
-                  <li>Samsung</li>
-                  <li>Nokia</li>
-                  <li>Sony</li>
-                </div>
-              </div>
+          </li>   
+          <li class="dropdown yamm-fw">
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-expanded="true">DINING</a>
+            <ul class="dropdown-menu">
+              <%= render 'layouts/dining' %>
             </ul>
-          </ul>
-          <li class="nav-menu"><%= link_to "GIFTS", products_path %></li>
-          <li class="nav-menu"><%= link_to "TRAVEL", "#" %></li>
+          </li>   
+          <li class="dropdown yamm-fw">
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-expanded="true">BED & BATH</a>
+            <ul class="dropdown-menu">
+              <%= render 'layouts/bed_and_bath' %>
+            </ul>
+          </li>   
+          <li class="dropdown yamm-fw">
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-expanded="true">HOME</a>
+            <ul class="dropdown-menu">
+              <%= render 'layouts/home' %>
+            </ul>
+          </li>     
+          <li class="dropdown yamm-fw">
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-expanded="true">OUTDOOR</a>
+            <ul class="dropdown-menu">
+              <%= render 'layouts/outdoor' %>
+            </ul>
+          </li> 
+          <li class="dropdown yamm-fw">
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-expanded="true">TRAVEL</a>
+            <ul class="dropdown-menu">
+              <%= render 'layouts/travel' %>
+            </ul>
+          </li>   
+          <li class="dropdown yamm-fw">
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-expanded="true">WEDDING FAVORS</a>
+            <ul class="dropdown-menu">
+              <%= render 'layouts/wedding_favors' %>
+            </ul>
+          </li>   
         </ul>
       </div>
     </div>
