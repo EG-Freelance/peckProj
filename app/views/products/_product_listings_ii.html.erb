@@ -12,7 +12,7 @@
           <div class="card-block card-text">
             <span class="card-text">
               <h3 style="text-align:center"><b><u><%= p[1]['product']['name'] %></u></b></h3>
-              <p><u>Brand</u>: <%= Brand.find_by(popshops_index: p[1]['product']['brand']).name %></p>
+              <p><u>Brand</u>: <%= Brand.find_by(popshops_index: p[1]['product']['brand'].to_s).name %></p>
               <p><%= p[1]['product']['description'] %></p>
             </span>
             <p style="color:green"><b><%= number_to_currency(p[1]['product']['price_min']) %></b></p>

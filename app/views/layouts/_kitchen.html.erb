@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-sm-2 nav">
-    <li><b><u>Small Appliances</u></b></li>
+    <li class="s-link"><b><u><%= link_to "Small Appliances", products_url(:keywords => URI.encode('small appliances'), :page => 1) %></u></b></li>
     <li><%= link_to "Blenders", products_url(:keywords => URI.encode('blenders'), :page => 1) %></li>
     <li><%= link_to "Food Processors", products_url(:keywords => URI.encode('food processors'), :page => 1) %></li>
     <li><%= link_to "Juicers", products_url(:keywords => URI.encode('juicers'), :page => 1) %></li>
@@ -12,7 +12,7 @@
     <li><%= link_to "Griddles & Skillets", products_url(:keywords => URI.encode('griddles skillets'), :page => 1) %></li>
   </div>
   <div class="col-sm-2">
-    <li><b><u>Bakeware</u></b></li>
+    <li class="s-link"><b><u><%= link_to "Bakeware", products_url(:keywords => URI.encode('bakeware'), :page => 1) %></u></b></li>
     <li><%= link_to "Bakeware Sets", products_url(:keywords => URI.encode('bakeware sets'), :page => 1) %></li>
     <li><%= link_to "Baking Sheets", products_url(:keywords => URI.encode('baking sheets'), :page => 1) %></li>
     <li><%= link_to "Baking Pans", products_url(:keywords => URI.encode('baking pans'), :page => 1) %></li>
@@ -21,14 +21,14 @@
     <li><%= link_to "Baking & Decorating Tools", products_url(:keywords => URI.encode('baking decorating tools'), :page => 1) %></li>
   </div>
   <div class="col-sm-2">
-    <li></li><b><u>Coffee & Tea</u></b></li>
+    <li class="s-link"><b><u><%= link_to "Coffee & Tea", products_url(:keywords => URI.encode('coffee tea'), :page => 1) %></u></b></li>
     <li><%= link_to "Coffee Makers", products_url(:keywords => URI.encode('coffee makers'), :page => 1) %></li>
     <li><%= link_to "Espresso Makers", products_url(:keywords => URI.encode('espresso makers'), :page => 1) %></li>
     <li><%= link_to "Teapots & Kettles", products_url(:keywords => URI.encode('teapots kettles'), :page => 1) %></li>
     <li><%= link_to "Coffee & Tea Accessories", products_url(:keywords => URI.encode('coffee tea accessories'), :page => 1) %></li>
   </div>
   <div class="col-sm-2">
-    <li><b><u>Cookware</u></b></li>
+    <li class="s-link"><b><u><%= link_to "Cookware", products_url(:keywords => URI.encode('cookware'), :page => 1) %></u></b></li>
     <li><%= link_to "Cookware Sets", products_url(:keywords => URI.encode('cookware sets'), :page => 1) %></li>
     <li><%= link_to "Saute Pans", products_url(:keywords => URI.encode('saute pans'), :page => 1) %></li>
     <li><%= link_to "Frying Pans", products_url(:keywords => URI.encode('frying pans'), :page => 1) %></li>
@@ -41,14 +41,14 @@
     <li><%= link_to "Woks", products_url(:keywords => URI.encode('woks'), :page => 1) %></li>
   </div>
   <div class="col-sm-2">
-    <li><b><u>Knives & Boards</u></b></li>
+    <li class="s-link"><b><u><%= link_to "Knives & Boards", products_url(:keywords => URI.encode('knives boards'), :page => 1) %></u></b></li>
     <li><%= link_to "Knife Blocks & Starter Sets", products_url(:keywords => URI.encode('knife blocks starter sets'), :page => 1) %></li>
     <li><%= link_to "Knives & Shears", products_url(:keywords => URI.encode('knives shears'), :page => 1) %></li>
     <li><%= link_to "Storage & Sharpening Tools", products_url(:keywords => URI.encode('storage sharpening tools'), :page => 1) %></li>
     <li><%= link_to "Cutting Boards", products_url(:keywords => URI.encode('cutting boards'), :page => 1) %></li>
   </div>
   <div class="col-sm-2">
-    <li><b><u>Cleaning & Organization</u></b></li>
+    <li class="s-link"><b><u><%= link_to "Cleaning & Organization", products_url(:keywords => URI.encode('cleaning organization'), :page => 1) %></u></b></li>
     <li><%= link_to "Drawer, Counter, & Cabinet Organizers", products_url(:keywords => URI.encode('drawer counter cabinet organizers'), :page => 1) %></li>
     <li><%= link_to "Kitchen Carts & Cookware Racks, Dish Racks & Sinkware", products_url(:keywords => URI.encode('kitchen carts cookware racks dish racks sinkware'), :page => 1) %></li>
     <li><%= link_to "Kitchen Textiles", products_url(:keywords => URI.encode('kitchen textiles'), :page => 1) %></li>
@@ -57,7 +57,7 @@
     <li><%= link_to "Vacuums", products_url(:keywords => URI.encode('vacuums'), :page => 1) %></li>
   </div>
   <div class="col-sm-2">
-    <li><b><u>Tools & Gadgets</u></b></li>
+    <li class="s-link"><b><u><%= link_to "Tools & Gadgets", products_url(:keywords => URI.encode('tools gadgets'), :page => 1) %></u></b></li>
     <li><%= link_to "Cooking Utensils & Holders", products_url(:keywords => URI.encode('cooking utensils holders'), :page => 1) %></li>
     <li><%= link_to "Collanders & Strainers", products_url(:keywords => URI.encode('colanders strainers'), :page => 1) %></li>
     <li><%= link_to "Choppers & Slicers", products_url(:keywords => URI.encode('choppers slicers'), :page => 1) %></li>
