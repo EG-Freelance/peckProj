@@ -10,7 +10,7 @@
       <% @products.each do |p| %>
         <!-- find ProductRegistry based on product information -->
         <% unless @registry.nil? %>
-          <% product = Product.find_by(popshops_index: p[1]['product']['id']) %>
+          <% product = Product.find_by(popshops_index: p[1]['product']['id'].to_i) %>
           <% pr = ProductRegistry.find_by(registry_id: @registry.id, product_id: !product.nil? ? product.id : nil) %>
           <% on_reg = !pr.nil? %>
         <% end %>
