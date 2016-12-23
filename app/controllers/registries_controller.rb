@@ -75,7 +75,7 @@ class RegistriesController < ApplicationController
     @product = Product.where(
       brand_id: Brand.find_by(popshops_index: p['brand'].to_s).id, 
       popshops_index: p['id'].to_s,
-      category: p['category'],
+      category: p['category'].to_s,
       name: p['name'],
       description: p['description'],
       popshops_brand: p['brand'].to_s,
