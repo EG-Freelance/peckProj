@@ -1,8 +1,8 @@
 class Product < ActiveRecord::Base
   belongs_to :brand
   has_many :offers, dependent: :destroy
-  has_many :product_registries
-  has_many :merchant_products
+  has_many :product_registries, dependent: :destroy
+  has_many :merchant_products, dependent: :destroy
   has_many :merchants, :through => :merchant_products
   has_many :registries, :through => :product_registries
   has_many :cart_products, dependent: :destroy

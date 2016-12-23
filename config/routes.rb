@@ -34,6 +34,7 @@ Rails.application.routes.draw do
   authenticated :user do
     root :to => 'pages#index', as: :authenticated_root
     resources :users, only: [:update], :constraints => { :id => /[0-9]+/ }
+    post 'set_current_reg' => 'products#set_current_reg'
     post 'add_product_to_registry' => 'registries#add_product_to_registry'
     post 'add_remove_product' => 'registries#add_remove_product'
     post 'new_payment_method' => 'payment_methods#save_payment_option'

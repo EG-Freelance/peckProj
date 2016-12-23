@@ -9,8 +9,12 @@
     </div>
     <div id=<%= "#{r[0]}" %> class="panel-collapse collapse">
       <div class="panel-body" id=<%= "#{r[0]}-listing" %>>
-        <% r[1].each do |reg| %>
-          <li class="link"><%= link_to reg.name, reg %></li>
+        <% if r[1].count > 0 %>
+          <% r[1].each do |reg| %>
+            <li class="link"><%= link_to reg.name, reg %></li>
+          <% end %>
+        <% else %>
+          <li><i>No registries to display</i></li>
         <% end %>
       </div>
     </div>

@@ -2,6 +2,7 @@ class RegistriesController < ApplicationController
   require 'open-uri'
   before_action :set_registry, only: [:show, :edit, :update, :destroy, :search]
   before_action :set_registries, only: [:index, :add_remove_as_guest, :search_reg]
+  after_action :set_registries, only: [:create]
 
   respond_to :html
 
@@ -70,6 +71,54 @@ class RegistriesController < ApplicationController
   end
   
   def add_remove_product
+    p = eval(params['product_registry']['product_hash'])
+    @product = Product.where(
+      brand_id: Brand.find_by(popshops_index: p['brand']).id, 
+      popshops_index: p['id'],
+      category: p['category'],
+      name: p['name'],
+      description: p['description'],
+      popshops_brand: p['brand'],
+      price_min: p['price_min'],
+      price_max: p['price_max'],
+      offer_count: p['offer_count'],
+      image_url: p['image_url_large']
+    ).first_or_initialize
+    
+    puts "====#{Product.exists?(@product)}"
+    
+    if Product.exists?(@product)
+      @product.destroy
+      @status = "success"
+      respond_to do |format|
+        format.html { redirect_to :back, notice: "Product removed" }
+        format.js { }
+      end
+    else
+      @product.save
+      pr = ProductRegistry.where(
+        product_id: @product.id, 
+        registry_id: params['product_registry']['registry_id'], 
+        quantity: params['product_registry']['quantity'],
+        purchased: 0
+      ).first_or_initialize
+      if pr.save
+        @status = "success"
+        respond_to do |format|
+          format.html { redirect_to :back, notice: "Product added" }
+          format.js { }
+        end
+      else
+        @status = "failure"
+        respond_to do |format|
+          format.html { redirect_to :back, alert: "Please be sure to select a quantity" }
+          format.js { }
+        end
+      end
+    end
+  end
+  
+  def old_add_remove_product
     @registry = Registry.find(params[:product_registry][:registry_id])
     @product = Product.find(params[:product_registry][:product_id])
     pr_params = { product_id: params[:product_registry][:product_id], registry_id: params[:product_registry][:registry_id] }
@@ -146,6 +195,7 @@ class RegistriesController < ApplicationController
     @registry.payment_method_id = payment_method.id
     respond_to do |format|
       if @registry.save
+        set_registries
         UserRegistry.create(registry_id: @registry.id, user_id: current_user.id, association_type: 'owner')
         format.html { redirect_to registries_url, notice: "Registry created" }
         format.js { }

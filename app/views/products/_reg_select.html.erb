@@ -1,0 +1,17 @@
+<% if user_signed_in? %>
+  <% if @registries.nil? %>
+    <%= link_to "Create a Registry", registries_path %>
+  <% else %>
+    <div id="reg-select">
+      <%= simple_form_for "current_reg", url: set_current_reg_url, html: { method: :post } do |f| %>
+        <%= select_tag "reg_select", options_for_select(@registries.unshift(["---Select a Registry---", ""]), @registry.nil? ? 0 : @registry.id) %>
+        <%= f.hidden_field :keywords, :value => @keywords %>
+        <%= f.hidden_field :page, :value => @page %>
+        <%= f.hidden_field :registry, :value => @registry %>
+        <%= f.submit "Set Registry" %>
+      <% end %>
+    </div>
+  <% end %>
+<% else %>
+  <p>Sign in to add products to a registry!</p>
+<% end %>

@@ -163,9 +163,9 @@ form.form-search:before {
 }
 /*-------End Custom Search Field--------*/
 
-/*-------Navbar Dropdown on Hover---------
+/*-------Navbar Dropdown on Hover---------*/
 @media only screen and (min-width: 768px) {
-  .dropdown:hover .dropdown-menu{
+  .dropdown:hover #user-dropdown{
     display:block;
     padding-left:5px;
     // left:-50px; // Use if dropdown needs to be offset
@@ -180,7 +180,7 @@ form.form-search:before {
     //border-radius:10px;
   }
 }
-*/
+
 
 .nav > li.dropdown.open { position: static; }
 .nav > li.dropdown.open .dropdown-menu {display:table; width: 100%; text-align: center; left:0; right:0; }
