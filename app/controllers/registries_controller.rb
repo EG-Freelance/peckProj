@@ -73,12 +73,12 @@ class RegistriesController < ApplicationController
   def add_remove_product
     p = eval(params['product_registry']['product_hash'])
     @product = Product.where(
-      brand_id: Brand.find_by(popshops_index: p['brand']).id, 
-      popshops_index: p['id'],
+      brand_id: Brand.find_by(popshops_index: p['brand'].to_s).id, 
+      popshops_index: p['id'].to_s,
       category: p['category'],
       name: p['name'],
       description: p['description'],
-      popshops_brand: p['brand'],
+      popshops_brand: p['brand'].to_s,
       price_min: p['price_min'],
       price_max: p['price_max'],
       offer_count: p['offer_count'],
