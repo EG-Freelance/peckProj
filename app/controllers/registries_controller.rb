@@ -110,9 +110,9 @@ class RegistriesController < ApplicationController
           merchant = Merchant.find_by(popshops_index: o['merchant'])
           offer = Offer.where(
             product_id: @product.id,
-            popshops_index: o['id'],
-            sku: o['sku'],
-            popshops_merchant: o['merchant'],
+            popshops_index: o['id'].to_s,
+            sku: o['sku'].to_s,
+            popshops_merchant: o['merchant'].to_s,
             name: o['name'],
             description: o['description'],
             url: o['url'],
