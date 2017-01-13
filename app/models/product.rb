@@ -9,6 +9,7 @@ class Product < ActiveRecord::Base
   #has_many :carts, through: :cart_products
   has_many :cart_offers, :through => :offers
 
+  Unused in non-data-persistent model
   def self.update_listings
     # set initial page to 1
     i = 1
@@ -30,7 +31,7 @@ class Product < ActiveRecord::Base
 
         # Create offers for each product
         p['offers']['offer'].each do |o|
-          offer = Offer.where(merchant_id: Merchant.find_by(popshops_index: o['merchant']).id, product_id: product.id, popshops_index: o['id'], sku: o['sku'], popshops_merchant: o['merchant'], name: o['name'], description: o['description'], url: o['url'], image_url_large: o['image_url_large'], currency_iso: o['currency_iso'], price_merchant: o['price_merchant'], price_retail: o['price_retail'], estimated_price_total: o['estimated_price_total'], condition: o['condition']).first_or_create
+          offer = Offer.where(merchant_id: Merchant.find_by(popshops_index: o['merchant'].to_s).id, product_id: product.id, popshops_index: o['id'].to_s, sku: o['sku'], popshops_merchant: o['merchant'], name: o['name'], description: o['description'], url: o['url'], image_url_large: o['image_url_large'], currency_iso: o['currency_iso'], price_merchant: o['price_merchant'], price_retail: o['price_retail'], estimated_price_total: o['estimated_price_total'], condition: o['condition']).first_or_create
           offer.touch
         end
       end

@@ -16,8 +16,8 @@ class Merchant < ActiveRecord::Base
       
       # Create merchants
       merchants_hash.each do |m|
-        merchant = Merchant.where(popshops_index: m['id']).first_or_create
-        merchant.update(merchant_type_id: MerchantType.find_by(popshops_index: m['merchant_type']).id, name: m['name'], network: m['network'], product_count: m['product_count'], deal_count: m['deal_count'], network_merchant_id: m['network_merchant_id'], popshops_merchant_type: m['merchant_type'], country: m['country'], category: m['category'], logo_url: m['logo_url'], url: m['url'], site_url: m['site_url'])
+        merchant = Merchant.where(popshops_index: m['id'].to_s).first_or_create
+        merchant.update(merchant_type_id: MerchantType.find_by(popshops_index: m['merchant_type'].to_s).id, name: m['name'], network: m['network'].to_s, product_count: m['product_count'], deal_count: m['deal_count'], network_merchant_id: m['network_merchant_id'].to_s, popshops_merchant_type: m['merchant_type'].to_s, country: m['country'].to_s, category: m['category'].to_s, logo_url: m['logo_url'], url: m['url'], site_url: m['site_url'])
         # NOTE: Adding: merchant_type: m['merchant_type'] is throwing errors, so removed --- Pretty sure it's superfluous anyway
         merchant.touch
       end

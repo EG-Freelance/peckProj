@@ -1,7 +1,5 @@
 <div id="js-notice-cc" style="padding-left:100px; height:18px"></div>
 
-<% puts "======#{@merchants}" %>
-
 <%= simple_form_for :checkout_confirmation, url: checkout_confirmation_path, :html => { method: :post, id: 'checkout-confirmation-form' }, remote: true do |f| %>
   <% unless @merchants.nil? %>
     <% @merchants.each do |m| %>
