@@ -9,7 +9,6 @@ class Product < ActiveRecord::Base
   #has_many :carts, through: :cart_products
   has_many :cart_offers, :through => :offers
 
-  Unused in non-data-persistent model
   def self.update_listings
     # set initial page to 1
     i = 1
