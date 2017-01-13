@@ -85,7 +85,7 @@ class CartsController < ApplicationController
     end    
   end
   
-  def destroy_cart_product
+  def destroy_cart_offer
     @co_id = params[:format]
     CartOffer.destroy(@co_id)
   end
