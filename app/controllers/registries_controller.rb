@@ -107,7 +107,7 @@ class RegistriesController < ApplicationController
       ).first_or_initialize
       if pr.save
         p['offers']['offer'].each do |o|
-          merchant = Merchant.find_by(popshops_index: o['merchant'])
+          merchant = Merchant.find_by(popshops_index: o['merchant'].to_s )
           offer = Offer.where(
             product_id: @product.id,
             popshops_index: o['id'].to_s,
