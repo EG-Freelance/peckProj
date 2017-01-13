@@ -4,26 +4,41 @@ class CartsController < ApplicationController
   respond_to :html
   
   def add_to_cart
-    @p_id = params[:cart_product][:product_id]
-    c = CartProduct.find_or_initialize_by(cart_id: Cart.find_by(user_id: current_user.id).id, registry_id: params[:cart_product][:registry_id], product_id: params[:cart_product][:product_id])
-    unless c.quantity == params[:cart_product][:quantity]
-      c.quantity = params[:cart_product][:quantity]
-      c.save
+    @p_id = params[:cart_offer][:product_id]
+    @o_id = params[:cart_offer][:offer_id]
+    @r = current_user.cart.cart_offers.map{ |co| co.registry_id }.uniq
+    co = CartOffer.where(cart_id: Cart.find_by(user_id: current_user.id).id, registry_id: params[:cart_offer][:registry_id], product_id: params[:cart_offer][:product_id]).first_or_initialize
+    unless co.quantity == params[:cart_offer][:quantity] && co.offer_id == params[:cart_offer][:offer_id]
+      co.quantity = params[:cart_offer][:quantity]
+      co.offer_id = params[:cart_offer][:offer_id]
+      co.save
     end
-    @r = current_user.cart.cart_products.map{ |cp| cp.registry_id }.uniq
     respond_to do |format|
       format.html { redirect_to :back }
       format.js { }
     end
+    
+    ########## OLD CODE BEFORE SWITCH TO CART_OFFER ##########
+    # @p_id = params[:cart_product][:product_id]
+    # c = CartProduct.find_or_initialize_by(cart_id: Cart.find_by(user_id: current_user.id).id, registry_id: params[:cart_product][:registry_id], product_id: params[:cart_product][:product_id])
+    # unless c.quantity == params[:cart_product][:quantity]
+    #   c.quantity = params[:cart_product][:quantity]
+    #   c.save
+    # end
+    # @r = current_user.cart.cart_products.map{ |cp| cp.registry_id }.uniq
+    # respond_to do |format|
+    #   format.html { redirect_to :back }
+    #   format.js { }
+    # end
   end
 
   def checkout
     # Set products being checked out
-    @cp = params['checkout'].map{ |k,v| k unless v == "false" }
-    @cp.delete_if { |r| r.nil? }
-    @cp_array = @cp.map { |cpid| CartProduct.find(cpid).product }
-    @merchants = @cp.map { |cpid| CartProduct.find(cpid).product.merchant }.uniq
-    @registry = Registry.find_by(id: CartProduct.find(@cp.first).registry_id)
+    @co = params['checkout'].map{ |k,v| k unless v == "false" }
+    @co.delete_if { |r| r.nil? }
+    @co_array = @co.map { |coid| CartOffer.find(coid).offer }
+    @merchants = @co.map { |coid| CartOffer.find(coid).offer.merchant }.uniq
+    @registry = Registry.find_by(id: CartOffer.find(@co.first).registry_id)
     
     respond_to do |format|
       format.html { redirect_to :back }
@@ -48,18 +63,18 @@ class CartsController < ApplicationController
     if sum_confirmed > 0
       @status = "success"
       #set @registry for js rendering
-      @registry = CartProduct.find(pairs[0][0][0]).registry
-      cps = CartProduct.where(id: product_array)
-      product_ids = cps.map{ |cp| cp.product_id }
+      @registry = CartOffer.find(pairs[0][0][0]).registry
+      co_set = CartOffer.where(id: product_array)
+      product_ids = co_set.map{ |co| co.product_id }
 
       #set @prs for js rendering
       @prs = ProductRegistry.where(product_id: product_ids, registry_id: @registry.id)
       pairs.each do |p|
-        cp = CartProduct.find(p[0][0])
-        cp_pr = cp.registry.product_registries.find_by(product_id: cp.product_id)
-        cp_purch = cp_pr.purchased
-        cp_pr.update(purchased: (p[1][1].to_i + cp_purch))
-        cp.destroy      
+        co = CartOffer.find(p[0][0])
+        co_pr = co.registry.product_registries.find_by(product_id: co.product_id)
+        co_purch = co_pr.purchased
+        co_pr.update(purchased: (p[1][1].to_i + co_purch))
+        co.destroy      
       end
     else
       @status = "failure"
@@ -71,8 +86,8 @@ class CartsController < ApplicationController
   end
   
   def destroy_cart_product
-    @cp_id = params[:format]
-    CartProduct.destroy(@cp_id)
+    @co_id = params[:format]
+    CartOffer.destroy(@co_id)
   end
   
   def index

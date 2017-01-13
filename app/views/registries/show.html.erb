@@ -1,6 +1,6 @@
 <% included = ProductRegistry.where(registry_id: @registry.id).map{ |r| r.product_id }.sort %>
 
-<% progress_array = ProductRegistry.where(registry_id: @registry.id).map { |pr| [pr.product.fund.to_f, pr.purchased] } %>
+<% progress_array = ProductRegistry.where(registry_id: @registry.id).map { |pr| [pr.product.price_min.to_f, pr.purchased] } %> <!-- THIS VALUE WILL CHANGE FOR PRODUCTION; NEEDS TO BE ACTUALLY CALCULATED -->
 <% progress_array.empty? ? progress = 0 : progress = progress_array.map{ |p| p.inject(:*) }.inject(:+)/@registry.goal*100 %>
 
 <!-- Invite more users if the current user is the owner -->
@@ -34,7 +34,7 @@
   <p>Share this registry with your friends!</p><input style="min-width:250px" name="Tiny-URL" disabled="true" value=<%= @tiny_url %> />
 </div>
 
-<%= render 'products/product_listings' %>
+<%= render 'registries/product_listings_ii' %>
 
 <!-- Invite Users Modal -->
 <div id="invite" class="modal fade" role="dialog">
@@ -75,25 +75,27 @@
           <!-- Tab panes/Modal Body -->
           <div class="modal-body">
 
-            <!-- WHEN PRODUCT INFORMATION IS PULLED IN, IMAGE SOURCE SHOULD BE TIED TO PRODUCT -->
-            <div class="row">
-              <div class="col-md-4">
-                <img src="http://www.wired.com/wp-content/uploads/2015/06/Oculus-Rift-2-1024x576.jpg" alt="Oculus Rift" style='max-height:100px;'>
+            <%= simple_form_for :cart_offer, url: add_to_cart_path, html: { method: :post }, :remote => true do |f| %>
+              <div class="row">
+                <div class="col-md-4">
+                  <img src="<%= p.image_url %>" alt="<%= p.name %>" style='max-height:100px;'>
+                </div>
+                <div class="col-md-8">
+                  <% offers_array = p.offers.map { |o| ["#{number_to_currency(o.price_merchant)} - #{Merchant.find_by(popshops_index: o.popshops_merchant).name}", o.id] } %>
+                  <h4><%= p.name %></h4>
+                </div>
               </div>
-              <div class="col-md-8">
-                <h3><u><i><%= p.merchant %></i></u></h3>
-                <h4><%= p.name %></h4>
+              <br>
+              <% unless pr.nil? %><p><i><%= [pr.quantity - pr.purchased, 0].max %> more needed out of <%= pr.quantity %></i></p><% end %>
+              <!-- Submission form for cart item -->
+              <p><u><i><%= f.select :offer_id, options_for_select(offers_array) %></i></u></p>
+              <% cart = Cart.find_by(user_id: current_user.id) %>
+              <div class="col-md-1" style="width:25px; border-radius:10px">
+                <%= f.input_field :quantity, :style => "width:25px", :value => CartOffer.exists?(product_id: p.id, cart_id: cart.id) ? CartOffer.find_by(product_id: p.id, cart_id: cart.id).quantity : "", :id => "cart-quantity-#{p.id}" %>
               </div>
-            </div>
-            <br>
-            <% unless pr.nil? %><p><i><%= [pr.quantity - pr.purchased, 0].max %> more needed out of <%= pr.quantity %></i></p><% end %>
-            <!-- Submission form for cart item -->
-            <% cart = Cart.find_by(user_id: current_user.id) %>
-            <%= simple_form_for :cart_product, url: add_to_cart_path, html: { method: :post }, :remote => true do |f| %>
-              <div class="col-md-1" style="width:25px; border-radius:10px"><%= f.input_field :quantity, :style => "width:25px", :value => CartProduct.exists?(product_id: p.id, cart_id: cart.id) ? CartProduct.find_by(product_id: p.id, cart_id: cart.id).quantity : "", :id => "cart-quantity-#{p.id}" %></div>
               <%= f.hidden_field :product_id, :value => p.id %>
               <%= f.hidden_field :registry_id, :value => @registry.id %>
-
+  
               <div class="col-md-2"><%= f.submit "Add to Cart" %></div>
               <br><br>
             <% end %>  

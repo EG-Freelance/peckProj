@@ -563,3 +563,12 @@ input{
   max-width: 150px;
   width: 100%;
 }
+
+.cart-listing{
+  max-width: 250px; 
+  display: inline-block; 
+  text-overflow: ellipsis; 
+  overflow: hidden; 
+  white-space: nowrap; 
+  vertical-align: bottom;
+}

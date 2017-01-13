@@ -1,4 +1,4 @@
-<% @registries = current_user.cart.cart_products.map{ |cp| cp.registry_id }.uniq %>
+<% @registries = current_user.cart.cart_offers.map{ |co| co.registry_id }.uniq %>
 
 <% if @registries.empty? %>
   <h4>Your cart is empty</h4>
@@ -8,7 +8,7 @@
     <div id="accordion" class="panel-group">
       <% @registries.each do |r| %>
         <% registry = Registry.find(r) %>
-        <% merchants = registry.products.map{ |p| p.merchant }.uniq %>
+        <% merchants = registry.products.map{ |p| p.offers.map { |o| Merchant.find_by(popshops_index: o.popshops_merchant).name } }.flatten.uniq %>
         <div class="panel panel-default">    
           <div class="panel-heading">
             <h4 class="panel-title">
@@ -19,15 +19,18 @@
           <div id=<%= "#{r}" %> class="panel-collapse collapse">
             <div class="panel-body" id=<%= "registry-#{r}-products" %>>
               <% merchants.each do |m| %>
-                <div class="cart-merchant"><b><%= m %></b></div>
-                <% @products = registry.cart_products.includes(:cart, :product).where( :carts => { :user_id => current_user.id }, :products => { :merchant => m }).each do |cp| %>
-                  <% p = Product.find(cp.product_id) %>
-                  <% pr = ProductRegistry.find_by(product_id: p.id, registry_id: r) %>
-                  <div id=<%= "registry-item-#{cp.id}" %>>
-                    <%= f.check_box "#{cp.id}".to_sym, {class: 'registry-checkbox'}, 'true', 'false' %>
-                    <%= Product.find(cp.product_id).name %> -- <b>Cart: </b><span style="color: green;"><%= cp.quantity %></span> <b>Still needed: </b><span style="color: red;"><%= pr.quantity - pr.purchased %></span>
-                    <div class="pull-right"><%= link_to "X", destroy_cart_product_path(cp), method: :post, remote: true %></div>
-                  </div>
+                <% @products = registry.cart_offers.includes(:cart, :offer).where(:carts => { :user_id => current_user.id }, :offers => { :popshops_merchant => Merchant.find_by(name: m).popshops_index }) %>
+                <% unless @products.empty? %>
+                  <div class="cart-merchant"><b><%= m %></b></div>
+                  <% @products.each do |co| %>
+                    <% p = Product.find(co.product_id) %>
+                    <% pr = ProductRegistry.find_by(product_id: p.id, registry_id: r) %>
+                    <div id=<%= "registry-item-#{co.id}" %>>
+                      <%= f.check_box "#{co.id}".to_sym, {class: 'registry-checkbox'}, 'true', 'false' %>
+                      <span class="cart-listing"><%= Product.find(co.product_id).name %></span> -- <b>Cart: </b><span style="color: green;"><%= co.quantity %></span> <b>Still needed: </b><span style="color: red;"><%= pr.quantity - pr.purchased %></span>
+                      <div class="pull-right"><%= link_to "X", destroy_cart_offer_path(co), method: :post, remote: true %></div>
+                    </div>
+                  <% end %>
                 <% end %>
               <% end %>
             </div>

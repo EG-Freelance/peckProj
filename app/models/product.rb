@@ -5,8 +5,9 @@ class Product < ActiveRecord::Base
   has_many :merchant_products, dependent: :destroy
   has_many :merchants, :through => :merchant_products
   has_many :registries, :through => :product_registries
-  has_many :cart_products, dependent: :destroy
-  has_many :carts, through: :cart_products  
+  #has_many :cart_products, dependent: :destroy
+  #has_many :carts, through: :cart_products
+  has_many :cart_offers, :through => :offers
 
   def self.update_listings
     # set initial page to 1

@@ -41,7 +41,7 @@ Rails.application.routes.draw do
     post 'add_to_cart' => 'carts#add_to_cart'
     post 'checkout' => 'carts#checkout'
     post 'checkout_confirmation' => 'carts#checkout_confirmation'
-    post 'destroy_cart_product' => 'carts#destroy_cart_product'
+    post 'destroy_cart_offer' => 'carts#destroy_cart_offer'
     post 'add_remove_as_guest' => 'registries#add_remove_as_guest'
   end
   

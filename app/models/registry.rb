@@ -5,8 +5,10 @@ class Registry < ActiveRecord::Base
   has_many :product_registries, dependent: :destroy
   has_many :products, :through => :product_registries
   belongs_to :payment_method
-  has_many :cart_products
-  has_many :carts, :through => :cart_products
+  #has_many :cart_products
+  #has_many :carts, :through => :cart_products
+  has_many :cart_offers
+  has_many :carts, :through => :cart_offers
   
   validates_presence_of :goal
   validates_presence_of :name

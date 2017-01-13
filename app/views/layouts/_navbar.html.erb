@@ -17,8 +17,9 @@
       <div class="col-md-5 col-sm-5">
         <ul class="nav navbar-nav" style="width:100%">
           <div style="padding:15px;" id="search-div">
-            <form accept-charset="UTF-8" action="/products/search" class="form-search form-inline" id="product_search" method="get">
-              <input id="q_name_cont" name="q[name_cont]" placeholder="Search Products" type="text" class="search-query" />
+            <form accept-charset="UTF-8" action="/products" class="form-search form-inline" id="product_search" method="get">
+              <input id="keyword" name="keywords" placeholder="Search Products" type="text" class="search-query" />
+              <input id="page" name="page" type="hidden" value="1" />
             </form>
           </div>
         </ul>

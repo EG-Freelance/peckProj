@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160714151114) do
+ActiveRecord::Schema.define(version: 20170111131355) do
 
   create_table "admins", force: true do |t|
     t.string   "email",              default: "", null: false
@@ -32,6 +32,16 @@ ActiveRecord::Schema.define(version: 20160714151114) do
     t.string   "popshops_index"
     t.string   "name"
     t.integer  "count"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "cart_offers", force: true do |t|
+    t.integer  "cart_id"
+    t.integer  "offer_id"
+    t.integer  "registry_id"
+    t.integer  "product_id"
+    t.integer  "quantity"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

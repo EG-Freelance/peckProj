@@ -19,16 +19,17 @@ class RegistriesController < ApplicationController
   end  
   
   def show
-    begin 
-      ur = UserRegistry.find_by(registry_id: @registry.id, user_id: current_user.id)
-      if (ur.association_type == "owner" || ur.association_type == "administrator")
-        products_pool = Product.all
-      else
-        products_pool = Product.includes(:product_registries).where(:product_registries => { registry_id: @registry.id })
-      end
-    rescue
-      products_pool = Product.includes(:product_registries).where(:product_registries => { registry_id: @registry.id })
-    end
+    @products = Product.includes(:product_registries).where(:product_registries => { :registry_id => params['id'] })
+    # begin 
+    #   ur = UserRegistry.find_by(registry_id: @registry.id, user_id: current_user.id)
+    #   if (ur.association_type == "owner" || ur.association_type == "administrator")
+    #     products_pool = Product.all
+    #   else
+    #     products_pool = Product.includes(:product_registries).where(:product_registries => { registry_id: @registry.id })
+    #   end
+    # rescue
+    #   products_pool = Product.includes(:product_registries).where(:product_registries => { registry_id: @registry.id })
+    # end
 
     ###### SET TINY-URL FOR REGISTRY ######    
     # This will change for live site!!
@@ -37,10 +38,10 @@ class RegistriesController < ApplicationController
     @tiny_url = open('http://tinyurl.com/api-create.php?url=' + base + path, "UserAgent" => "Ruby Script").read
     ########################################
     
-    @q = products_pool.ransack(params[:q])
-    params[:id] = @registry.id
-    @q.sorts = 'name asc' if @q.sorts.empty?
-    @products = @q.result.paginate(page: params[:page], per_page: 24)
+    # @q = products_pool.ransack(params[:q])
+    # params[:id] = @registry.id
+    # @q.sorts = 'name asc' if @q.sorts.empty?
+    # @products = @q.result.paginate(page: params[:page], per_page: 24)
   end
   
   def search  
@@ -71,21 +72,23 @@ class RegistriesController < ApplicationController
   end
   
   def add_remove_product
-    p = eval(params['product_registry']['product_hash'])
-    @product = Product.where(
-      brand_id: Brand.find_by(popshops_index: p['brand'].to_s).id, 
-      popshops_index: p['id'].to_s,
-      category: p['category'].to_s,
-      name: p['name'],
-      description: p['description'],
-      popshops_brand: p['brand'].to_s,
-      price_min: p['price_min'],
-      price_max: p['price_max'],
-      offer_count: p['offer_count'],
-      image_url: p['image_url_large']
-    ).first_or_initialize
-    
-    puts "====#{Product.exists?(@product)}"
+    if params['product_registry']['rendering_controller'] == 'registries'
+      @product = Product.find(params['product_registry']['product_id'])
+    else
+      p = eval(params['product_registry']['product_hash'])
+      @product = Product.where(
+        brand_id: Brand.find_by(popshops_index: p['brand'].to_s).id, 
+        popshops_index: p['id'].to_s,
+        category: p['category'].to_s,
+        name: p['name'],
+        description: p['description'],
+        popshops_brand: p['brand'].to_s,
+        price_min: p['price_min'],
+        price_max: p['price_max'],
+        offer_count: p['offer_count'],
+        image_url: p['image_url_large']
+      ).first_or_initialize
+    end
     
     if Product.exists?(@product)
       @product.destroy
@@ -103,6 +106,25 @@ class RegistriesController < ApplicationController
         purchased: 0
       ).first_or_initialize
       if pr.save
+        p['offers']['offer'].each do |o|
+          merchant = Merchant.find_by(popshops_index: o['merchant'])
+          offer = Offer.where(
+            product_id: @product.id,
+            popshops_index: o['id'],
+            sku: o['sku'],
+            popshops_merchant: o['merchant'],
+            name: o['name'],
+            description: o['description'],
+            url: o['url'],
+            image_url_large: o['image_url_large'],
+            currency_iso: o['currency_iso'],
+            price_merchant: o['price_merchant'],
+            price_retail: o['price_retail'],
+            estimated_price_total: o['estimated_price_total'],
+            condition: o['condition']).first_or_create
+          @product.merchants << merchant unless @product.merchants.include?(merchant)
+          merchant.offers << offer unless merchant.offers.include?(offer) 
+        end
         @status = "success"
         respond_to do |format|
           format.html { redirect_to :back, notice: "Product added" }

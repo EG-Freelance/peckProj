@@ -1,7 +1,7 @@
 $('#checkout').modal('hide');
 
-<% @cp_array.each do |p| %>
-  window.open('<%= p.affiliate_link %>');
+<% @co_array.each do |o| %>
+  window.open('<%= o.url %>');
 <% end %>
 
 $('#checkout-confirmation-modal').html("<%= j (render partial: 'carts/checkout_confirmation') %>");
