@@ -33,7 +33,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     @user = User.new(adjusted_sign_up_params)
     
     if @user.owner_id == "Error"
-      @user.errors.add(:owner_id, 'Registry Owner email is not valid -- please check the address and try again.')
+      @user.errors.add(:owner_id, 'Either email address is invalid or account already exists.  Please try again.')
     end
     
 
@@ -43,7 +43,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         format.html { redirect_to root_url, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else
-        format.html { redirect_to root_url, :flash => { :error => "Registry Owner email is not valid -- please check the address and try again."} }
+        format.html { redirect_to root_url, :flash => { :error => "Either email address is invalid or account already exists.  Please try again."} }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end

@@ -28,10 +28,14 @@
     <%= render "layouts/navbar" %>
 
     <% unless flash[:error].nil? %>
-      <p id="error" style="padding-top:60px; padding-left:20px; margin-bottom:0px; color:darkred; background:red"><b><%= flash[:error] %></b></p>
+      <script>
+        $('#js-notice').removeClass().addClass('js-failure js-notice').text("<%= flash[:error] %>").stop().fadeTo(1,100).fadeTo(6000,0);
+      </script>
     <% end %>
     <% unless alert.nil? %>
-      <p class="alert"><%= alert %></p>
+      <script>
+        $('#js-notice').removeClass().addClass('js-failure js-notice').text("<%= alert %>").stop().fadeTo(1,100).fadeTo(6000,0);
+      </script>
     <% end %>
   </head>
   <body>
