@@ -3,12 +3,13 @@
 <%= simple_form_for :checkout_confirmation, url: checkout_confirmation_path, :html => { method: :post, id: 'checkout-confirmation-form' }, remote: true do |f| %>
   <% unless @merchants.nil? %>
     <% @merchants.each do |m| %>
-      <%= m %>
+      <div class="cart-merchant"><b><%= m.name %></b></div>
       <% @registry.cart_offers.includes(:cart, :offer).where( :carts => { :user_id => current_user.id }, :offers => { :merchant_id => m.id }).each do |co| %>
         <div class="form-wrapper"><%= f.check_box "#{co.id}".to_sym, {class: 'confirmation-checkbox'} %>  <%= Product.find(co.product_id).name %> -- <%= f.input_field "#{co.id}-quantity".to_sym, :value => co.quantity, :style => "width:25px" %></div>
       <% end %>
     <% end %>
     <br />
     <%= f.submit "Confirm" %>
+    <br />
   <% end %>
 <% end %>

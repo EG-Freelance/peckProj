@@ -1,5 +1,15 @@
 <% current_controller = Rails.application.routes.recognize_path(request.env['PATH_INFO'])[:controller] unless @refresh == true %>
 
+<div style="width:100%; text-align:center">
+  <div>
+    <ul class="pagination">
+      <% [(@product_count/100.0).ceil,10].min.times do |i| %>
+        <li><%= link_to i+1, products_url(:keywords => @keywords, :page => i+1), {:class => i+1 == @page.to_i ? 'active' : 'inactive' } %></li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
 <!-- Product listings -->
 <div class="free-wall">
   <div class="card-deck">
@@ -41,14 +51,6 @@
                 <br><br>
               <% end %>
             <% end %>
-                    <% if false %>
-                    
-                    <% end %>
-                    <% if false %>
-                      <% if user_signed_in? && @registry.administrators.include?(current_user) %>
-                        
-                      <% end %>
-                    <% end %>
             <% if user_signed_in?  && !@registry.nil? && current_controller == 'registries' %>
               <% if pr_quant - pr_purch > 0 %>
                 <img type="button" class="btn btn-lg" data-toggle="modal" data-target=<%= "#add-to-cart-#{p.id}-modal" %> src="/assets/ShoppingCartAdd.png" height="60" style="padding: 0px 0px 0px 0px;" id=<%= "add-cart-#{p.id}" %>> or <i><%= link_to "Skip the cart", nonuser_checkout_path(:product_id => p.id, :registry_id => @registry.id), :id => "checkout-#{p.id}", method: :post, remote: true %></i>

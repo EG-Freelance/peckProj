@@ -221,7 +221,6 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Confirm Your Purchase(s)</h4>
       </div>
       <div class="modal-body" style="padding-top:0px">
@@ -230,11 +229,26 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <div class="form-wrapper pull-left"><%= check_box_tag "no_purchase", {id: 'no-purchase'} %> I did not make any purchases.</div>
+
+        <button id="confirmation-modal-close" type="button" class="btn btn-default disabled" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
 </div>
+
+<script> 
+  function noPurchase(){
+    if($('#no_purchase').prop('checked') == true){
+  		$('#confirmation-modal-close').removeClass('disabled');
+  		$('.confirmation-checkbox').prop('checked', false);
+  	}else{
+  		$('#confirmation-modal-close').addClass('disabled');
+  	}
+  }
+  
+  $('#no_purchase').click(noPurchase);
+</script>
 
 <script>
   var menu = document.querySelector('.sticky-menu');

@@ -20,20 +20,9 @@ class RegistriesController < ApplicationController
   
   def show
     @products = Product.includes(:product_registries).where(:product_registries => { :registry_id => params['id'] })
-    # begin 
-    #   ur = UserRegistry.find_by(registry_id: @registry.id, user_id: current_user.id)
-    #   if (ur.association_type == "owner" || ur.association_type == "administrator")
-    #     products_pool = Product.all
-    #   else
-    #     products_pool = Product.includes(:product_registries).where(:product_registries => { registry_id: @registry.id })
-    #   end
-    # rescue
-    #   products_pool = Product.includes(:product_registries).where(:product_registries => { registry_id: @registry.id })
-    # end
 
-    ###### SET TINY-URL FOR REGISTRY ######    
-    # This will change for live site!!
-    base = "http://regisli-staging.herokuapp.com"
+    ###### SET TINY-URL FOR REGISTRY ######
+    base = root_url[0..-2]
     path = request.env['PATH_INFO']
     @tiny_url = open('http://tinyurl.com/api-create.php?url=' + base + path, "UserAgent" => "Ruby Script").read
     ########################################

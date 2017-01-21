@@ -13,6 +13,8 @@ module GetProducts
       return nil
     end
     
+    count = results['results']['products']['count']
+    
     # Create products to house offers
 #    p_results.each do |p|
 #      products[p['name'] = { 'product' => p }
@@ -41,6 +43,6 @@ module GetProducts
     products_with_offers.each do |p|
       products[p['name']] = { 'product' => p, 'offers' => p['offers']['offer'] }
     end
-    return products
+    return [products, count]
   end
 end

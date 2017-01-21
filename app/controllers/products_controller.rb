@@ -23,7 +23,14 @@ class ProductsController < ApplicationController
     @registry = Registry.find(params[:registry]) unless params[:registry].nil?
     @keywords = params[:keywords]
     @page = params[:page]
-    @products = GetProducts.get_products(@keywords, @page)
+    p_summary = GetProducts.get_products(@keywords, @page)
+    if p_summary.nil?
+      @products = nil
+      @product_count = 0
+    else
+      @products = p_summary[0]
+      @product_count = p_summary[1]
+    end
    
 #    @q = products_pool.ransack(params[:q])
 #    @q.sorts = 'name asc' if @q.sorts.empty?
