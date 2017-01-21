@@ -1,7 +1,7 @@
 <div id="js-notice-ncc" style="padding-left:100px; height:18px"></div>
 
 <%= simple_form_for :nonuser_checkout_confirmation, url: nonuser_checkout_confirmation_path, :html => { method: :post, id: 'nonuser_checkout-confirmation-form' }, remote: true do |f| %>
-    <div class="form-wrapper"><%= Product.find(@product.id).name %> -- <%= f.input_field :quantity, :style => "width:25px" %></div>
+    <div class="form-wrapper"><%= Product.find(@product.id).name %> -- <%= f.input_field :quantity, :value => 1, :style => "width:25px" %></div>
     <%= f.hidden_field :registry_id, :value => @registry_id %>
     <%= f.hidden_field :product_id, :value => @product.id %>
   <br />
