@@ -91,7 +91,7 @@
               <p><u><i><%= f.select :offer_id, options_for_select(offers_array) %></i></u></p>
               <% cart = Cart.find_by(user_id: current_user.id) %>
               <div class="col-md-1" style="width:25px; border-radius:10px">
-                <%= f.input_field :quantity, :style => "width:25px", :value => CartOffer.exists?(product_id: p.id, cart_id: cart.id) ? CartOffer.find_by(product_id: p.id, cart_id: cart.id).quantity : "", :id => "cart-quantity-#{p.id}" %>
+                <%= f.input_field :quantity, :style => "width:25px", :value => CartOffer.exists?(product_id: p.id, cart_id: cart.id) ? CartOffer.find_by(product_id: p.id, cart_id: cart.id).quantity : 1, :id => "cart-quantity-#{p.id}" %>
               </div>
               <%= f.hidden_field :product_id, :value => p.id %>
               <%= f.hidden_field :registry_id, :value => @registry.id %>
